@@ -38,13 +38,14 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
 }
 
 void updateScreen(int h) {
+    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-    drawLine(100, 100, 500, 100, 0, 255, 0);
-    drawFilledRect(200, 200, 100, 100, 255, 0, 0);
+    drawLine(100, 100, 500, 100, 0, 0, 0);
+    drawFilledRect(200, 200, 10, 10, 0, 0, 0);
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers
