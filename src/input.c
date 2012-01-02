@@ -26,6 +26,17 @@ void getInput()
                         break;
                 }
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                switch (event.button.button) {
+                    case SDL_BUTTON_LEFT:
+                        if (event.button.state == SDL_PRESSED) {
+                            printf("xcor:%d\tycor:%d\n", event.button.x, event.button.y);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
         }
     }
 }
