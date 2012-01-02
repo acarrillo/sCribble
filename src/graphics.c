@@ -9,15 +9,12 @@ void drawPixel(int x, int y, int color) {
     pixel = screen->pixels + x + y; // Magic pointer arithmetic; pixels are stored in linear array
     *pixel = color;
 }
-void setpixel(int x, int y, Uint8 r, Uint8 g, Uint8 b)
+void setpixel(int x, int y, int color)
 {
     Uint32 *pixmem32;
-    Uint32 colour;  
- 
-    colour = SDL_MapRGB( screen->format, r, g, b );
   
     pixmem32 = (Uint32*) screen->pixels  + y + x;
-    *pixmem32 = colour;
+    *pixmem32 = color;
 }
 /*void DrawScreen(SDL_Surface* screen)*/
 void DrawScreen()
@@ -31,7 +28,7 @@ void DrawScreen()
         ytimesw = y*screen->pitch/4;
         for( x = 0; x < screen->w; x++ )
         {
-            setpixel(x, ytimesw, 255, 255, 255);
+            setpixel(x, ytimesw, color);
         }
     }
 }
