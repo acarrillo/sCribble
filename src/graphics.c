@@ -9,52 +9,30 @@ void drawPixel(int x, int y, int color) {
     pixel = (Uint32*) screen->pixels + x + y; // Magic pointer arithmetic; pixels are stored in linear array
     *pixel = color;
 }
-void setpixel(int x, int y, int color)
-{
-    Uint32 *pixmem32;
-  
-    pixmem32 = (Uint32*) screen->pixels  + y + x;
-    *pixmem32 = color;
-}
-/*void DrawScreen(SDL_Surface* screen)*/
-void DrawScreen()
-{ 
-    int x, y, ytimesw;
-    int color;
-    color = SDL_MapRGB(screen->format, 255, 255, 255);
-    //Magic below
-    for(y = 0; y < screen->h; y++ )
-    {
-        ytimesw = y*screen->pitch/4;
-        for( x = 0; x < screen->w; x++ )
-        {
-            drawPixel(x, ytimesw, color);
-        }
-    }
-}
-void drawFilledRect(int x, int y, int len, int width, int r, int g, int b) {
-    int color;
+void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
+    int color, ytimesw;
     color = SDL_MapRGB(screen->format, r, g, b);
-    int i, j;
-    for (i=0; i < len; i++) {
-        for (j=0; j < width; j++) {
-            drawPixel(x, y, color);
+    int x, y;
+    for (y=0; y < len; y++) {
+        ytimesw = (yi+y)*screen->pitch/4;
+        for (x=0; x < width; x++) {
+            drawPixel(xi+x, ytimesw, color);
         }
     }
 }
 
+/*
+ * TODO: Make this work for vertical and diagonal lines.  Currently only works for horizontal.
+ */
 void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     int color;
     color = SDL_MapRGB(screen->format, r, g, b);
 
-    int x, y, ytimesw;
-    for(y = 0; y < screen->h; y++ )
+    int x, ytimesw;
+    ytimesw = yi*screen->pitch/4;
+    for( x = 0; x < (xf-xi); x++ )
     {
-        ytimesw = y*screen->pitch/4;
-        for( x = 0; x < screen->w; x++ )
-        {
-            drawPixel(x, ytimesw, color);
-        }
+        drawPixel(xi+x, ytimesw, color);
     }
 
 }
@@ -65,9 +43,8 @@ void updateScreen(int h) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-    DrawScreen();
-
-    /*drawLine(5, 5, 5, 5, 255, 0, 0);*/
+    drawLine(100, 100, 500, 100, 0, 255, 0);
+    drawFilledRect(200, 200, 100, 100, 255, 0, 0);
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers
