@@ -4,9 +4,9 @@
 #include "graphics.h"
 
 void drawPixel(int x, int y, int color) {
-    int *pixel;
+    Uint32 *pixel;
 
-    pixel = screen->pixels + x + y; // Magic pointer arithmetic; pixels are stored in linear array
+    pixel = (Uint32*) screen->pixels + x + y; // Magic pointer arithmetic; pixels are stored in linear array
     *pixel = color;
 }
 void setpixel(int x, int y, int color)
@@ -28,7 +28,7 @@ void DrawScreen()
         ytimesw = y*screen->pitch/4;
         for( x = 0; x < screen->w; x++ )
         {
-            setpixel(x, ytimesw, color);
+            drawPixel(x, ytimesw, color);
         }
     }
 }
