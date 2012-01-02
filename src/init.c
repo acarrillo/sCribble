@@ -10,7 +10,7 @@ void init(char *title) {
 		exit(1);
 	}
 	
-	screen = SDL_SetVideoMode(640, 480, 0, SDL_HWPALETTE); //Opens screen
+	screen = SDL_SetVideoMode(640, 480, 0, SDL_HWPALETTE|SDL_DOUBLEBUF);
 	
 	if (screen == NULL) {
 		printf("Couldn't set screen mode to 640 x 480: %s\n", SDL_GetError());

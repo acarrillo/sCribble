@@ -1,3 +1,3 @@
 #include "defs.h"
 
-extern SDL_Surface *screen, *dexterImage;
+extern SDL_Surface *screen;

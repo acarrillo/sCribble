@@ -6,6 +6,7 @@
 
 extern void init(char *);
 extern void cleanup(void);
+extern void updateScreen(void);
 extern void getInput(void);
 
 int main(int argc, char *argv[]) {
@@ -18,6 +19,8 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         getInput();
+
+        updateScreen();
 
         SDL_Delay(16);
     }
