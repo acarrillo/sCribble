@@ -1,3 +1,6 @@
+/*
+ * SDL framework borrowed from http://www.parallelrealities.co.uk/
+ */
 #include "input.h"
 
 void getInput()
@@ -6,30 +9,20 @@ void getInput()
 	
 	/* Loop through waiting messages and process them */
 	
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-			/* Closing the Window or pressing Escape will exit the program */
-			
-			case SDL_QUIT:
-				exit(0);
-			break;
-			
-			case SDL_KEYDOWN:
-				switch (event.key.keysym.sym)
-				{
-					case SDLK_ESCAPE:
-                        exit(0);
-                        break;
-                    case SDLK_r:
-                        printf("yaaay\n");
-                        break;
+	while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            /* Closing the Window or pressing Escape will exit the program */
 
+            case SDL_QUIT:
+                exit(0);
+                break;
+
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
                     default:
                         break;
                 }
-			break;
-		}
-	}
+                break;
+        }
+    }
 }
