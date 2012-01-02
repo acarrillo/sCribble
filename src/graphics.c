@@ -22,14 +22,7 @@ void setpixel(SDL_Surface *screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 /*void DrawScreen(SDL_Surface* screen)*/
 void DrawScreen()
 { 
-    printf("drawing screen\n");
     int x, y, ytimesw;
-  
-    if(SDL_MUSTLOCK(screen)) 
-    {
-        if(SDL_LockSurface(screen) < 0) return;
-    }
-
     //Magic below
     for(y = 0; y < screen->h; y++ )
     {
@@ -40,10 +33,6 @@ void DrawScreen()
             setpixel(screen, x, ytimesw, 255, 0, 0);
         }
     }
-
-    if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
-  
-    SDL_Flip(screen);
 }
 void drawFilledRect(int x, int y, int len, int width, int r, int g, int b) {
     int color;
@@ -73,14 +62,15 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
 }
 
 void updateScreen(int h) {
-    DrawScreen();
 
-    /*if(SDL_MUSTLOCK(screen)) {*/
-        /*if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels*/
-    /*}*/
+    if(SDL_MUSTLOCK(screen)) {
+        if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
+    }
+
+    DrawScreen();
 
     /*drawLine(5, 5, 5, 5, 255, 0, 0);*/
 
-    /*if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing*/
-    /*SDL_Flip(screen); //Swap image buffers*/
+    if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
+    SDL_Flip(screen); //Swap image buffers
 }
