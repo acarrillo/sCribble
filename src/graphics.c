@@ -19,7 +19,8 @@ void setpixel(SDL_Surface *screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
     pixmem32 = (Uint32*) screen->pixels  + y + x;
     *pixmem32 = colour;
 }
-void DrawScreen(SDL_Surface* screen, int h)
+/*void DrawScreen(SDL_Surface* screen)*/
+void DrawScreen()
 { 
     printf("drawing screen\n");
     int x, y, ytimesw;
@@ -36,7 +37,7 @@ void DrawScreen(SDL_Surface* screen, int h)
         for( x = 0; x < screen->w; x++ )
         {
             /*setpixel(screen, x, ytimesw, (x*x)/256+3*y+h, (y*y)/256+x+h, h);*/
-            setpixel(screen, x, ytimesw, 255, 100, 0);
+            setpixel(screen, x, ytimesw, 255, 0, 0);
         }
     }
 
@@ -72,7 +73,7 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
 }
 
 void updateScreen(int h) {
-    DrawScreen(screen, h);
+    DrawScreen();
 
     /*if(SDL_MUSTLOCK(screen)) {*/
         /*if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels*/
