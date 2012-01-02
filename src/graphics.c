@@ -3,29 +3,82 @@
  */
 #include "graphics.h"
 
+void setpixel(SDL_Surface *screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
+{
+    Uint32 *pixmem32;
+    Uint32 colour;  
+ 
+    colour = SDL_MapRGB( screen->format, r, g, b );
+  
+    pixmem32 = (Uint32*) screen->pixels  + y + x;
+    *pixmem32 = colour;
+}
+void DrawScreen(SDL_Surface* screen, int h)
+{ 
+    printf("drawing screen\n");
+    int x, y, ytimesw;
+  
+    if(SDL_MUSTLOCK(screen)) 
+    {
+        if(SDL_LockSurface(screen) < 0) return;
+    }
+
+    //Magic below
+    for(y = 0; y < screen->h; y++ )
+    {
+        ytimesw = y*screen->pitch/4;
+        for( x = 0; x < screen->w; x++ )
+        {
+            /*setpixel(screen, x, ytimesw, (x*x)/256+3*y+h, (y*y)/256+x+h, h);*/
+            setpixel(screen, x, ytimesw, 255, 100, 0);
+        }
+    }
+
+    if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
+  
+    SDL_Flip(screen);
+}
 void drawFilledRect(int x, int y, int len, int width, int r, int g, int b) {
     int color;
     color = SDL_MapRGB(screen->format, r, g, b);
     int i, j;
     for (i; i < len; i++) {
         for (j; j < width; j++) {
-            drawPixel(i+x, j+y, color);
+            drawPixel(x+y+i+j, color);
         }
     }
 }
-void drawPixel(int x, int y, int color) {
 
+void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
+    int color;
+    color = SDL_MapRGB(screen->format, r, g, b);
+
+    int x, y, ytimesw;
+    for(y = 0; y < screen->h; y++ )
+    {
+        ytimesw = y*screen->pitch/4;
+        for( x = 0; x < screen->w; x++ )
+        {
+            drawPixel(x, ytimesw, color);
+        }
+    }
+
+}
+void drawPixel(int x, int y, int color) {
     int *pixel;
 
-    pixel = screen->pixels + (640*y) + (x*4); // Magic pointer arithmetic, dwai.
+    pixel = screen->pixels + x + y; // Magic pointer arithmetic; pixels are stored in linear array
     *pixel = color;
 }
 
 void updateScreen() {
-    /* Blank the screen */
 
-    SDL_FillRect(screen, NULL, 255);
+    if(SDL_MUSTLOCK(screen)) {
+        if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
+    }
 
-    drawPixel(100, 100, 255, 0, 0);
+    drawLine(5, 5, 5, 5, 255, 0, 0);
+
+    if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers
 }

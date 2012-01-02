@@ -19,6 +19,9 @@ void getInput()
 
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        exit(0);
+                        break;
                     default:
                         break;
                 }

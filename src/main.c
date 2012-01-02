@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
     while (1) {
         getInput();
 
-        updateScreen();
+        /*updateScreen();*/
+        DrawScreen();
 
         SDL_Delay(16);
     }
