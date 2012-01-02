@@ -1,4 +1,4 @@
-CFLAGS = -Wall
+CFLAGS = -Werror -Wall
 LFLAGS = `sdl-config --libs` -lSDL -lSDL_image
 OBJS   = init.o input.o graphics.o main.o
 PROG = sCribble
