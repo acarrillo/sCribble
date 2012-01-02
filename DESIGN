@@ -1,0 +1,41 @@
+     ____      _ _     _     _      
+ ___ / ___|_ __(_) |__ | |__ | | ___
+/ __| |   | '__| | '_ \| '_ \| |/ _ \
+\__ \ |___| |  | | |_) | |_) | |  __/
+|___/\____|_|  |_|_.__/|_.__/|_|\___|                                     
+                                The smart (s)cribbler
+
+------------------------------------------------------
+by Alejandro Carrillo, Doron Shapiro, and Vincent Zhen
+------------------------------------------------------
+
+WHAT ARE YOU?
+    I am a collaborative doodle-pad. Combining the simplicity of MS Paint with the magic of networking, we can bring multiple clients together to work on a single screen.
+
+HOW DO I USE YOU?
+    Quite simply, just draw on the canvas and all of your edits will simultaneously propagate to all of your collaborators’ canvases as well.  To create a new doodle, use the interface just like you would make any other file on your computer. You will be presented with a special code that other users can use to “log in” to your doodle.
+
+HOW DO YOU WORK?
+
+    We will mainly be using the basics of networking as shown in class along with writing and managing a central server and multiple clients.  The server/client distinction will not be transparent to the user and the “code” generated for each doodle will be a description of the server’s location on the network.   We will also be using structs to send back and forth between the clients and server that dictate individual changes made by the user. The server will monitor any changes and modify the canvases accordingly.
+    sample struct outline:
+    {
+        timestamp;
+        tool type;
+        color;
+        size;
+        tool-specific data; //e.g. x,y coordinates
+    }
+    
+    TEAM MEMBER WORK BREAKDOWN:
+        Networking-
+        Canvas Drawing-
+        UI-
+        Client logic-
+
+WHEN WILL YOU BE READY?
+    Week of the 1st:  
+    Week of the 8th:  
+    Week of the 15th:
+    Week of the 22nd:
+    Week of the 29th: 
