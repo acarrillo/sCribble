@@ -31,11 +31,11 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
 
     float slope;
     slope = ((float)yf-yi)/((float)xf-xi);
-    printf("%sslope:%2.2f\n",gtag, slope);
+    /*printf("%sslope:%2.2f\n",gtag, slope);*/
     for ( y = 0; y < (yf-yi); y++) {
         ytimesw = (y+yi)*screen->pitch/4;
         for( x = 0; x < (xf-xi); x++ ) {
-            if (slope*x == y) {
+            if (fabs(x*slope - y) < 1) {
                 drawPixel(xi+x, ytimesw, color);
             }
         }
@@ -52,7 +52,7 @@ void updateScreen() {
     /* If there has been a change to the drawing, draw it */
     if (mouse.xcor >= 0) {
         /* TODO: Scale up from simple pen tool */
-        drawFilledRect(mouse.xcor-2, mouse.ycor-2, 5, 5, 0, 255, 255);
+        drawFilledRect(mouse.xcor-2, mouse.ycor-2, tool_width, tool_width, 0, 255, 255);
     }
 
     drawLine(200, 100, 400, 200, 255, 0, 0);

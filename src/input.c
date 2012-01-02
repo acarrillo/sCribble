@@ -33,7 +33,7 @@ void getInput()
                         if (event.button.state == SDL_PRESSED) {
                             mouse.xcor = event.button.x;
                             mouse.ycor = event.button.y;
-                            printf("%sxcor:%d\tycor:%d\n", tag, event.button.x, event.button.y);
+                            /*printf("%sxcor:%d\tycor:%d\n", tag, event.button.x, event.button.y);*/
                         }
                         break;
                     default:
@@ -49,7 +49,7 @@ void getInput()
                 if (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1)) { //If mouse is down
                     mouse.xcor = event.button.x;
                     mouse.ycor = event.button.y;
-                    printf("%sxcor:%d\tycor:%d\n", tag, event.button.x, event.button.y);
+                    /*printf("%sxcor:%d\tycor:%d\n", tag, event.button.x, event.button.y);*/
                 }
                 break;
         }

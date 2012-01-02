@@ -2,3 +2,4 @@
 
 extern SDL_Surface *screen;
 extern Mouse mouse;
+extern int tool_width;
