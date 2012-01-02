@@ -23,14 +23,15 @@ void setpixel(SDL_Surface *screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 void DrawScreen()
 { 
     int x, y, ytimesw;
+    int color;
+    color = SDL_MapRGB(screen->format, 255, 255, 255);
     //Magic below
     for(y = 0; y < screen->h; y++ )
     {
         ytimesw = y*screen->pitch/4;
         for( x = 0; x < screen->w; x++ )
         {
-            /*setpixel(screen, x, ytimesw, (x*x)/256+3*y+h, (y*y)/256+x+h, h);*/
-            setpixel(screen, x, ytimesw, 255, 0, 0);
+            setpixel(screen, x, ytimesw, 255, 255, 255);
         }
     }
 }
