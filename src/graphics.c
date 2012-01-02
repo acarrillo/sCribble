@@ -37,15 +37,19 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
 
 }
 
-void updateScreen(int h) {
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
+void updateScreen() {
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-    drawLine(100, 100, 500, 100, 0, 0, 0);
-    drawFilledRect(200, 200, 10, 10, 0, 0, 0);
+
+    /* If there has been a change to the drawing, draw it */
+    if (mouse.xcor >= 0) {
+        drawFilledRect(mouse.xcor, mouse.ycor, 5, 5, 0, 0, 255);
+
+
+    }
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers

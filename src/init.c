@@ -20,6 +20,7 @@ void init(char *title) {
 	
 	
 	SDL_WM_SetCaption(title, NULL); // Sets screen title
+    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
 }
 
 void cleanup() {

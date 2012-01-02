@@ -30,12 +30,19 @@ void getInput()
                 switch (event.button.button) {
                     case SDL_BUTTON_LEFT:
                         if (event.button.state == SDL_PRESSED) {
-                            printf("xcor:%d\tycor:%d\n", event.button.x, event.button.y);
+                            mouse.xcor = event.button.x;
+                            mouse.ycor = event.button.y;
+                            printf("%sxcor:%d\tycor:%d\n", tag, event.button.x, event.button.y);
                         }
                         break;
                     default:
                         break;
                 }
+                break;
+            case SDL_MOUSEBUTTONUP:
+                /* Set the mice coords to -1 to notify others of no change */
+                mouse.xcor = -1;
+                mouse.ycor = -1;
                 break;
         }
     }

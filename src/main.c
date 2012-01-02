@@ -6,7 +6,7 @@
 
 extern void init(char *);
 extern void cleanup(void);
-extern void updateScreen(int h);
+extern void updateScreen(void);
 extern void getInput(void);
 
 int main(int argc, char *argv[]) {
@@ -17,12 +17,10 @@ int main(int argc, char *argv[]) {
     atexit(cleanup); //Tells SDL to call the cleanup() function in init.c when exiting
 
 
-    int h;
-    h = 0;
     while (1) {
         getInput();
 
-        updateScreen(h++);
+        updateScreen();
 
         SDL_Delay(16);
     }
