@@ -49,6 +49,12 @@ void getInput()
                 if (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1)) { //If mouse is down
                     mouse.xcor = event.button.x;
                     mouse.ycor = event.button.y;
+                    
+                    //added to deter segfaults in the vertical boundaries of the screen
+                     if(mouse.ycor > 475 || mouse.ycor <= 2){
+		      mouse.xcor = -1;
+		      mouse.ycor = -1;
+		    }
                     /*printf("%sxcor:%d\tycor:%d\n", tag, event.button.x, event.button.y);*/
                 }
                 break;
