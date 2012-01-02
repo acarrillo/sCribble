@@ -26,19 +26,20 @@ void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
  */
 void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     int color;
+    int x, y, ytimesw;
     color = SDL_MapRGB(screen->format, r, g, b);
-
-    int x, ytimesw;
-    ytimesw = yi*screen->pitch/4;
 
     float slope;
     slope = ((float)yf-yi)/((float)xf-xi);
     printf("%sslope:%2.2f\n",gtag, slope);
-    for( x = 0; x < (xf-xi); x++ )
-    {
-        drawPixel(xi+x, ytimesw, color);
+    for ( y = 0; y < (yf-yi); y++) {
+        ytimesw = (y+yi)*screen->pitch/4;
+        for( x = 0; x < (xf-xi); x++ ) {
+            if (slope*x == y) {
+                drawPixel(xi+x, ytimesw, color);
+            }
+        }
     }
-
 }
 
 void updateScreen() {
