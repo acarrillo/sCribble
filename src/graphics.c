@@ -46,9 +46,8 @@ void updateScreen() {
 
     /* If there has been a change to the drawing, draw it */
     if (mouse.xcor >= 0) {
-        drawFilledRect(mouse.xcor, mouse.ycor, 5, 5, 0, 0, 255);
-
-
+        /* TODO: Scale up from simple pen tool */
+        drawFilledRect(mouse.xcor-2, mouse.ycor-2, 5, 5, 0, 255, 0);
     }
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing

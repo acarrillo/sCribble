@@ -21,6 +21,10 @@ void init(char *title) {
 	
 	SDL_WM_SetCaption(title, NULL); // Sets screen title
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
+
+    /* initialize mouse coordinate struct */
+    mouse.xcor = -1;
+    mouse.ycor = -1;
 }
 
 void cleanup() {
