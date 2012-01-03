@@ -44,6 +44,8 @@ void getInput()
                 /* Set the mice coords to -1 to notify others of no change */
                 mouse.xcor = -1;
                 mouse.ycor = -1;
+                mouse.lastx = -1;
+                mouse.lasty = -1;
                 break;
             case SDL_MOUSEMOTION:
                 if (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1)) { //If mouse is down
