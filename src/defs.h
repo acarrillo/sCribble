@@ -7,4 +7,6 @@
 typedef struct Mouse {
     int xcor;
     int ycor;
+    int lastx;
+    int lasty;
 } Mouse;

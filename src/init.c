@@ -25,6 +25,8 @@ void init(char *title) {
     /* initialize mouse coordinate struct */
     mouse.xcor = -1;
     mouse.ycor = -1;
+    mouse.lastx = -1;
+    mouse.lasty = -1;
 
     /* initialize tool size */
     tool_width = 5;

@@ -22,7 +22,7 @@ void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
 }
 
 /*
- * TODO: Make this work for vertical and diagonal lines.  Currently only works for horizontal.
+ * TODO: Make this work better for vertical and diagonal lines.
  */
 void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     int color;
@@ -48,11 +48,15 @@ void updateScreen() {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-
     /* If there has been a change to the drawing, draw it */
     if (mouse.xcor >= 0) {
         /* TODO: Scale up from simple pen tool */
         drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, 0, 255, 255);
+        if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen
+            drawLine(mouse.lastx, mouse.lasty, mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), 0, 255, 255);
+        }
+        mouse.lastx = mouse.xcor;
+        mouse.lasty = mouse.ycor;
     }
 
     drawLine(100, 100, 500, 150, 255, 0, 0);
