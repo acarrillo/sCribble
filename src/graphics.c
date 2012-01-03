@@ -16,7 +16,9 @@ void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
     for (y=0; y < len; y++) {
         ytimesw = (yi+y)*screen->pitch/4;
         for (x=0; x < width; x++) {
-            drawPixel(xi+x, ytimesw, color);
+            if (xi+x < screen->w && y+yi < screen->h && xi+x >= 0 && yi+y >= 0) {
+                drawPixel(xi+x, ytimesw, color);
+            }
         }
     }
 }
@@ -42,7 +44,9 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
                 /*rect.y = yi+y;*/
                 /*rect.w = rect.h = tool_width;*/
                 /*SDL_FillRect(screen, &rect, color);*/
-                drawPixel(xi+x, ytimesw, color);
+                if (xi+x < screen->w && y+yi < screen->h && xi+x >= 0 && yi+y >= 0) {
+                    drawPixel(xi+x, ytimesw, color);
+                }
             }
         }
     }
