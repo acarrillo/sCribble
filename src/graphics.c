@@ -62,14 +62,15 @@ void updateScreen() {
     if (mouse.xcor >= 0) {
         /* TODO: Scale up from simple pen tool */
         drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, 0, 0, 0);
-        if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen
-            if (mouse.lastx < mouse.xcor-(tool_width/2)) {
-                drawLine(mouse.lastx, mouse.lasty, mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), 0, 0, 0);
-            }
-            else {
-                drawLine(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), mouse.lastx, mouse.lasty, 0, 0, 0);
-            }
-        }
+        /*if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen*/
+            /*if (mouse.lastx < mouse.xcor-(tool_width/2)) {*/
+                /*drawLine(mouse.lastx, mouse.lasty, mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), 0, 0, 0);*/
+            /*}*/
+            /*else {*/
+                /*drawLine(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), mouse.lastx, mouse.lasty, 0, 0, 0);*/
+            /*}*/
+        /*}*/
+        Draw_Line(screen, mouse.xcor, mouse.ycor, mouse.lastx, mouse.lasty, SDL_MapRGB(screen->format, 0, 0, 0));
         mouse.lastx = mouse.xcor;
         mouse.lasty = mouse.ycor;
     }

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "SDL/SDL.h"
+#include "SDL/SDL_draw.h"
 
 typedef struct Mouse {
     int xcor;
