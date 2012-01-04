@@ -29,7 +29,7 @@ void init(char *title) {
     mouse.lasty = -1;
 
     /* initialize tool size */
-    tool_width = 50;
+    tool_width = 5;
 }
 
 void cleanup() {
