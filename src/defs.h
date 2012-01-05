@@ -10,3 +10,11 @@ typedef struct Mouse {
     int lastx;
     int lasty;
 } Mouse;
+
+struct ToolAction {
+  int timestamp;
+  char type[64];
+  int color[3];
+  int size;
+  char data[128];
+};
