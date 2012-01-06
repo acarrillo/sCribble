@@ -36,6 +36,7 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     float slope;
     slope = ((float)yf-yi)/((float)xf-xi);
     /*printf("%sslope:%2.2f\n",gtag, slope);*/
+    if(slope >= 0){}
     for ( y = 0; y <= (yf-yi); y++) {
         ytimesw = (y+yi)*screen->pitch/4;
         for( x = 0; x < (xf-xi); x++ ) {
@@ -50,6 +51,7 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
             }
         }
     }
+}
 }
 
 void updateScreen() {
