@@ -1,13 +1,18 @@
-     ____      _ _     _     _      
+      ____      _ _     _     _      
  ___ / ___|_ __(_) |__ | |__ | | ___
 / __| |   | '__| | '_ \| '_ \| |/ _ \
 \__ \ |___| |  | | |_) | |_) | |  __/
 |___/\____|_|  |_|_.__/|_.__/|_|\___|                                     
-                                The smart (s)cribbler
+                                     The smart doodler
 
 ------------------------------------------------------
 by Alejandro Carrillo, Doron Shapiro, and Vincent Zhen
 ------------------------------------------------------
+
+<DW>
+Approved
+</DW>
+
 
 WHAT ARE YOU?
     I am a collaborative doodle-pad. Combining the simplicity of MS Paint with the magic of networking, we can bring multiple clients together to work on a single screen.
@@ -17,7 +22,9 @@ HOW DO I USE YOU?
 
 HOW DO YOU WORK?
 
-    We will mainly be using the basics of networking as shown in class along with writing and managing a central server and multiple clients.  The server/client distinction will not be transparent to the user and the “code” generated for each doodle will be a description of the server’s location on the network.   We will also be using structs to send back and forth between the clients and server that dictate individual changes made by the user. The server will monitor any changes and modify the canvases accordingly.
+    Each "doodle" will be hosted by a central server (which runs alongside one client program).  The server/client distinction will not be transparent to the user and the “code” generated for each doodle will be a description of the server’s location on the network.
+    Changes made to the doodle will be sent as high-level instructions ("draw a red line of width 5px from 1,2 to 3,4").  Specialized structs will hold this data.  Each client will be split up into at least three processes: one is a "canvas" that is dedicated entirely to drawing the instructions sent to it, another is the user interactions process that intercepts mouse events to send to the canvas and central server, and the last is a networking client that sends instructions from the central server to the canvas.
+
     sample struct outline:
     {
         timestamp;
@@ -28,14 +35,14 @@ HOW DO YOU WORK?
     }
     
     TEAM MEMBER WORK BREAKDOWN:
-        Networking-
-        Canvas Drawing-
-        UI-
-        Client logic-
+        Networking- Doron
+        Canvas Drawing- Alex
+        UI- Alex
+        Client logic- Vincent
 
 WHEN WILL YOU BE READY?
-    Week of the 1st:  
-    Week of the 8th:  
-    Week of the 15th:
-    Week of the 22nd:
-    Week of the 29th: 
+    Week of the 1st:  Project code outlined
+    Week of the 8th:  Working non-networked paint tools
+    Week of the 15th: Working client-server relationships
+    Week of the 22nd: Connect client/server code with paint tools
+    Week of the 29th: Debugging/extra features (chat, mouse overlay, etc)
