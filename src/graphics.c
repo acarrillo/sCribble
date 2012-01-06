@@ -52,7 +52,6 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
         }
     }
 }
-}
 
 void updateScreen() {
 
