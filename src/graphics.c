@@ -78,39 +78,39 @@ void updateScreen() {
     }
     
     //if the mouse is under the divider line, then it will take in a new color.
-    else if(mouse.ycor > 450 && mouse.xcor <= 150){
-      color.r = (Uint8)mouse.xcor / 25 * 50;
-      color.g = 0;
-      color.b =0;
-     
-    }
-    else if(mouse.ycor >450 && mouse.xcor <= 275){
-      if(mouse.xcor > 250 && mouse.xcor <=275){
-    color.r=0;
-	color.g=250;
-	color.b=0;
-      }
-      else{
-      color.r=0;
-      color.g=(Uint8)mouse.xcor / 25 * 50;
-      color.b=0;
-      printf("xcor:%d\n", mouse.xcor);
-      }
-    }
-    else if(mouse.ycor > 450 && mouse.xcor <= 400){
+    //if the mouse is on the black button, it will reset the RGB values.
+    else if(mouse.ycor > 450 && mouse.xcor <= 25){
       color.r=0;
       color.g=0;
-      color.b=(Uint8)mouse.xcor / 25 * 50;
-      
+      color.b=0;
     }
-
-    else if(mouse.ycor > 425){ //ERASING
+    //change R values by intervals of 50.
+    else if(mouse.ycor > 450 && mouse.xcor <= 150){
+      color.r = (Uint8)mouse.xcor / 25 * 50;   
+    }
+    //change G values by intervals of 50.
+    else if(mouse.ycor >450 && mouse.xcor <= 275){
+      //something went wrong with this so I hardcoded the issue out.	
+      if(mouse.xcor > 250 && mouse.xcor <=275){
+	color.g=250;
+      }
+      else{
+      color.g=(Uint8)mouse.xcor / 25 * 50;
+      }
+    }
+    //changes B values by intervals of 50.
+    else if(mouse.ycor > 450 && mouse.xcor <= 400){
+      color.b=(Uint8)mouse.xcor / 25 * 50;
+    }
+    //sets the pen to "erase" (just painting the page white emulates erasing)
+    else if(mouse.ycor > 425){ 
       color.r=255;
       color.g=255;
       color.b=255;
     }
 
-    drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
+    //divider line separates drawing space and the UI space.
+    drawLine(0, 450, 650, 450, 0, 0, 0); 
 
     //draw color indicators.
     drawFilledRect(0,450,15,25, 0,0,0);
@@ -149,8 +149,8 @@ void updateScreen() {
     }
     */
 
-
-    drawFilledRect(500,450,15, 15,color.r, color.g, color.b); //DRAW THE CURRENT COLOR
+    //indicates the current color of the pen.
+    drawFilledRect(500,450,15, 15,color.r, color.g, color.b); 
 
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
