@@ -61,20 +61,20 @@ void updateScreen() {
     /* If there has been a change to the drawing, draw it */
     if (mouse.xcor >= 0) {
         /* TODO: Scale up from simple pen tool */
-        drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, 0, 0, 0);
+        drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, color.r, color.g, color.b);
         if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen
             if (mouse.lastx < mouse.xcor-(tool_width/2)) {
-                drawLine(mouse.lastx, mouse.lasty, mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), 0, 0, 0);
+                drawLine(mouse.lastx, mouse.lasty, mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), color.r, color.g, color.b);
             }
             else {
-                drawLine(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), mouse.lastx, mouse.lasty, 0, 0, 0);
+                drawLine(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), mouse.lastx, mouse.lasty, color.r, color.g, color.b);
             }
         }
         mouse.lastx = mouse.xcor;
         mouse.lasty = mouse.ycor;
     }
 
-    drawLine(100, 100, 500, 150, 0, 0, 0);
+    drawLine(100, 100, 500, 150, color.r, color.g, color.b);
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers
