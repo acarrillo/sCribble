@@ -30,6 +30,11 @@ void init(char *title) {
 
     /* initialize tool size */
     tool_width = 5;
+
+    /* initialize tool color */
+    color.r = 0;
+    color.g = 0;
+    color.b = 0;
 }
 
 void cleanup() {
