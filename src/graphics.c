@@ -36,6 +36,7 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     float slope;
     slope = ((float)yf-yi)/((float)xf-xi);
     /*printf("%sslope:%2.2f\n",gtag, slope);*/
+    if(slope >= 0){}
     for ( y = 0; y <= (yf-yi); y++) {
         ytimesw = (y+yi)*screen->pitch/4;
         for( x = 0; x < (xf-xi); x++ ) {
@@ -59,7 +60,7 @@ void updateScreen() {
     }
 
     /* If there has been a change to the drawing, draw it */
-    if (mouse.xcor >= 0) {
+    if (mouse.xcor >= 0 && mouse.ycor < 450) {
         /* TODO: Scale up from simple pen tool */
         drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, color.r, color.g, color.b);
         if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen
