@@ -10,3 +10,9 @@ typedef struct Mouse {
     int lastx;
     int lasty;
 } Mouse;
+
+typedef struct Color {
+    Uint8 r; // 0 to 255
+    Uint8 g;
+    Uint8 b;
+} Color;
