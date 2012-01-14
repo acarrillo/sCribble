@@ -134,6 +134,7 @@ void updateScreen() {
 	}
       }
       
+
     drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
 
     drawFilledRect(0,450,15,25, 0,0,0);
@@ -144,6 +145,14 @@ void updateScreen() {
     drawFilledRect(125,450,15,25, 0,0,255);
     drawFilledRect(150,450,15,25, 75, 0 ,130);
     drawFilledRect(175,450,15,25, 148, 0 , 211);
+
+    
+    
+
+
+    drawFilledRect(60,465,15,25,100,100,100);
+    drawFilledRect(110,465,15,25,100,100,100);
+    
 
     
 
