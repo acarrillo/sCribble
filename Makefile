@@ -4,7 +4,7 @@ OBJS   = init.o input.o graphics.o main.o
 PROG = sCribble
 
 # top-level rule to create the program.
-all: $(PROG)
+all: $(PROG) server
 
 # compiling other source files.
 %.o: src/%.c src/%.h src/defs.h
@@ -14,6 +14,10 @@ all: $(PROG)
 $(PROG): $(OBJS)
 	gcc $(OBJS) -o $(PROG) $(LFLAGS)
 
+# Cribble server
+server: src/server.c
+	gcc src/server.c -o cribbleServer
+
 # cleaning everything that can be automatically recreated with "make".
 clean:
-	rm $(PROG) *.o
+	rm $(PROG) cribbleServer *.o

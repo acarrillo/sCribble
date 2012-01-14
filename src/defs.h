@@ -20,10 +20,9 @@ typedef struct Color {
     Uint8 b;
 } Color;
 
-struct ToolAction {
-  int timestamp;
-  char type[64];
-  int color[3];
+struct cribblePacket {
+  char type[64];  //CONNECT, DISCONNECT, STATUS, PEN, LINE
+  Color color;
   int size;
   char data[128];
 };
