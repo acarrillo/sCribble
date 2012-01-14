@@ -3,6 +3,7 @@
  */
 
 #include "main.h"
+#include "client.h"
 
 extern void init(char *);
 extern void cleanup(void);

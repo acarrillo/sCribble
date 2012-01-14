@@ -103,12 +103,10 @@ int main() {
 
     printf("accepted connection %d\n",socket_client);
 
-    //do stuff
-
-      b = read( socket_client, buffer, sizeof(buffer) );
-      serve(buffer, socket_client, clients);
+    b = read( socket_client, buffer, sizeof(buffer) );
+    serve(buffer, socket_client, clients);
       
-      //close this client connection
-      close(socket_client);
+    //close this client connection
+    close(socket_client);
   }
 }
