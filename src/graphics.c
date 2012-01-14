@@ -183,7 +183,6 @@ void updateScreen() {
     drawFilledRect(350,450,15, 25,0,0,200);
     drawFilledRect(375,450,15, 25,0,0,250);
 
-    /*
     int xclr;
     int cclr;
     xclr = 0;
