@@ -78,53 +78,62 @@ void updateScreen() {
     }
 
 	//ROYGBIV PALETTE
-    else if (mouse.ycor > 450){
-    if(mouse.xcor <= 25){
-      color.r=0;
-      color.g=0;
-      color.b=0;
-    }
-    else if(mouse.xcor <= 50){
-      color.r=255;
-      color.g=0;
-      color.b=0;
-    }
-    else if(mouse.xcor <= 75){
-      color.r=255;
-      color.g=100;
-      color.b=0;
-    }
-    else if(mouse.xcor <= 100){
-      color.r=255;
-      color.g=255;
-      color.b=0;
-    }
-    else if(mouse.xcor <= 125){
-      color.r=0;
-      color.g=255;
-      color.b=0;
-    }
-    else if(mouse.xcor <= 150){
-      color.r=0;
-      color.g=0;
-      color.b=255;
-    }
-    else if(mouse.xcor <= 175){
-      color.r=75;
-      color.g=0;
-      color.b=130;
-    }
-    else if(mouse.xcor <= 200){
-      color.r=148;
-      color.g=0;
-      color.b=211;
-    }
-    else{
-      color.r=255;
-      color.g=255;
-      color.b=255;
-    }
-    }
+    else if (mouse.ycor > 450 && mouse.ycor < 465){
+	if(mouse.xcor <= 25){
+	  color.r=0;
+	  color.g=0;
+	  color.b=0;
+	}
+	else if(mouse.xcor <= 50){
+	  color.r=255;
+	  color.g=0;
+	  color.b=0;
+	}
+	else if(mouse.xcor <= 75){
+	  color.r=255;
+	  color.g=100;
+	  color.b=0;
+	}
+	else if(mouse.xcor <= 100){
+	  color.r=255;
+	  color.g=255;
+	  color.b=0;
+	}
+	else if(mouse.xcor <= 125){
+	  color.r=0;
+	  color.g=255;
+	  color.b=0;
+	}
+	else if(mouse.xcor <= 150){
+	  color.r=0;
+	  color.g=0;
+	  color.b=255;
+	}
+	else if(mouse.xcor <= 175){
+	  color.r=75;
+	  color.g=0;
+	  color.b=130;
+	}
+	else if(mouse.xcor <= 200){
+	  color.r=148;
+	  color.g=0;
+	  color.b=211;
+	}
+	else{
+	  color.r=255;
+	  color.g=255;
+	  color.b=255;
+	}
+      }
+      else if (mouse.ycor >= 465){
+	if(mouse.xcor > 110 && mouse.xcor < 135 && tool_width < 15){
+	  tool_width++;
+	}
+	if(mouse.xcor > 60 && mouse.xcor < 85 && tool_width > 1){
+	  tool_width--;
+	}
+      }
+      
     drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
 
     drawFilledRect(0,450,15,25, 0,0,0);
