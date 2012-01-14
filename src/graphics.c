@@ -76,21 +76,80 @@ void updateScreen() {
         mouse.lastx = mouse.xcor;
         mouse.lasty = mouse.ycor;
     }
+
+	//ROYGBIV PALETTE
+    else if (mouse.ycor > 450){
+    if(mouse.xcor <= 25){
+      color.r=0;
+      color.g=0;
+      color.b=0;
+    }
+    else if(mouse.xcor <= 50){
+      color.r=255;
+      color.g=0;
+      color.b=0;
+    }
+    else if(mouse.xcor <= 75){
+      color.r=255;
+      color.g=100;
+      color.b=0;
+    }
+    else if(mouse.xcor <= 100){
+      color.r=255;
+      color.g=255;
+      color.b=0;
+    }
+    else if(mouse.xcor <= 125){
+      color.r=0;
+      color.g=255;
+      color.b=0;
+    }
+    else if(mouse.xcor <= 150){
+      color.r=0;
+      color.g=0;
+      color.b=255;
+    }
+    else if(mouse.xcor <= 175){
+      color.r=75;
+      color.g=0;
+      color.b=130;
+    }
+    else if(mouse.xcor <= 200){
+      color.r=148;
+      color.g=0;
+      color.b=211;
+    }
+    else{
+      color.r=255;
+      color.g=255;
+      color.b=255;
+    }
+    }
     
-    //if the mouse is under the divider line, then it will take in a new color.
-    //if the mouse is on the black button, it will reset the RGB values.
+
+    drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
+
+    drawFilledRect(0,450,15,25, 0,0,0);
+    drawFilledRect(25,450,15,25, 255,0,0);
+    drawFilledRect(50,450,15,25, 255,100,0);
+    drawFilledRect(75,450,15,25, 255,255,0);
+    drawFilledRect(100,450,15,25, 0,255,0);
+    drawFilledRect(125,450,15,25, 0,0,255);
+    drawFilledRect(150,450,15,25, 75, 0 ,130);
+    drawFilledRect(175,450,15,25, 148, 0 , 211);
+    
+
+    /*
+      //COLOR MIXER
     else if(mouse.ycor > 450 && mouse.xcor <= 25){
       color.r=0;
       color.g=0;
       color.b=0;
     }
-    //change R values by intervals of 50.
     else if(mouse.ycor > 450 && mouse.xcor <= 150){
       color.r = (Uint8)mouse.xcor / 25 * 50;   
     }
-    //change G values by intervals of 50.
     else if(mouse.ycor >450 && mouse.xcor <= 275){
-      //something went wrong with this so I hardcoded the issue out.	
       if(mouse.xcor > 250 && mouse.xcor <=275){
 	color.g=250;
       }
@@ -98,21 +157,18 @@ void updateScreen() {
       color.g=(Uint8)mouse.xcor / 25 * 50;
       }
     }
-    //changes B values by intervals of 50.
     else if(mouse.ycor > 450 && mouse.xcor <= 400){
       color.b=(Uint8)mouse.xcor / 25 * 50;
     }
-    //sets the pen to "erase" (just painting the page white emulates erasing)
-    else if(mouse.ycor > 425){ 
+
+    else if(mouse.ycor > 425){ //ERASING
       color.r=255;
       color.g=255;
       color.b=255;
     }
 
-    //divider line separates drawing space and the UI space.
-    drawLine(0, 450, 650, 450, 0, 0, 0); 
+    drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
 
-    //draw color indicators.
     drawFilledRect(0,450,15,25, 0,0,0);
     drawFilledRect(25,450,15,25, 50,0,0);
     drawFilledRect(50,450,15,25, 100,0,0);
@@ -129,8 +185,9 @@ void updateScreen() {
     drawFilledRect(325,450,15, 25,0,0,150);
     drawFilledRect(350,450,15, 25,0,0,200);
     drawFilledRect(375,450,15, 25,0,0,250);
+    */
+
     
-    //tried to make it easier. for some reason, it didn't work.
     /*
     int xclr;
     int cclr;
@@ -149,10 +206,10 @@ void updateScreen() {
     }
     */
 
-    //indicates the current color of the pen.
-    drawFilledRect(500,450,15, 15,color.r, color.g, color.b); 
 
+    drawFilledRect(500,450,15, 15,color.r, color.g, color.b); //DRAW THE CURRENT COLOR
 
+  
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers
 }
