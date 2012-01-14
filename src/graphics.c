@@ -136,69 +136,7 @@ void updateScreen() {
     drawFilledRect(150,450,15,25, 75, 0 ,130);
     drawFilledRect(175,450,15,25, 148, 0 , 211);
 
-    /*
-      //COLOR MIXER
-    else if(mouse.ycor > 450 && mouse.xcor <= 25){
-      color.r=0;
-      color.g=0;
-      color.b=0;
-    }
-    else if(mouse.ycor > 450 && mouse.xcor <= 150){
-      color.r = (Uint8)mouse.xcor / 25 * 50;
-    }
-    else if(mouse.ycor >450 && mouse.xcor <= 275){
-      if(mouse.xcor > 250 && mouse.xcor <=275){
-	color.g=250;
-      }
-      else{
-      color.g=(Uint8)mouse.xcor / 25 * 50;
-      }
-    }
-    else if(mouse.ycor > 450 && mouse.xcor <= 400){
-      color.b=(Uint8)mouse.xcor / 25 * 50;
-    }
-
-    else if(mouse.ycor > 425){ //ERASING
-      color.r=255;
-      color.g=255;
-      color.b=255;
-    }
-
-    drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
-
-    drawFilledRect(0,450,15,25, 0,0,0);
-    drawFilledRect(25,450,15,25, 50,0,0);
-    drawFilledRect(50,450,15,25, 100,0,0);
-    drawFilledRect(75,450,15,25, 150,0,0);
-    drawFilledRect(100,450,15,25, 200,0,0);
-    drawFilledRect(125,450,15,25, 250,0,0);
-    drawFilledRect(150,450,15, 25,0,50,0);
-    drawFilledRect(175,450,15, 25,0,100,0);
-    drawFilledRect(200,450,15, 25,0,150,0);
-    drawFilledRect(225,450,15, 25,0,200,0);
-    drawFilledRect(250,450,15, 25,0,250,0);
-    drawFilledRect(275,450,15, 25,0,0,50);
-    drawFilledRect(300,450,15, 25,0,0,100);
-    drawFilledRect(325,450,15, 25,0,0,150);
-    drawFilledRect(350,450,15, 25,0,0,200);
-    drawFilledRect(375,450,15, 25,0,0,250);
-
-    int xclr;
-    int cclr;
-    xclr = 0;
-    for(cclr = 0; cclr <= 250; cclr + 10){
-    drawFilledRect(xclr, 450, 15, 15, cclr, 0, 0);
-    xclr += 15;
-    }
-    for(cclr = 0; cclr <= 250; cclr + 10){
-    drawFilledRect(xclr, 450, 15, 15, 0, cclr, 0);
-    xclr += 15;
-    }
-    for(cclr = 0; cclr <= 250; cclr + 10){
-    drawFilledRect(xclr, 450, 15, 15, 0, 0, cclr);
-    xclr += 15;
-    }
-    */
+    
 
     //indicates the current color of the pen.
     drawFilledRect(500,450,15, 15,color.r, color.g, color.b);
