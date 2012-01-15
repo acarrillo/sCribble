@@ -214,7 +214,7 @@ void setImages(){
 void drawBorder() {
     int stroke, k_color;
     stroke = 4;
-    k_color = 200;
+    k_color = 50;
     drawFilledRect(0, 0, stroke, screen->w, k_color, k_color, k_color); // Top
     drawFilledRect(0, 0, screen->h, stroke, k_color, k_color, k_color); // Left
     drawFilledRect(0, screen->h - stroke, stroke, screen->w, k_color, k_color, k_color); // Bottom
@@ -330,7 +330,6 @@ void updateScreen() {
 
 
 
-    drawBorder(); // Draws border around screen
 
     //draws ROYGBIV palette
     drawFilledRect(0,455,25,25, 0,0,0);            // Black
@@ -356,6 +355,8 @@ void updateScreen() {
     drawFilledRect(499,454, 17,17,255,255,255);
     drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
 
+    //Draw border
+    drawBorder();
 
 
 
