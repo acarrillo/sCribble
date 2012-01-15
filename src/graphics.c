@@ -53,7 +53,7 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     }
 }
 
-
+/*
 SDL_Surface *loadImage(char *name){
   SDL_Surface *temp = IMG_Load(name);
   SDL_Surface *image;
@@ -75,6 +75,7 @@ SDL_Surface *loadImage(char *name){
 
   return image;
 }
+*/
 
 
 
@@ -144,15 +145,12 @@ void updateScreen() {
 	  color.g=0;
 	  color.b=211;
 	}
+	//Changing pen size where 1 <= pen size <= 16.
 	else if(mouse.xcor <=300 && mouse.xcor >=275 && tool_width > 1){
-	  
-	  tool_width--;
-	  
+	  tool_width--;	  
 	}
-	else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){
-	  
+	else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){	  
 	  tool_width++;
-
 	}
 	else if(mouse.xcor >= 550 && mouse.xcor <= 575){
 	  color.r=255;
@@ -160,6 +158,7 @@ void updateScreen() {
 	  color.b=255;
 	}
     }
+    //Creates a pen size indicator.
     drawFilledRect(300,460,5,100,255,255,255);
     drawLine(300,462,400,462,0,0,0);
     drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
@@ -167,6 +166,7 @@ void updateScreen() {
 
     drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
 
+	//draws ROYGBIV palette
     drawFilledRect(0,455,15,25, 0,0,0);
     drawFilledRect(25,455,15,25, 255,0,0);
     drawFilledRect(50,455,15,25, 255,100,0);
@@ -175,15 +175,13 @@ void updateScreen() {
     drawFilledRect(125,455,15,25, 0,0,255);
     drawFilledRect(150,455,15,25, 75, 0 ,130);
     drawFilledRect(175,455,15,25, 148, 0 , 211);
-
+    
+    
+	//draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
     drawFilledRect(550,455,15,25,255,255,255);
-    
-
-    
-    
-
-
+   
+	//draws the grey rectangles that are buttons that change tool_width
     drawFilledRect(275,455,15,25,100,100,100);
     drawFilledRect(400,455,15,25,100,100,100);
     
@@ -196,7 +194,7 @@ void updateScreen() {
     drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
     
     /*
-      //Attempting to blit icons
+      //Attempting to blit icons but fails to load the image.
     SDL_Rect dest;
     dest.x = 5;
     dest.y = 5;
