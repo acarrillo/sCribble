@@ -329,23 +329,23 @@ void updateScreen() {
 
     //draws ROYGBIV palette
     int i = 1; //DIVIDER (|) multiplier
-    drawFilledRect(0+BORDER_WIDTH, 450, 1, 25*8, 0, 0, 0);                   // outer black border of palette
-    drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 0,0,0);            // Black
-    drawFilledRect(0+(25*i++), 450, 25, 1, 0, 0, 0);                         // DIVIDER (black)
-    drawFilledRect(25+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 255,0,0);         // Red
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 255,100,0);       // Orange
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(75+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 255,255,0);       // Yellow
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(100+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 0,255,0);        // Green
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(125+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 0,0,255);        // Blue
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(150+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 75, 0 ,130);     // Indigo
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 148, 0 , 211);   // Violet
-    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(0+BORDER_WIDTH, 450, 1, C_SQUARE*8, 0, 0, 0);                   // outer black border of palette
+    drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,0);            // Black
+    drawFilledRect(0+(C_SQUARE*i++), 450, C_SQUARE, 1, 0, 0, 0);                         // DIVIDER (black)
+    drawFilledRect(C_SQUARE+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,0,0);         // Red
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,100,0);       // Orange
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(75+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,255,0);       // Yellow
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(100+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,255,0);        // Green
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(125+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,255);        // Blue
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(150+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 75, 0 ,130);     // Indigo
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 148, 0 , 211);   // Violet
+    drawFilledRect(3+C_SQUARE*i++, 451, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
