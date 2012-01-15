@@ -258,7 +258,7 @@ void updateScreen() {
     
  
     
-    closeFont(font);
+    //closeFont(font);
 
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
