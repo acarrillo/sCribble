@@ -125,8 +125,8 @@ void Status(char* message, TTF_Font *font){
 }
 
 void updateScreen() {
-  TTF_Font *font;
-  font = loadFont("font/blackWolf.ttf", 16);
+  //TTF_Font *font;
+  //font = loadFont("font/blackWolf.ttf", 16);
 
 
     if(SDL_MUSTLOCK(screen)) {
@@ -136,10 +136,10 @@ void updateScreen() {
     /* If there has been a change to the drawing, draw it */
     if (mouse.xcor >= 0 && mouse.ycor < 450) {
       if(color.r == 255 && color.g == 255 && color.b == 255){
-	Status("Status: Erasing...", font);
+	//Status("Status: Erasing...", font);
       }
       else
-	Status("Status: Drawing...", font);
+	//Status("Status: Drawing...", font);
         /* TODO: Scale up from simple pen tool */
         drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, color.r, color.g, color.b);
         if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen
@@ -158,64 +158,64 @@ void updateScreen() {
 	//ROYGBIV PALETTE
     if (mouse.ycor > 450 && mouse.ycor < 465){
 	if(mouse.xcor <= 25){
-	  Status("Status: Pen Color: Black", font);
+	  //Status("Status: Pen Color: Black", font);
 	  color.r=0;
 	  color.g=0;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 50){
-	  Status("Status: Pen Color: Red", font);
+	  //Status("Status: Pen Color: Red", font);
 	  color.r=255;
 	  color.g=0;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 75){
-	  Status("Status: Pen Color: Orange", font);
+	  //Status("Status: Pen Color: Orange", font);
 	  color.r=255;
 	  color.g=100;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 100){
-	  Status("Status: Pen Color: Yellow", font);
+	  //Status("Status: Pen Color: Yellow", font);
 	  color.r=255;
 	  color.g=255;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 125){
-	  Status("Status: Pen Color: Green", font);
+	  //Status("Status: Pen Color: Green", font);
 	  color.r=0;
 	  color.g=255;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 150){
-	  Status("Status: Pen Color: Blue", font);
+	  //Status("Status: Pen Color: Blue", font);
 	  color.r=0;
 	  color.g=0;
 	  color.b=255;
 	}
 	else if(mouse.xcor <= 175){
-	  Status("Status: Pen Color: Indigo", font);
+	  //Status("Status: Pen Color: Indigo", font);
 	  color.r=75;
 	  color.g=0;
 	  color.b=130;
 	}
 	else if(mouse.xcor <= 200){
-	  Status("Status: Pen Color: Violet", font);
+	  //Status("Status: Pen Color: Violet", font);
 	  color.r=148;
 	  color.g=0;
 	  color.b=211;
 	}
 	//Changing pen size where 1 <= pen size <= 16.
 	else if(mouse.xcor <=300 && mouse.xcor >=275 && tool_width > 1){
-	  Status("Status: Pen size decreased", font);
+	  //Status("Status: Pen size decreased", font);
 	  tool_width--;	  
 	}
 	else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){
-	  Status("Status: Pen size increased", font);	  
+	  //Status("Status: Pen size increased", font);	  
 	  tool_width++;
 	}
 	else if(mouse.xcor >= 550 && mouse.xcor <= 575){
-	  Status("Status: Eraser ON", font);
+	  //Status("Status: Eraser ON", font);
 	  color.r=255;
 	  color.g=255;
 	  color.b=255;
