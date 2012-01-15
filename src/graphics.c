@@ -23,6 +23,8 @@ void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
   }
 }
 
+//dwks from 'http://cboard.cprogramming.com/game-programming/67832-line-drawing-algorithm.html'
+//Bresenham's line algorithm
 void line(int startx, int starty, int endx, int endy, int r, int g, int b) {
     int t, distance;
     int xerr=0, yerr=0, delta_x, delta_y;
@@ -144,7 +146,7 @@ void drawString(char *text, TTF_Font *font)
 }
 
 void Status(char* message, TTF_Font *font){
-  drawFilledRect(10,430,20,500,255,255,255);
+  drawFilledRect(0,427,20,900,255,255,255);
   drawString(message, font);
 }
 
@@ -213,7 +215,7 @@ void setImages(){
   drawImage(image, 225,450);
   SDL_Surface *image2;
   image2 = loadImage("gfx/eraser.jpg");
-  drawImage(image2, 550,430);
+  drawImage(image2, 600,450);
   SDL_FreeSurface(image);
   SDL_FreeSurface(image2);
 }
@@ -359,4 +361,4 @@ void updateScreen() {
 
   if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
   SDL_Flip(screen); //Swap image buffers
-}
+  }
