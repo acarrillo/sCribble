@@ -249,7 +249,7 @@ void updateScreen() {
 
 
     //ROYGBIV PALETTE
-    else if (mouse.ycor > 450 && mouse.ycor < 465){
+    else if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
         if(mouse.xcor <= 25){
             Status("Status: Pen Color: Black", font);
             color.r=0;
