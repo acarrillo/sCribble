@@ -54,8 +54,32 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
 }
 
 
+SDL_Surface *loadImage(char *name){
+  SDL_Surface *temp = IMG_Load(name);
+  SDL_Surface *image;
+
+  if(temp == NULL){
+    printf("Failed to load image %s\n", name);
+    return NULL;
+  }
+  SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 0,0,0));
+
+  image = SDL_DisplayFormat(temp);
+
+  SDL_FreeSurface(temp);
+
+  if(image == NULL){
+    printf("Failed to convert image %s to native format\n", name);
+    return NULL;
+  }
+
+  return image;
+}
+
+
 
 void updateScreen() {
+  
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
@@ -76,9 +100,10 @@ void updateScreen() {
         mouse.lastx = mouse.xcor;
         mouse.lasty = mouse.ycor;
     }
-
+    
+    
 	//ROYGBIV PALETTE
-    else if (mouse.ycor > 450 && mouse.ycor < 465){
+    if (mouse.ycor > 450 && mouse.ycor < 465){
 	if(mouse.xcor <= 25){
 	  color.r=0;
 	  color.g=0;
@@ -119,47 +144,69 @@ void updateScreen() {
 	  color.g=0;
 	  color.b=211;
 	}
-	else{
+	else if(mouse.xcor <=300 && mouse.xcor >=275 && tool_width > 1){
+	  
+	  tool_width--;
+	  
+	}
+	else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){
+	  
+	  tool_width++;
+
+	}
+	else if(mouse.xcor >= 550 && mouse.xcor <= 575){
 	  color.r=255;
 	  color.g=255;
 	  color.b=255;
 	}
-      }
-      else if (mouse.ycor >= 465){
-	if(mouse.xcor > 110 && mouse.xcor < 135 && tool_width < 15){
-	  tool_width++;
-	}
-	if(mouse.xcor > 60 && mouse.xcor < 85 && tool_width > 1){
-	  tool_width--;
-	}
-      }
+    }
+    drawFilledRect(300,460,5,100,255,255,255);
+    drawLine(300,462,400,462,0,0,0);
+    drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
       
 
     drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
 
-    drawFilledRect(0,450,15,25, 0,0,0);
-    drawFilledRect(25,450,15,25, 255,0,0);
-    drawFilledRect(50,450,15,25, 255,100,0);
-    drawFilledRect(75,450,15,25, 255,255,0);
-    drawFilledRect(100,450,15,25, 0,255,0);
-    drawFilledRect(125,450,15,25, 0,0,255);
-    drawFilledRect(150,450,15,25, 75, 0 ,130);
-    drawFilledRect(175,450,15,25, 148, 0 , 211);
+    drawFilledRect(0,455,15,25, 0,0,0);
+    drawFilledRect(25,455,15,25, 255,0,0);
+    drawFilledRect(50,455,15,25, 255,100,0);
+    drawFilledRect(75,455,15,25, 255,255,0);
+    drawFilledRect(100,455,15,25, 0,255,0);
+    drawFilledRect(125,455,15,25, 0,0,255);
+    drawFilledRect(150,455,15,25, 75, 0 ,130);
+    drawFilledRect(175,455,15,25, 148, 0 , 211);
+
+    drawFilledRect(549,454,17,27,0,0,0);
+    drawFilledRect(550,455,15,25,255,255,255);
+    
 
     
     
 
 
-    drawFilledRect(60,465,15,25,100,100,100);
-    drawFilledRect(110,465,15,25,100,100,100);
+    drawFilledRect(275,455,15,25,100,100,100);
+    drawFilledRect(400,455,15,25,100,100,100);
     
 
     
 
     //indicates the current color of the pen.
-    drawFilledRect(500,450,15, 15,color.r, color.g, color.b);
+    drawFilledRect(497,452, 21,21, 0,0,0);
+    drawFilledRect(499,454, 17,17,255,255,255);
+    drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
+    
+    /*
+      //Attempting to blit icons
+    SDL_Rect dest;
+    dest.x = 5;
+    dest.y = 5;
+    dest.w = 10;
+    dest.h = 10;
 
-    drawFilledRect(500,450,15, 15,color.r, color.g, color.b); //DRAW THE CURRENT COLOR
+    SDL_Surface *image = loadImage("penc.png");
+    SDL_BlitSurface(image, NULL, screen, &dest);
+    */
+
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
     SDL_Flip(screen); //Swap image buffers
