@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
 
 #define READ 0
 #define WRITE 1
