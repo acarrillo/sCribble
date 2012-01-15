@@ -53,34 +53,81 @@ void drawLine(int xi, int yi, int xf, int yf, int r, int g, int b) {
     }
 }
 
-/*
-SDL_Surface *loadImage(char *name){
-  SDL_Surface *temp = IMG_Load(name);
-  SDL_Surface *image;
+//SDL_TTF THINGS START HERE!
+TTF_Font *loadFont(char *name, int size)
+{
+	/* Use SDL_TTF to load the font at the specified size */
+	
+	TTF_Font *font = TTF_OpenFont(name, size);
 
-  if(temp == NULL){
-    printf("Failed to load image %s\n", name);
-    return NULL;
-  }
-  SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 0,0,0));
+	if (font == NULL)
+	{
+		printf("Failed to open Font %s: %s\n", name, TTF_GetError());
 
-  image = SDL_DisplayFormat(temp);
-
-  SDL_FreeSurface(temp);
-
-  if(image == NULL){
-    printf("Failed to convert image %s to native format\n", name);
-    return NULL;
-  }
-
-  return image;
+		exit(1);
+	}
+	
+	return font;
 }
-*/
 
+void closeFont(TTF_Font *font)
+{
+	/* Close the font once we're done with it */
+	
+	if (font != NULL)
+	{
+		TTF_CloseFont(font);
+	}
+}
 
+void drawString(char *text, TTF_Font *font)
+{
+	SDL_Rect dest;
+	SDL_Surface *surface;
+	SDL_Color foregroundColor, backgroundColor;
+	
+	foregroundColor.r = 0;
+	foregroundColor.g = 0;
+	foregroundColor.b = 0;
+	
+	backgroundColor.r = 255;
+	backgroundColor.g = 255;
+	backgroundColor.b = 255;
+	
+	/* Use SDL_TTF to generate a string image, this returns an SDL_Surface */
+
+	surface = TTF_RenderUTF8_Shaded(font, text, foregroundColor, backgroundColor);
+
+	if (surface == NULL)
+	{
+		printf("Couldn't create String %s: %s\n", text, SDL_GetError());
+
+		return;
+	}
+	
+	/* Blit the entire surface to the screen */
+
+	dest.x = 10;
+	dest.y = 430;
+	dest.w = surface->w;
+	dest.h = surface->h;
+
+	SDL_BlitSurface(surface, NULL, screen, &dest);
+	
+	/* Free the generated string image */
+
+	SDL_FreeSurface(surface);
+}
+
+void Status(char* message, TTF_Font *font){
+  drawFilledRect(10,430,20,500,255,255,255);
+  drawString(message, font);
+}
 
 void updateScreen() {
-  
+  TTF_Font *font;
+  font = loadFont("font/blackWolf.ttf", 16);
+
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
@@ -88,6 +135,11 @@ void updateScreen() {
 
     /* If there has been a change to the drawing, draw it */
     if (mouse.xcor >= 0 && mouse.ycor < 450) {
+      if(color.r == 255 && color.g == 255 && color.b == 255){
+	Status("Status: Erasing...", font);
+      }
+      else
+	Status("Status: Drawing...", font);
         /* TODO: Scale up from simple pen tool */
         drawFilledRect(mouse.xcor-(tool_width/2), mouse.ycor-(tool_width/2), tool_width, tool_width, color.r, color.g, color.b);
         if (mouse.lastx >= 0) { // TODO: make sure this works with bottom of screen
@@ -106,53 +158,64 @@ void updateScreen() {
 	//ROYGBIV PALETTE
     if (mouse.ycor > 450 && mouse.ycor < 465){
 	if(mouse.xcor <= 25){
+	  Status("Status: Pen Color: Black", font);
 	  color.r=0;
 	  color.g=0;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 50){
+	  Status("Status: Pen Color: Red", font);
 	  color.r=255;
 	  color.g=0;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 75){
+	  Status("Status: Pen Color: Orange", font);
 	  color.r=255;
 	  color.g=100;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 100){
+	  Status("Status: Pen Color: Yellow", font);
 	  color.r=255;
 	  color.g=255;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 125){
+	  Status("Status: Pen Color: Green", font);
 	  color.r=0;
 	  color.g=255;
 	  color.b=0;
 	}
 	else if(mouse.xcor <= 150){
+	  Status("Status: Pen Color: Blue", font);
 	  color.r=0;
 	  color.g=0;
 	  color.b=255;
 	}
 	else if(mouse.xcor <= 175){
+	  Status("Status: Pen Color: Indigo", font);
 	  color.r=75;
 	  color.g=0;
 	  color.b=130;
 	}
 	else if(mouse.xcor <= 200){
+	  Status("Status: Pen Color: Violet", font);
 	  color.r=148;
 	  color.g=0;
 	  color.b=211;
 	}
 	//Changing pen size where 1 <= pen size <= 16.
 	else if(mouse.xcor <=300 && mouse.xcor >=275 && tool_width > 1){
+	  Status("Status: Pen size decreased", font);
 	  tool_width--;	  
 	}
-	else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){	  
+	else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){
+	  Status("Status: Pen size increased", font);	  
 	  tool_width++;
 	}
 	else if(mouse.xcor >= 550 && mouse.xcor <= 575){
+	  Status("Status: Eraser ON", font);
 	  color.r=255;
 	  color.g=255;
 	  color.b=255;
@@ -162,9 +225,10 @@ void updateScreen() {
     drawFilledRect(300,460,5,100,255,255,255);
     drawLine(300,462,400,462,0,0,0);
     drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
+    
       
 
-    drawLine(0, 450, 650, 450, 0, 0, 0); //DIVIDER LINE
+    drawLine(0, 425, 650, 425, 0, 0, 0); //DIVIDER LINE
 
 	//draws ROYGBIV palette
     drawFilledRect(0,455,15,25, 0,0,0);
@@ -184,26 +248,17 @@ void updateScreen() {
 	//draws the grey rectangles that are buttons that change tool_width
     drawFilledRect(275,455,15,25,100,100,100);
     drawFilledRect(400,455,15,25,100,100,100);
-    
-
-    
+      
 
     //indicates the current color of the pen.
     drawFilledRect(497,452, 21,21, 0,0,0);
     drawFilledRect(499,454, 17,17,255,255,255);
     drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
-    
-    /*
-      //Attempting to blit icons but fails to load the image.
-    SDL_Rect dest;
-    dest.x = 5;
-    dest.y = 5;
-    dest.w = 10;
-    dest.h = 10;
 
-    SDL_Surface *image = loadImage("penc.png");
-    SDL_BlitSurface(image, NULL, screen, &dest);
-    */
+    
+ 
+    
+    closeFont(font);
 
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing
