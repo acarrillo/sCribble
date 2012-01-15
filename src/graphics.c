@@ -212,13 +212,12 @@ void setImages(){
 
 /*--- draws a grey border around drawing screen ---*/
 void drawBorder() {
-    int stroke, k_color;
-    stroke = 4;
+    int k_color;
     k_color = 50;
-    drawFilledRect(0, 0, stroke, screen->w, k_color, k_color, k_color); // Top
-    drawFilledRect(0, 0, screen->h, stroke, k_color, k_color, k_color); // Left
-    drawFilledRect(0, screen->h - stroke, stroke, screen->w, k_color, k_color, k_color); // Bottom
-    drawFilledRect(screen->w - stroke, 0, screen->h, stroke, k_color, k_color, k_color); // Bottom
+    drawFilledRect(0, 0, BORDER_WIDTH, screen->w, k_color, k_color, k_color); // Top
+    drawFilledRect(0, 0, screen->h, BORDER_WIDTH, k_color, k_color, k_color); // Left
+    drawFilledRect(0, screen->h - BORDER_WIDTH, BORDER_WIDTH, screen->w, k_color, k_color, k_color); // Bottom
+    drawFilledRect(screen->w - BORDER_WIDTH, 0, screen->h, BORDER_WIDTH, k_color, k_color, k_color); // Bottom
 }
 
 /*
@@ -320,9 +319,6 @@ void updateScreen() {
             color.b=255;
         }
     }
-
-
-
     //Creates a pen size indicator.
     drawFilledRect(300,460,5,100,255,255,255);
 
@@ -332,14 +328,24 @@ void updateScreen() {
 
 
     //draws ROYGBIV palette
-    drawFilledRect(0,455,25,25, 0,0,0);            // Black
-    drawFilledRect(25,455,25,25, 255,0,0);         // Red
-    drawFilledRect(50,455,25,25, 255,100,0);       // Orange
-    drawFilledRect(75,455,25,25, 255,255,0);       // Yellow
-    drawFilledRect(100,455,25,25, 0,255,0);        // Green
-    drawFilledRect(125,455,25,25, 0,0,255);        // Blue
-    drawFilledRect(150,455,25,25, 75, 0 ,130);     // Indigo
-    drawFilledRect(175,455,25,25, 148, 0 , 211);   // Violet
+    int i = 1; //DIVIDER (|) multiplier
+    drawFilledRect(0+BORDER_WIDTH, 450, 1, 25*8, 0, 0, 0);                   // outer black border of palette
+    drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 0,0,0);            // Black
+    drawFilledRect(0+(25*i++), 450, 25, 1, 0, 0, 0);                         // DIVIDER (black)
+    drawFilledRect(25+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 255,0,0);         // Red
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 255,100,0);       // Orange
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(75+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 255,255,0);       // Yellow
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(100+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 0,255,0);        // Green
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(125+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 0,0,255);        // Blue
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(150+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 75, 0 ,130);     // Indigo
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,25,25, 148, 0 , 211);   // Violet
+    drawFilledRect(3+25*i++, 451, 25, 1, 0, 0, 0);                           // DIVIDER (black)
 
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);

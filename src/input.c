@@ -30,7 +30,7 @@ void getInput()
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                printf("%sbutton down caught\n", tag);
+                /*printf("%sbutton down caught\n", tag);*/
                 switch (event.button.button) {
                     case SDL_BUTTON_LEFT:
                         if (event.button.state == SDL_PRESSED) {
