@@ -225,6 +225,8 @@ void updateScreen() {
 
   setImages();
 
+  
+
   //int color, ytimesw;
   //color = SDL_MapRGB(screen->format, color.r, color.g, color.b);
 
@@ -322,12 +324,12 @@ void updateScreen() {
 
   //Creates a pen size indicator.
   drawFilledRect(300,460,5,100,255,255,255);
-  drawLine(300,462,400,462,0,0,0);
+  
   drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
     
       
 
-  drawLine(0, 425, 650, 425, 0, 0, 0); //DIVIDER LINE
+  
 
   //draws ROYGBIV palette
   drawFilledRect(0,455,15,25, 0,0,0);

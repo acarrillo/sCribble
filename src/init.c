@@ -3,6 +3,8 @@
  */
 #include "init.h"
 
+extern void line(int sx, int sy, int ex, int ey, int r, int g, int b);
+
 void init(char *title) {
 
   if (TTF_Init() == -1){
@@ -33,12 +35,20 @@ void init(char *title) {
     mouse.lasty = -1;
 
     /* initialize tool size */
-    tool_width = 5;
+    tool_width = 2;
 
     /* initialize tool color */
     color.r = 0;
     color.g = 0;
     color.b = 0;
+
+    //draw divider line
+    line(0, 425, 650, 425, 0, 0, 0); //DIVIDER LINE
+
+    //draw slider line
+    line(300,462,400,462,0,0,0);
+
+    tool_width = 5;
 }
 
 void cleanup() {
