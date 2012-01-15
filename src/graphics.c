@@ -27,14 +27,14 @@ void line(int startx, int starty, int endx, int endy, int r, int g, int b) {
     int t, distance;
     int xerr=0, yerr=0, delta_x, delta_y;
     int incx, incy;
- 
+
     /* compute the distances in both directions */
     delta_x=endx-startx;
     delta_y=endy-starty;
 
     int color;
     color = SDL_MapRGB(screen->format, r, g, b);
- 
+
     /* Compute the direction of the increment,
        an increment of 0 means either a horizontal or vertical
        line.
@@ -42,21 +42,21 @@ void line(int startx, int starty, int endx, int endy, int r, int g, int b) {
     if(delta_x>0) incx=1;
     else if(delta_x==0) incx=0;
     else incx=-1;
- 
+
     if(delta_y>0) incy=1;
     else if(delta_y==0) incy=0;
     else incy=-1;
- 
+
     /* determine which distance is greater */
     delta_x=abs(delta_x);
     delta_y=abs(delta_y);
     if(delta_x>delta_y) distance=delta_x;
     else distance=delta_y;
- 
+
     /* draw the line */
     for(t=0; t<=distance+1; t++) {
       drawFilledRect(startx, starty, tool_width, tool_width, r, g, b);
-         
+
         xerr+=delta_x;
         yerr+=delta_y;
         if(xerr>distance) {
@@ -81,7 +81,7 @@ void line(int startx, int starty, int endx, int endy, int r, int g, int b) {
 TTF_Font *loadFont(char *name, int size)
 {
   /* Use SDL_TTF to load the font at the specified size */
-	
+
   TTF_Font *font = TTF_OpenFont(name, size);
 
   if (font == NULL)
@@ -90,14 +90,14 @@ TTF_Font *loadFont(char *name, int size)
 
       exit(1);
     }
-	
+
   return font;
 }
 
 void closeFont(TTF_Font *font)
 {
   /* Close the font once we're done with it */
-	
+
   if (font != NULL)
     {
       TTF_CloseFont(font);
@@ -109,15 +109,15 @@ void drawString(char *text, TTF_Font *font)
   SDL_Rect dest;
   SDL_Surface *surface;
   SDL_Color foregroundColor, backgroundColor;
-	
+
   foregroundColor.r = 0;
   foregroundColor.g = 0;
   foregroundColor.b = 0;
-	
+
   backgroundColor.r = 255;
   backgroundColor.g = 255;
   backgroundColor.b = 255;
-	
+
   /* Use SDL_TTF to generate a string image, this returns an SDL_Surface */
 
   surface = TTF_RenderUTF8_Shaded(font, text, foregroundColor, backgroundColor);
@@ -128,7 +128,7 @@ void drawString(char *text, TTF_Font *font)
 
       return;
     }
-	
+
   /* Blit the entire surface to the screen */
 
   dest.x = 10;
@@ -137,7 +137,7 @@ void drawString(char *text, TTF_Font *font)
   dest.h = surface->h;
 
   SDL_BlitSurface(surface, NULL, screen, &dest);
-	
+
   /* Free the generated string image */
 
   SDL_FreeSurface(surface);
@@ -158,52 +158,52 @@ void Status(char* message, TTF_Font *font){
 SDL_Surface *loadImage(char *name)
 {
 	/* Load the image using SDL Image */
-	
+
 	SDL_Surface *temp = IMG_Load(name);
 	SDL_Surface *image;
-	
+
 	if (temp == NULL)
 	{
 		printf("Failed to load image %s\n", name);
-		
+
 		return NULL;
 	}
-	
+
 	/* Make the background transparent */
-	
+
 	SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 0, 0, 0));
-	
+
 	/* Convert the image to the screen's native format */
-	
+
 	image = SDL_DisplayFormat(temp);
-	
+
 	SDL_FreeSurface(temp);
-	
+
 	if (image == NULL)
 	{
 		printf("Failed to convert image %s to native format\n", name);
-		
+
 		return NULL;
 	}
-	
+
 	/* Return the processed image */
-	
+
 	return image;
 }
 
 void drawImage(SDL_Surface *image, int x, int y)
 {
 	SDL_Rect dest;
-	
+
 	/* Set the blitting rectangle to the size of the src image */
-	
+
 	dest.x = x;
 	dest.y = y;
 	dest.w = image->w;
 	dest.h = image->h;
-	
+
 	/* Blit the entire image onto the screen at coordinates x and y */
-	
+
 	SDL_BlitSurface(image, NULL, screen, &dest);
 }
 
@@ -225,8 +225,6 @@ void updateScreen() {
 
   setImages();
 
-  
-
   //int color, ytimesw;
   //color = SDL_MapRGB(screen->format, color.r, color.g, color.b);
 
@@ -247,8 +245,8 @@ void updateScreen() {
     mouse.lastx = mouse.xcor;
     mouse.lasty = mouse.ycor;
   }
-  
-    
+
+
   //ROYGBIV PALETTE
   else if (mouse.ycor > 450 && mouse.ycor < 465){
     if(mouse.xcor <= 25){
@@ -302,10 +300,10 @@ void updateScreen() {
     //Changing pen size where 1 <= pen size <= 16.
     else if(mouse.xcor <=300 && mouse.xcor >=275 && tool_width > 1){
       Status("Status: Pen size decreased", font);
-      tool_width--;	  
+      tool_width--;	
     }
     else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){
-      Status("Status: Pen size increased", font);	  
+      Status("Status: Pen size increased", font);
       tool_width++;
     }
     else if(mouse.xcor >= 305 && mouse.xcor <= 390){
@@ -320,16 +318,14 @@ void updateScreen() {
     }
   }
 
-  
+
 
   //Creates a pen size indicator.
   drawFilledRect(300,460,5,100,255,255,255);
-  
-  drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
-    
-      
 
-  
+  drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
+
+
 
   //draws ROYGBIV palette
   drawFilledRect(0,455,15,25, 0,0,0);
@@ -340,25 +336,24 @@ void updateScreen() {
   drawFilledRect(125,455,15,25, 0,0,255);
   drawFilledRect(150,455,15,25, 75, 0 ,130);
   drawFilledRect(175,455,15,25, 148, 0 , 211);
-    
-    
+
   //draws the erasing rectangle.
   drawFilledRect(549,454,17,27,0,0,0);
   drawFilledRect(550,455,15,25,255,255,255);
-   
+
   //draws the grey rectangles that are buttons that change tool_width
   drawFilledRect(275,455,15,25,100,100,100);
   drawFilledRect(400,455,15,25,100,100,100);
-      
+
 
   //indicates the current color of the pen.
   drawFilledRect(497,452, 21,21, 0,0,0);
   drawFilledRect(499,454, 17,17,255,255,255);
   drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
 
-  
- 
-    
+
+
+
   closeFont(font);
 
 
