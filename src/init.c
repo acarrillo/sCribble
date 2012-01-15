@@ -5,6 +5,10 @@
 
 void init(char *title) {
 
+  if (TTF_Init() == -1){
+    exit(1);
+  }
+
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("Could not initialize SDL: %s\n", SDL_GetError());
 		exit(1);

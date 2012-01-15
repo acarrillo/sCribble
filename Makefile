@@ -1,5 +1,5 @@
 CFLAGS = -Werror -Wall -I./lib/
-LFLAGS = `sdl-config --libs` -lSDL -lSDL_image -lSDL_ttf
+LFLAGS = `sdl-config --libs` -lSDL -lSDL_image -lSDL_ttf -lSDL_image
 OBJS   = init.o input.o graphics.o main.o client.o
 PROG = sCribble
 
