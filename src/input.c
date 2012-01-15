@@ -5,10 +5,9 @@
 
 void getInput()
 {
+    Uint8 *keystate; // Used for getting cmd-q
 	SDL_Event event;
-	
 	/* Loop through waiting messages and process them */
-	
 	while (SDL_PollEvent(&event)) {
         switch (event.type) {
             /* Closing the Window or pressing Escape will exit the program */
@@ -23,6 +22,10 @@ void getInput()
                         exit(0);
                         break;
                     default:
+                        keystate = SDL_GetKeyState(NULL);
+                        if ((keystate[SDLK_RMETA] || keystate[SDLK_LMETA]) && keystate[SDLK_q]) { // Apple cmd-Q
+                            exit(0);
+                        }
                         break;
                 }
                 break;
