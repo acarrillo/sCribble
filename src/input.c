@@ -56,7 +56,7 @@ void getInput()
                     mouse.ycor = event.button.y;
 
                     //added to deter segfaults in the vertical boundaries of the screen
-                    if(mouse.ycor > 475 || mouse.ycor <= 2){
+                    if(mouse.ycor > 425 || mouse.ycor <= 2){
                         mouse.xcor = -1;
                         mouse.ycor = -1;
                     }
