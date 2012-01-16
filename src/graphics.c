@@ -199,13 +199,11 @@ void drawImage(SDL_Surface *image, int x, int y)
 }
 
 void setImages(){
-    SDL_Surface *image, *image2, *image3;
+    SDL_Surface *image, *image2;
     image = loadImage("gfx/color_line.jpg");
     drawImage(image, 225,450);
     image2 = loadImage("gfx/eraser.jpg");
     drawImage(image2, 600,450);
-    /*image3 = loadImage("gfx/c_squared2.bmp");*/
-    drawImage(image3, 6, 448);
     SDL_FreeSurface(image);
     SDL_FreeSurface(image2);
 
@@ -223,45 +221,49 @@ void drawBorder() {
 }
 
 void unpressAllColorButton() {
+    printf("%sHere we go?\n", gtag);
 
-    SDL_Surface *black, *red, *orange, *yellow, *green, *blue, *indigo, *violet, *white;
+    /*SDL_Surface *black, *red, *orange, *yellow, *green, *blue, *indigo, *violet, *white;*/
+    SDL_Surface *black;
     black = loadImage("gfx/black_up.bmp");
-    red = loadImage("gfx/red_up.bmp");
-    orange = loadImage("gfx/orange_up.bmp");
-    yellow = loadImage("gfx/yellow_up.bmp");
-    green = loadImage("gfx/green_up.bmp");
-    blue = loadImage("gfx/blue_up.bmp");
-    indigo = loadImage("gfx/indigo_up.bmp");
-    violet = loadImage("gfx/violet_up.bmp");
-    white = NULL; //TODO: get un-lazy about this
+    /*red = loadImage("gfx/red_up.bmp");*/
+    /*orange = loadImage("gfx/orange_up.bmp");*/
+    /*yellow = loadImage("gfx/yellow_up.bmp");*/
+    /*green = loadImage("gfx/green_up.bmp");*/
+    /*blue = loadImage("gfx/blue_up.bmp");*/
+    /*indigo = loadImage("gfx/indigo_up.bmp");*/
+    /*violet = loadImage("gfx/violet_up.bmp");*/
+    /*white = NULL; //TODO: get un-lazy about this*/
 
+    printf("%sDid I make it?\n", gtag);
     int i = 0;
     drawImage(black, C_SQUARE*(i++) + BORDER_WIDTH, 448);
-    drawImage(red, C_SQUARE*(i++) + BORDER_WIDTH, 449);
-    drawImage(orange, C_SQUARE*(i++) + BORDER_WIDTH, 449);
-    drawImage(yellow, C_SQUARE*(i++) + BORDER_WIDTH, 449);
-    drawImage(green, C_SQUARE*(i++) + BORDER_WIDTH, 449);
-    drawImage(blue, C_SQUARE*(i++) + BORDER_WIDTH, 449);
-    drawImage(indigo, C_SQUARE*(i++) + BORDER_WIDTH, 449);
-    drawImage(violet, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    /*drawImage(red, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
+    /*drawImage(orange, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
+    /*drawImage(yellow, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
+    /*drawImage(green, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
+    /*drawImage(blue, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
+    /*drawImage(indigo, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
+    /*drawImage(violet, C_SQUARE*(i++) + BORDER_WIDTH, 449);*/
 
+    printf("%sEyyyy?\n", gtag);
     SDL_FreeSurface(black);
-    SDL_FreeSurface(red);
-    SDL_FreeSurface(orange);
-    SDL_FreeSurface(yellow);
-    SDL_FreeSurface(green);
-    SDL_FreeSurface(blue);
-    SDL_FreeSurface(indigo);
-    SDL_FreeSurface(violet);
+    /*SDL_FreeSurface(red);*/
+    /*SDL_FreeSurface(orange);*/
+    /*SDL_FreeSurface(yellow);*/
+    /*SDL_FreeSurface(green);*/
+    /*SDL_FreeSurface(blue);*/
+    /*SDL_FreeSurface(indigo);*/
+    /*SDL_FreeSurface(violet);*/
+    printf("%sI passed!?\n", gtag);
 }
 void depressColorButton() {
-    SDL_Surface *button;
-    /*button = loadImage("gfx/c_squared2_red_down.bmp");*/
+
     switch(color.id) {
         case BLACK:
             break;
         case RED:
-            drawImage(button, 6, 488);
+            /*drawImage(button, 6, 488);*/
             break;
         case ORANGE:
             break;
@@ -276,7 +278,6 @@ void depressColorButton() {
         default:
             break;
     }
-    SDL_FreeSurface(button);
 }
 
 /*
