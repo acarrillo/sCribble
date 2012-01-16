@@ -250,49 +250,49 @@ void updateScreen() {
 
     //ROYGBIV PALETTE
     else if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
-        if(mouse.xcor <= 25){
+        if(mouse.xcor <= C_SQUARE){
             Status("Status: Pen Color: Black", font);
             color.r=0;
             color.g=0;
             color.b=0;
         }
-        else if(mouse.xcor <= 50){
+        else if(mouse.xcor <= 2*C_SQUARE){
             Status("Status: Pen Color: Red", font);
             color.r=255;
             color.g=0;
             color.b=0;
         }
-        else if(mouse.xcor <= 75){
+        else if(mouse.xcor <= 3*C_SQUARE){
             Status("Status: Pen Color: Orange", font);
             color.r=255;
             color.g=100;
             color.b=0;
         }
-        else if(mouse.xcor <= 100){
+        else if(mouse.xcor <= 4*C_SQUARE){
             Status("Status: Pen Color: Yellow", font);
             color.r=255;
             color.g=255;
             color.b=0;
         }
-        else if(mouse.xcor <= 125){
+        else if(mouse.xcor <= 5*C_SQUARE){
             Status("Status: Pen Color: Green", font);
             color.r=0;
             color.g=255;
             color.b=0;
         }
-        else if(mouse.xcor <= 150){
+        else if(mouse.xcor <= 6*C_SQUARE){
             Status("Status: Pen Color: Blue", font);
             color.r=0;
             color.g=0;
             color.b=255;
         }
-        else if(mouse.xcor <= 175){
+        else if(mouse.xcor <= 7*C_SQUARE){
             Status("Status: Pen Color: Indigo", font);
             color.r=75;
             color.g=0;
             color.b=130;
         }
-        else if(mouse.xcor <= 200){
+        else if(mouse.xcor <= 8*C_SQUARE){
             Status("Status: Pen Color: Violet", font);
             color.r=148;
             color.g=0;
