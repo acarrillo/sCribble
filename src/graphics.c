@@ -204,7 +204,7 @@ void setImages(){
     drawImage(image, 225,450);
     image2 = loadImage("gfx/eraser.jpg");
     drawImage(image2, 600,450);
-    image3 = loadImage("gfx/c_squared2.bmp");
+    /*image3 = loadImage("gfx/c_squared2.bmp");*/
     drawImage(image3, 6, 448);
     SDL_FreeSurface(image);
     SDL_FreeSurface(image2);
@@ -223,23 +223,40 @@ void drawBorder() {
 }
 
 void unpressAllColorButton() {
-    //iterate through all the colors
 
-    SDL_Surface *black, *red, *orange, *yellow, *blue, *indigo, *violet, *white;
+    SDL_Surface *black, *red, *orange, *yellow, *green, *blue, *indigo, *violet, *white;
     black = loadImage("gfx/black_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    red = loadImage("gfx/c_squared2_red_up.bmp");
-    drawImage(button, 200, 200);
+    red = loadImage("gfx/red_up.bmp");
+    orange = loadImage("gfx/orange_up.bmp");
+    yellow = loadImage("gfx/yellow_up.bmp");
+    green = loadImage("gfx/green_up.bmp");
+    blue = loadImage("gfx/blue_up.bmp");
+    indigo = loadImage("gfx/indigo_up.bmp");
+    violet = loadImage("gfx/violet_up.bmp");
+    white = NULL; //TODO: get un-lazy about this
+
+    int i = 0;
+    drawImage(black, C_SQUARE*(i++) + BORDER_WIDTH, 448);
+    drawImage(red, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    drawImage(orange, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    drawImage(yellow, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    drawImage(green, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    drawImage(blue, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    drawImage(indigo, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+    drawImage(violet, C_SQUARE*(i++) + BORDER_WIDTH, 449);
+
+    SDL_FreeSurface(black);
+    SDL_FreeSurface(red);
+    SDL_FreeSurface(orange);
+    SDL_FreeSurface(yellow);
+    SDL_FreeSurface(green);
+    SDL_FreeSurface(blue);
+    SDL_FreeSurface(indigo);
+    SDL_FreeSurface(violet);
 }
 void depressColorButton() {
     SDL_Surface *button;
-    button = loadImage("gfx/c_squared2_red_down.bmp");
+    /*button = loadImage("gfx/c_squared2_red_down.bmp");*/
     switch(color.id) {
         case BLACK:
             break;
@@ -382,27 +399,6 @@ void updateScreen() {
 
 
 
-    //draws ROYGBIV palette
-    int i = 1; //DIVIDER (|) multiplier
-    int magic = 5; //Magic number, dwai
-    drawFilledRect(0+BORDER_WIDTH, 448, 1, C_SQUARE*8, 0, 0, 0);                         // outer black border of palette
-    drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,0);            // Black
-    drawFilledRect(0+(C_SQUARE*i++), 449, C_SQUARE, 1, 0, 0, 0);                         // DIVIDER (black)
-    if (color.id != RED)
-        drawFilledRect(C_SQUARE+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,0,0);   // Red
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,100,0);       // Orange
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(75+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,255,0);       // Yellow
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(100+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,255,0);        // Green
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(125+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,255);        // Blue
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(150+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 75, 0 ,130);     // Indigo
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 148, 0 , 211);   // Violet
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
     /* If palette square is depressed, make it look so */
     //draws the erasing rectangle.
