@@ -199,14 +199,16 @@ void drawImage(SDL_Surface *image, int x, int y)
 }
 
 void setImages(){
-  SDL_Surface *image;
-  image = loadImage("gfx/color_line.jpg");
-  drawImage(image, 225,450);
-  SDL_Surface *image2;
-  image2 = loadImage("gfx/eraser.jpg");
-  drawImage(image2, 600,450);
-  SDL_FreeSurface(image);
-  SDL_FreeSurface(image2);
+    SDL_Surface *image, *image2, *image3;
+    image = loadImage("gfx/color_line.jpg");
+    drawImage(image, 225,450);
+    image2 = loadImage("gfx/eraser.jpg");
+    drawImage(image2, 600,450);
+    image3 = loadImage("gfx/c_squared2.bmp");
+    drawImage(image3, 6, 448);
+    SDL_FreeSurface(image);
+    SDL_FreeSurface(image2);
+
 }
 
 
@@ -220,6 +222,38 @@ void drawBorder() {
     drawFilledRect(screen->w - BORDER_WIDTH, 0, screen->h, BORDER_WIDTH, k_color, k_color, k_color); // Bottom
 }
 
+void unpressAllColorButton() {
+    //iterate through all the colors
+
+    SDL_Surface *button;
+    button = loadImage("gfx/c_squared2_red_up.bmp");
+    drawImage(button, 200, 200);
+}
+void depressColorButton() {
+    SDL_Surface *button;
+    button = loadImage("gfx/c_squared2_red_down.bmp");
+    switch(color.id) {
+        case BLACK:
+            break;
+        case RED:
+            drawImage(button, 200, 200);
+            break;
+        case ORANGE:
+            break;
+        case YELLOW:
+            break;
+        case BLUE:
+            break;
+        case INDIGO:
+            break;
+        case VIOLET:
+            break;
+        default:
+            break;
+    }
+    SDL_FreeSurface(button);
+}
+
 /*
  * Called iteratively
  */
@@ -227,7 +261,10 @@ void updateScreen() {
     TTF_Font *font;
     font = loadFont("font/blackWolf.ttf", 16);
 
+    unpressAllColorButton();
     setImages();
+
+    depressColorButton(); // Makes the right color button look filled in
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
@@ -248,52 +285,61 @@ void updateScreen() {
     }
 
 
+
     //ROYGBIV PALETTE
     else if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
         if(mouse.xcor <= C_SQUARE){
             Status("Status: Pen Color: Black", font);
+            color.id=BLACK;
             color.r=0;
             color.g=0;
             color.b=0;
         }
         else if(mouse.xcor <= 2*C_SQUARE){
             Status("Status: Pen Color: Red", font);
+            color.id=RED;
             color.r=255;
             color.g=0;
             color.b=0;
         }
         else if(mouse.xcor <= 3*C_SQUARE){
             Status("Status: Pen Color: Orange", font);
+            color.id=ORANGE;
             color.r=255;
             color.g=100;
             color.b=0;
         }
         else if(mouse.xcor <= 4*C_SQUARE){
             Status("Status: Pen Color: Yellow", font);
+            color.id=YELLOW;
             color.r=255;
             color.g=255;
             color.b=0;
         }
         else if(mouse.xcor <= 5*C_SQUARE){
             Status("Status: Pen Color: Green", font);
+            color.id=GREEN;
             color.r=0;
             color.g=255;
             color.b=0;
         }
         else if(mouse.xcor <= 6*C_SQUARE){
             Status("Status: Pen Color: Blue", font);
+            color.id=BLUE;
             color.r=0;
             color.g=0;
             color.b=255;
         }
         else if(mouse.xcor <= 7*C_SQUARE){
             Status("Status: Pen Color: Indigo", font);
+            color.id=INDIGO;
             color.r=75;
             color.g=0;
             color.b=130;
         }
         else if(mouse.xcor <= 8*C_SQUARE){
             Status("Status: Pen Color: Violet", font);
+            color.id=VIOLET;
             color.r=148;
             color.g=0;
             color.b=211;
@@ -319,6 +365,7 @@ void updateScreen() {
             color.b=255;
         }
     }
+
     //Creates a pen size indicator.
     drawFilledRect(300,460,5,100,255,255,255);
 
@@ -348,6 +395,7 @@ void updateScreen() {
     drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 148, 0 , 211);   // Violet
     drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
+    /* If palette square is depressed, make it look so */
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
     drawFilledRect(550,455,15,25,255,255,255);
@@ -361,7 +409,6 @@ void updateScreen() {
     drawFilledRect(497,452, 21,21, 0,0,0);
     drawFilledRect(499,454, 17,17,255,255,255);
     drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
-
     //Draw border
     drawBorder();
 
