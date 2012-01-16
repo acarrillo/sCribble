@@ -225,8 +225,16 @@ void drawBorder() {
 void unpressAllColorButton() {
     //iterate through all the colors
 
-    SDL_Surface *button;
-    button = loadImage("gfx/c_squared2_red_up.bmp");
+    SDL_Surface *black, *red, *orange, *yellow, *blue, *indigo, *violet, *white;
+    black = loadImage("gfx/black_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
+    red = loadImage("gfx/c_squared2_red_up.bmp");
     drawImage(button, 200, 200);
 }
 void depressColorButton() {
@@ -236,7 +244,7 @@ void depressColorButton() {
         case BLACK:
             break;
         case RED:
-            drawImage(button, 200, 200);
+            drawImage(button, 6, 488);
             break;
         case ORANGE:
             break;
@@ -380,7 +388,8 @@ void updateScreen() {
     drawFilledRect(0+BORDER_WIDTH, 448, 1, C_SQUARE*8, 0, 0, 0);                         // outer black border of palette
     drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,0);            // Black
     drawFilledRect(0+(C_SQUARE*i++), 449, C_SQUARE, 1, 0, 0, 0);                         // DIVIDER (black)
-    drawFilledRect(C_SQUARE+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,0,0);   // Red
+    if (color.id != RED)
+        drawFilledRect(C_SQUARE+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,0,0);   // Red
     drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
     drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,100,0);       // Orange
     drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
