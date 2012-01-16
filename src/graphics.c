@@ -1,7 +1,12 @@
 /*
  * SDL framework borrowed from http://www.parallelrealities.co.uk/
  */
+#include <math.h>
 #include "graphics.h"
+
+
+extern Circle circle;
+extern int toolno;
 
 void drawPixel(int x, int y, int color) {
   Uint32 *pixel;
@@ -23,6 +28,7 @@ void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
         }
     }
 }
+
 
 //dwks from 'http://cboard.cprogramming.com/game-programming/67832-line-drawing-algorithm.html'
 //Bresenham's line algorithm
@@ -220,36 +226,53 @@ void drawBorder() {
     drawFilledRect(screen->w - BORDER_WIDTH, 0, screen->h, BORDER_WIDTH, k_color, k_color, k_color); // Bottom
 }
 
-/*
- * Called iteratively
- */
-void updateScreen() {
-    TTF_Font *font;
-    font = loadFont("font/blackWolf.ttf", 16);
+void setUI(){
+    //Creates a pen size indicator.
+  drawFilledRect(300,460,5,100,255,255,255);
 
-    setImages();
+    drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
 
-    if(SDL_MUSTLOCK(screen)) {
-        if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
-    }
+  //draws ROYGBIV palette
+    int i = 1; //DIVIDER (|) multiplier
+    int magic = 5; //Magic number, dwai
+    drawFilledRect(0+BORDER_WIDTH, 448, 1, C_SQUARE*8, 0, 0, 0);                         // outer black border of palette
+    drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,0);            // Black
+    drawFilledRect(0+(C_SQUARE*i++), 449, C_SQUARE, 1, 0, 0, 0);                         // DIVIDER (black)
+    drawFilledRect(C_SQUARE+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,0,0);   // Red
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,100,0);       // Orange
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(75+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,255,0);       // Yellow
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(100+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,255,0);        // Green
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(125+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,255);        // Blue
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(150+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 75, 0 ,130);     // Indigo
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+    drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 148, 0 , 211);   // Violet
+    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
-    /* If there has been a change to the drawing, draw it */
-    if (mouse.xcor >= 0 && mouse.ycor < 450) {
-        if(color.r == 255 && color.g == 255 && color.b == 255){
-            Status("Status: Erasing...", font);
-        }
-        else
-            Status("Status: Drawing...", font);
-        if(mouse.lastx >= 0){
-            line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
-        }
-        mouse.lastx = mouse.xcor;
-        mouse.lasty = mouse.ycor;
-    }
+    //draws the erasing rectangle.
+    drawFilledRect(549,454,17,27,0,0,0);
+    drawFilledRect(550,455,15,25,255,255,255);
+
+    //draws the grey rectangles that are buttons that change tool_width
+    drawFilledRect(275,455,15,25,100,100,100);
+    drawFilledRect(400,455,15,25,100,100,100);
 
 
-    //ROYGBIV PALETTE
-    else if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
+    //indicates the current color of the pen.
+    drawFilledRect(497,452, 21,21, 0,0,0);
+    drawFilledRect(499,454, 17,17,255,255,255);
+    drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
+
+    //Draw border
+    drawBorder();
+}
+
+void modifyPen(TTF_Font *font){
+  if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
         if(mouse.xcor <= C_SQUARE){
             Status("Status: Pen Color: Black", font);
             color.r=0;
@@ -318,54 +341,143 @@ void updateScreen() {
             color.g=255;
             color.b=255;
         }
+
+	else if(mouse.xcor >= 225 && mouse.ycor >= 450 && mouse.xcor <= 240 && mouse.ycor <= 465){
+	  if(toolno == 1){
+	    toolno = 2;
+	  }
+	  else {toolno = 1;
+	  }
+	}
+
+	else {
+	  toolno = 0;
+	}
     }
-    //Creates a pen size indicator.
-    drawFilledRect(300,460,5,100,255,255,255);
+}
 
-    drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
+void penLine(TTF_Font *font){
+  if (mouse.xcor >= 0 && mouse.ycor < 450) {
+        if(color.r == 255 && color.g == 255 && color.b == 255){
+            Status("Status: Erasing...", font);
+        }
+        else
+            Status("Status: Drawing...", font);
+        if(mouse.lastx >= 0){
+            line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
+        }
+        mouse.lastx = mouse.xcor;
+        mouse.lasty = mouse.ycor;
+    }
+}
 
+void rasterCircle(int x0, int y0, int radius){
+  int f = 1 - radius;
+  int ddF_x = 1;
+  int ddF_y = -2 * radius;
+  int x = 0;
+  int y = radius;
+ 
+  drawFilledRect(x0, y0 + radius,tool_width,tool_width,color.r,color.g,color.b);
+  drawFilledRect(x0, y0 - radius,tool_width,tool_width,color.r,color.g,color.b);
+  drawFilledRect(x0 + radius, y0,tool_width,tool_width,color.r,color.g,color.b);
+  drawFilledRect(x0 - radius, y0,tool_width,tool_width,color.r,color.g,color.b);
+ 
+  while(x < y)
+  {
+    // ddF_x == 2 * x + 1;
+    // ddF_y == -2 * y;
+    // f == x*x + y*y - radius*radius + 2*x - y + 1;
+    if(f >= 0) 
+    {
+      y--;
+      ddF_y += 2;
+      f += ddF_y;
+    }
+    x++;
+    ddF_x += 2;
+    f += ddF_x;    
+    drawFilledRect(x0 + x, y0 + y,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - x, y0 + y,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + x, y0 - y,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - x, y0 - y,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + y, y0 + x,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - y, y0 + x,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + y, y0 - x,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - y, y0 - x,tool_width,tool_width,color.r,color.g,color.b);
+  }
+}
 
+//this just draws a circle with radius 25 as of now. please modify.
+void penCircle(TTF_Font *font){
+  if (mouse.xcor >= 0 && mouse.ycor < 450){
+    if(circle.iter == 0){
+      Status("Pick center of circle", font);
+      circle.savedx = mouse.xcor;
+      circle.savedy = mouse.ycor;
+      circle.iter = 1;
+    }
+    if(circle.iter == 1){
+      Status("Pick distance to circle's edge (radius)", font);
+      rasterCircle(circle.savedx, circle.savedy, 25);
+      circle.iter = 0;
+    }
+  }
+}
 
+void drawRectangle(int x1, int y1, int x2, int y2){
+  line(x1,y1,x1,y2,color.r,color.g,color.b);
+  line(x1,y1,x2,y1,color.r,color.g,color.b);
+  line(x1,y2,x2,y2,color.r,color.g,color.b);
+  line(x2,y1,x2,y2,color.r,color.g,color.b);
+}
 
-    //draws ROYGBIV palette
-    int i = 1; //DIVIDER (|) multiplier
-    int magic = 5; //Magic number, dwai
-    drawFilledRect(0+BORDER_WIDTH, 448, 1, C_SQUARE*8, 0, 0, 0);                         // outer black border of palette
-    drawFilledRect(0+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,0);            // Black
-    drawFilledRect(0+(C_SQUARE*i++), 449, C_SQUARE, 1, 0, 0, 0);                         // DIVIDER (black)
-    drawFilledRect(C_SQUARE+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,0,0);   // Red
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(50+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,100,0);       // Orange
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(75+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 255,255,0);       // Yellow
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(100+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,255,0);        // Green
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(125+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 0,0,255);        // Blue
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(150+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 75, 0 ,130);     // Indigo
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
-    drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 148, 0 , 211);   // Violet
-    drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
+void penRect(TTF_Font *font){
+  if(mouse.xcor >= 0 && mouse.ycor < 450){
+    if(circle.iter == 0){
+      Status("Pick upper left hand corner of rectangle", font);
+      circle.savedx = mouse.xcor;
+      circle.savedy = mouse.ycor;
+      circle.iter = 1;
+    }
+    if(circle.iter == 1){
+      Status("Pick bottom right hand corner of rectangle", font);
+      drawRectangle(circle.savedx, circle.savedy, circle.savedx + 100, circle.savedy + 100);
+      circle.iter = 0;
+    }
+  }
+}
 
-    //draws the erasing rectangle.
-    drawFilledRect(549,454,17,27,0,0,0);
-    drawFilledRect(550,455,15,25,255,255,255);
+/*
+ * Called iteratively
+ */
 
-    //draws the grey rectangles that are buttons that change tool_width
-    drawFilledRect(275,455,15,25,100,100,100);
-    drawFilledRect(400,455,15,25,100,100,100);
+void updateScreen() {
+    TTF_Font *font;
+    font = loadFont("font/blackWolf.ttf", 16);
 
+    setImages();
 
-    //indicates the current color of the pen.
-    drawFilledRect(497,452, 21,21, 0,0,0);
-    drawFilledRect(499,454, 17,17,255,255,255);
-    drawFilledRect(500,455,15, 15,color.r, color.g, color.b);
+    if(SDL_MUSTLOCK(screen)) {
+        if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
+    }
+    
+    if(toolno == 0){
+      Status("Status: Pen Line Drawing", font);
+      penLine(font);
+    }
+    if(toolno == 1){
+      Status("Status: Rectangle Drawing", font);
+      penRect(font);
+    }
+    if(toolno == 2){
+      Status("Status: Circle Drawing", font);
+      penCircle(font);
+    }
 
-    //Draw border
-    drawBorder();
+    modifyPen(font);
 
-
+    setUI();
 
     closeFont(font);
 

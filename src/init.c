@@ -4,6 +4,11 @@
 #include "init.h"
 
 extern void line(int sx, int sy, int ex, int ey, int r, int g, int b);
+extern void Status(char*, TTF_Font *font);
+extern TTF_Font *loadFont(char* name, int size);
+extern void closeFont(TTF_Font *font);
+extern Circle circle;
+extern int toolno;
 
 void init(char *title) {
 
@@ -28,6 +33,10 @@ void init(char *title) {
 	SDL_WM_SetCaption(title, NULL); // Sets screen title
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
 
+    TTF_Font * font;
+    font = loadFont("font/blackWolf.ttf", 16);
+    Status("Welcome to sCribble!", font);
+
     /* initialize mouse coordinate struct */
     mouse.xcor = -1;
     mouse.ycor = -1;
@@ -49,6 +58,12 @@ void init(char *title) {
     line(300,462,400,462,0,0,0);
 
     tool_width = 5;
+
+    circle.iter = 0;
+
+    toolno = 0;
+
+    closeFont(font);
 }
 
 void cleanup() {

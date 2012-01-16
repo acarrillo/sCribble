@@ -28,3 +28,9 @@ struct cribblePacket {
   int size;
   char data[128];
 };
+
+typedef struct Circle {
+  int savedx;
+  int savedy;
+  int iter;
+} Circle;
