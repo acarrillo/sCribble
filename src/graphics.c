@@ -255,6 +255,8 @@ void setUI(){
     drawFilledRect(175+BORDER_WIDTH,455-BORDER_WIDTH,C_SQUARE,C_SQUARE, 148, 0 , 211);   // Violet
     drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
+    //draw "pressed in" shadow for the chosen palette color
+    //TODO: Do this
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
     drawFilledRect(550,455,15,25,255,255,255);
