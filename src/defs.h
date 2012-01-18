@@ -17,6 +17,7 @@ typedef struct Mouse {
 } Mouse;
 
 typedef struct Color {
+    int id; // 0 to 8, constants defined in graphics.h
     Uint8 r; // 0 to 255
     Uint8 g;
     Uint8 b;

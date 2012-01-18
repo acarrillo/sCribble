@@ -205,14 +205,16 @@ void drawImage(SDL_Surface *image, int x, int y)
 }
 
 void setImages(){
-  SDL_Surface *image;
-  image = loadImage("gfx/color_line.jpg");
-  drawImage(image, 225,450);
-  SDL_Surface *image2;
-  image2 = loadImage("gfx/eraser.jpg");
-  drawImage(image2, 600,450);
-  SDL_FreeSurface(image);
-  SDL_FreeSurface(image2);
+    SDL_Surface *image, *image2, *image3;
+    image = loadImage("gfx/color_line.jpg");
+    drawImage(image, 225,450);
+    image2 = loadImage("gfx/eraser.jpg");
+    drawImage(image2, 600,450);
+    image3 = loadImage("gfx/c_squared2.bmp");
+    drawImage(image3, 6, 448);
+    SDL_FreeSurface(image);
+    SDL_FreeSurface(image2);
+
 }
 
 
@@ -275,48 +277,56 @@ void modifyPen(TTF_Font *font){
   if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
         if(mouse.xcor <= C_SQUARE){
             Status("Status: Pen Color: Black", font);
+            color.id=BLACK;
             color.r=0;
             color.g=0;
             color.b=0;
         }
         else if(mouse.xcor <= 2*C_SQUARE){
             Status("Status: Pen Color: Red", font);
+            color.id=RED;
             color.r=255;
             color.g=0;
             color.b=0;
         }
         else if(mouse.xcor <= 3*C_SQUARE){
             Status("Status: Pen Color: Orange", font);
+            color.id=ORANGE;
             color.r=255;
             color.g=100;
             color.b=0;
         }
         else if(mouse.xcor <= 4*C_SQUARE){
             Status("Status: Pen Color: Yellow", font);
+            color.id=YELLOW;
             color.r=255;
             color.g=255;
             color.b=0;
         }
         else if(mouse.xcor <= 5*C_SQUARE){
             Status("Status: Pen Color: Green", font);
+            color.id=GREEN;
             color.r=0;
             color.g=255;
             color.b=0;
         }
         else if(mouse.xcor <= 6*C_SQUARE){
             Status("Status: Pen Color: Blue", font);
+            color.id=BLUE;
             color.r=0;
             color.g=0;
             color.b=255;
         }
         else if(mouse.xcor <= 7*C_SQUARE){
             Status("Status: Pen Color: Indigo", font);
+            color.id=INDIGO;
             color.r=75;
             color.g=0;
             color.b=130;
         }
         else if(mouse.xcor <= 8*C_SQUARE){
             Status("Status: Pen Color: Violet", font);
+            color.id=VIOLET;
             color.r=148;
             color.g=0;
             color.b=211;
