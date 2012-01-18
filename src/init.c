@@ -20,16 +20,14 @@ void init(char *title) {
 		printf("Could not initialize SDL: %s\n", SDL_GetError());
 		exit(1);
 	}
-	
+
     screen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE);
-	
+
 	if (screen == NULL) {
 		printf("Couldn't set screen mode to 640 x 480: %s\n", SDL_GetError());
 
 		exit(1);
 	}
-	
-	
 	SDL_WM_SetCaption(title, NULL); // Sets screen title
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
 
@@ -50,6 +48,7 @@ void init(char *title) {
     color.r = 0;
     color.g = 0;
     color.b = 0;
+    color.id = 0; // Black
 
     //draw divider line
     line(0, 425, 650, 425, 0, 0, 0); //DIVIDER LINE
