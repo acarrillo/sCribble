@@ -13,29 +13,20 @@ struct cribblePacket {
   char data[128];
 };
 
-//Adds a client id to the end of the clients list
-//Returns 0 if there are too many clients
-int addClient(int sock_client, int* clients){
+void addClient(int sock_client, int* clients){
   int i;
   for(i=0;i<64; i++)
     if(!clients[i]){
       clients[i] = sock_client;
       break;
     }
-  return 64 - i;
 }
 
-//Removes a client from the (middle of) the clients list
-//Moves all clients after it back a space
 void removeClient(int sock_client, int* clients){
   int i;
   for(i=0;i<64; i++)
-    if(clients[i] == sock_client){
+    if(clients[i] == sock_client)
       clients[i] = 0;
-      break;
-    }
-  for(i++; (i < 64) && clients[i]; i++)
-    clients[i-1] = clients [i];
 }
 
 blastMessage(char* message, int* clients){
@@ -98,12 +89,10 @@ int main() {
   //wait for any connection
   i =  listen( socket_id, 0 );
 
-  //accept connections continuously
-  int* pos = 0;
-    
-  while(clients[pos]) {
+  //acept connections continuously
+  while(1) {
 
-    printf("Waiting for a connection from client %d\n", pos);
+    printf("Waiting for a connection\n");
 
     //set socket_length after the connection is made
     socket_length = sizeof(server); 
@@ -119,10 +108,5 @@ int main() {
       
     //close this client connection
     close(socket_client);
-
-    if(!clients[pos+1])
-      pos = 0;
-    else
-      pos++;
   }
 }
