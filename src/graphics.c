@@ -256,7 +256,9 @@ void setUI(){
     drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
     //draw "pressed in" shadow for the chosen palette color
-    //TODO: Do this
+    drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448, 3, C_SQUARE, 0, 0, 0); // Upper border
+    drawFilledRect(BORDER_WIDTH + (1+color.id)*C_SQUARE - 2, 448, C_SQUARE, 3, 0, 0, 0); // Upper border
+
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
     drawFilledRect(550,455,15,25,255,255,255);
