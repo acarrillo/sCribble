@@ -156,7 +156,7 @@ SDL_Surface *loadImage(char *name)
 {
 	/* Load the image using SDL Image */
 
-	SDL_Surface *temp = IMG_Load(name);
+	SDL_Surface *temp = SDL_LoadBMP(name);
 	SDL_Surface *image;
 
 	if (temp == NULL)
@@ -206,7 +206,7 @@ void drawImage(SDL_Surface *image, int x, int y)
 
 void setImages(){
     SDL_Surface *image, *image2, *image3;
-    image = loadImage("gfx/color_line.jpg");
+    image = loadImage("gfx/color_line.bmp");
     drawImage(image, 225,450);
     image2 = loadImage("gfx/eraser.jpg");
     drawImage(image2, 600,450);
@@ -261,7 +261,6 @@ void setUI(){
     drawFilledRect(BORDER_WIDTH + (1+color.id)*C_SQUARE - 4, 448, C_SQUARE, 4, 0, 0, 0); // Right border
     drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448, C_SQUARE, 1, 0, 0, 0); // Left border
     drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448 + C_SQUARE - 1, 2, C_SQUARE, 0, 0, 0); // Lower border
-
 
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
