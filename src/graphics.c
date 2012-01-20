@@ -205,15 +205,10 @@ void drawImage(SDL_Surface *image, int x, int y)
 }
 
 void setImages(){
-    SDL_Surface *image, *image2, *image3;
+    SDL_Surface *image;
     image = loadImage("gfx/color_line.bmp");
     drawImage(image, 225,450);
-    image2 = loadImage("gfx/eraser.jpg");
-    drawImage(image2, 600,450);
-    image3 = loadImage("gfx/c_squared2.bmp");
-    drawImage(image3, 6, 448);
     SDL_FreeSurface(image);
-    SDL_FreeSurface(image2);
 
 }
 
