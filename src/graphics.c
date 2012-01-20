@@ -256,8 +256,12 @@ void setUI(){
     drawFilledRect(magic+C_SQUARE*i++, 449, C_SQUARE, 1, 0, 0, 0);                           // DIVIDER (black)
 
     //draw "pressed in" shadow for the chosen palette color
-    drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448, 3, C_SQUARE, 0, 0, 0); // Upper border
-    drawFilledRect(BORDER_WIDTH + (1+color.id)*C_SQUARE - 2, 448, C_SQUARE, 3, 0, 0, 0); // Upper border
+    //WARNING: The following four lines employ a multitude of precarious magic numbers!  Beware!  This is unscalable! FIXME
+    drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448, 4, C_SQUARE, 0, 0, 0); // Upper border
+    drawFilledRect(BORDER_WIDTH + (1+color.id)*C_SQUARE - 4, 448, C_SQUARE, 4, 0, 0, 0); // Right border
+    drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448, C_SQUARE, 1, 0, 0, 0); // Left border
+    drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448 + C_SQUARE - 1, 2, C_SQUARE, 0, 0, 0); // Lower border
+
 
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
@@ -396,13 +400,13 @@ void rasterCircle(int x0, int y0, int radius){
   drawFilledRect(x0, y0 - radius,tool_width,tool_width,color.r,color.g,color.b);
   drawFilledRect(x0 + radius, y0,tool_width,tool_width,color.r,color.g,color.b);
   drawFilledRect(x0 - radius, y0,tool_width,tool_width,color.r,color.g,color.b);
- 
+
   while(x < y)
   {
     // ddF_x == 2 * x + 1;
     // ddF_y == -2 * y;
     // f == x*x + y*y - radius*radius + 2*x - y + 1;
-    if(f >= 0) 
+    if(f >= 0)
     {
       y--;
       ddF_y += 2;
@@ -410,7 +414,7 @@ void rasterCircle(int x0, int y0, int radius){
     }
     x++;
     ddF_x += 2;
-    f += ddF_x;    
+    f += ddF_x;
     drawFilledRect(x0 + x, y0 + y,tool_width,tool_width,color.r,color.g,color.b);
     drawFilledRect(x0 - x, y0 + y,tool_width,tool_width,color.r,color.g,color.b);
     drawFilledRect(x0 + x, y0 - y,tool_width,tool_width,color.r,color.g,color.b);
@@ -475,7 +479,7 @@ void updateScreen() {
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
-    
+
     if(toolno == 0){
       Status("Status: Pen Line Drawing", font);
       penLine(font);
