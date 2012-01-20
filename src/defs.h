@@ -9,6 +9,12 @@
 #define READ 0
 #define WRITE 1
 
+#define C_CONNECT 0
+#define C_DISCONNECT 1
+#define C_STATUS 2
+#define C_PEN 3
+#define C_LINE 4
+
 typedef struct Mouse {
     int xcor;
     int ycor;
@@ -23,12 +29,13 @@ typedef struct Color {
     Uint8 b;
 } Color;
 
-struct cribblePacket {
-  char type[64];  //CONNECT, DISCONNECT, STATUS, PEN, LINE
+typedef struct cribblePacket {
+  int type;
   Color color;
-  int size;
+  int tool_width;
+  Mouse mouse;
   char data[128];
-};
+} cribblePacket;
 
 typedef struct Circle {
   int savedx;
