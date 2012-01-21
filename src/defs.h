@@ -24,9 +24,9 @@ typedef struct Mouse {
 
 typedef struct Color {
     int id; // 0 to 8, constants defined in graphics.h
-    int8_t r; // 0 to 255
-    int8_t g;
-    int8_t b;
+    uint8_t r; // 0 to 255
+    uint8_t g;
+    uint8_t b;
 } Color;
 
 typedef struct cribblePacket {
