@@ -1,4 +1,4 @@
 *.o
 .*.swp
 sCribble
-server
+cribbleServer
