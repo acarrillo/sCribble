@@ -480,17 +480,19 @@ void updateScreen() {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-    if(toolno == 0){
-      Status("Status: Pen Line Drawing", font);
-      penLine(font);
-    }
-    if(toolno == 1){
-      Status("Status: Rectangle Drawing", font);
-      penRect(font);
-    }
-    if(toolno == 2){
-      Status("Status: Circle Drawing", font);
-      penCircle(font);
+    switch(toolno) {
+        case 0:
+            Status("Status: Pen Line Drawing", font);
+            penLine(font);
+            break;
+        case 1:
+            Status("Status: Rectangle Drawing", font);
+            penRect(font);
+            break;
+        case 2:
+            Status("Status: Circle Drawing", font);
+            penCircle(font);
+            break;
     }
 
     modifyPen(font);
