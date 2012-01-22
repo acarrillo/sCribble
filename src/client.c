@@ -6,11 +6,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "client.h"
+//#include "client.h"
+#define AM_SERVER 1
 #include "defs.h"
 
-void run_client(char* serverIP){
+int main(){
 
+  char* serverIP;
   int socket_id;
   struct cribblePacket buffer;
   int b;
@@ -35,12 +37,12 @@ void run_client(char* serverIP){
   printf("Connect returned: %d\n", c);
 
   //register with the current document using a CONNECT message
-  strcpy(buffer.type, "CONNECT");
+  buffer.type = C_CONNECT;
   b = write(socket_id, &buffer, sizeof(buffer) + 1);
 
     //do client stuff continuously
     while (1) {
-      strcpy(buffer.type, "PEN");
+      buffer.type = C_PEN;
 
       printf("Enter message: ");
       fgets(buffer.data, sizeof(buffer.data), stdin);
@@ -57,8 +59,9 @@ void run_client(char* serverIP){
     }
 
     //unregister with the current document using a DISCONNECT message
-    strcpy(buffer.type, "DISCONNECT");
+    buffer.type = C_DISCONNECT;
     b = write(socket_id, &buffer, sizeof(buffer) +1);
 
     close(socket_id);
+    return 1;
 }

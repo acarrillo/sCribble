@@ -8,6 +8,10 @@ S_PROG = sCribbleServer
 # top-level rule to create the program.
 all: $(PROG)
 
+# standalone client
+client: client.o
+	gcc client.o -o client
+
 # compiling server source files.
 src/server/%.o: %.c %.h src/defs.h
 	gcc $(CFLAGS) -c -s $<
@@ -34,3 +38,6 @@ cleanS:
 
 # cleaning everything that can be automatically recreated with "make server".
 cleanA: clean cleanS
+
+cleanC:
+	rm client client.o
