@@ -2,9 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include "SDL/SDL.h"
-#include "SDL/SDL_ttf.h"
-#include "SDL/SDL_image.h"
+#ifndef AM_SERVER
+  #include "SDL/SDL.h"
+  #include "SDL/SDL_ttf.h"
+  #include "SDL/SDL_image.h"
+#endif
 
 #define READ 0
 #define WRITE 1
