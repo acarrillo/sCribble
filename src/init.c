@@ -5,6 +5,7 @@
 
 extern void line(int sx, int sy, int ex, int ey, int r, int g, int b);
 extern void drawToolsBackground();
+extern void setImages();
 extern void Status(char*, TTF_Font *font);
 extern TTF_Font *loadFont(char* name, int size);
 extern void closeFont(TTF_Font *font);
@@ -53,6 +54,7 @@ void init(char *title) {
 
     //Draws the background
     drawToolsBackground();
+    setImages();
 
     //draw slider line
     line(300,462,400,462,0,0,0);

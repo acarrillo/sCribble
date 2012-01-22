@@ -168,7 +168,7 @@ SDL_Surface *loadImage(char *name)
 
 	/* Make the background transparent */
 
-	SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 0, 0, 0));
+	SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 100, 100, 100));
 
 	/* Convert the image to the screen's native format */
 
@@ -231,7 +231,6 @@ void drawToolsBackground() {
 }
 
 void setUI(){
-    drawToolsBackground(); //Draws the background
     //Creates a pen size indicator.
     drawFilledRect(300,460,5,100,255,255,255);
 
@@ -497,7 +496,6 @@ void updateScreen() {
     modifyPen(font);
 
     setUI();
-    setImages();
 
     closeFont(font);
 
