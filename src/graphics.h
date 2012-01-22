@@ -1,5 +1,6 @@
 #include "defs.h"
 #define BORDER_WIDTH 6
+#define BORDER_COLOR 50
 #define C_SQUARE     25
 
 #define BLACK        0
