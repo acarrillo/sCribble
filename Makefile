@@ -1,12 +1,18 @@
 CFLAGS = -Werror -Wall -I./lib/
 LFLAGS = `sdl-config --libs` -lSDL -lSDL_image -lSDL_ttf -lSDL_image
-OBJS   = init.o input.o graphics.o main.o client.o
+OBJS   = init.o input.o graphics.o main.o
+S_OBJS = src/server/server.o src/server/talker.o src/server/subserver.o
 PROG = sCribble
+S_PROG = sCribbleServer
 
 # top-level rule to create the program.
-all: $(PROG) server
+all: $(PROG)
 
-# compiling other source files.
+# compiling server source files.
+src/server/%.o: %.c %.h src/defs.h
+	gcc $(CFLAGS) -c -s $<
+
+# compiling source files.
 %.o: src/%.c src/%.h src/defs.h
 	gcc $(CFLAGS) -c -s $<
 
@@ -14,10 +20,17 @@ all: $(PROG) server
 $(PROG): $(OBJS)
 	gcc $(OBJS) -o $(PROG) $(LFLAGS)
 
-# Cribble server
-server: src/server.c
-	gcc src/server.c -o cribbleServer
+# linking the server
+server: $(S_OBJS)
+	gcc $(S_OBJS) -o $(S_PROG)
 
 # cleaning everything that can be automatically recreated with "make".
 clean:
-	rm $(PROG) cribbleServer *.o
+	rm $(PROG) *.o
+
+# cleaning everything that can be automatically recreated with "make server".
+cleanS:
+	rm $(S_PROG) src/server/*.o
+
+# cleaning everything that can be automatically recreated with "make server".
+cleanA: clean cleanS
