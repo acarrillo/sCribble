@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "server.h"
 #include "subserver.h"
+#include <errno.h>
 
 int socket_id;
 struct sockaddr_in server;
@@ -36,11 +37,13 @@ void server_listener_setup(){
 
 int add_client(int sock_client){
   int i;
-  for(i=0;i<64; i++)
+  for(i=0;i<64; i++){
+    printf("checking client #%d\n",i);
     if(!clientList[i]){
       clientList[i] = sock_client;
       break;
     }
+  }
   return 64 - i;
 }
 
@@ -59,6 +62,7 @@ void server_listener(){
 
     //accept the incoming connection, create a new file desciptor for the socket to the client | BLOCKS
     socket_client = accept(socket_id, (struct sockaddr *)&server, &l);
+    printf( "Error: %s\n", strerror( errno ) );
 
     printf("accepted connection %d\n",socket_client);
 
