@@ -21,6 +21,7 @@ void removeClient(int sock_client){
   for(i=0;i<64; i++)
     if(clientList[i] == sock_client)
       clientList[i] = 0;
+  close(sock_client);
   //Tell everyone about it
     char message[140];
     strcpy(message, messagePot->data);
@@ -35,7 +36,7 @@ void server_talker(int clientListKey){
 
   while(1){
     //Block until the pot semaphore is ready
-    sop.sem_op = -2;
+    sop.sem_op = 0;
     semop(semid, &sop, 1);
     if(messagePot->type == C_DISCONNECT)
       removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
@@ -45,7 +46,7 @@ void server_talker(int clientListKey){
       for(i=0; i<64; i++)
 	write( clientList[i], &messagePot, sizeof(messagePot));
     }
-    sop.sem_op = 2;
+    sop.sem_op = 3;
     semop(semid, &sop, 1);
   }
 }

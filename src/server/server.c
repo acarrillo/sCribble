@@ -7,6 +7,7 @@
 #define AM_SERVER 1
 #include "talker.h"
 #include "server.h"
+#include "listener.h"
 
 /* FROM server.h : 
   int semid;
@@ -34,8 +35,8 @@ int main(int argc, char *argv[]){
   talker = fork();
    if(talker == 0)
      server_talker(CLIENT_LIST_KEY);
-   //else
-  //server_listener();
+   else
+  server_listener();
   
   //remove shared memory
   shmdt(clientList);

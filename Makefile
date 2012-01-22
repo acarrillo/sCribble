@@ -1,7 +1,7 @@
 CFLAGS = -Werror -Wall -I./lib/
 LFLAGS = `sdl-config --libs` -lSDL -lSDL_ttf
 OBJS   = init.o input.o graphics.o main.o
-S_OBJS = src/server/server.o src/server/talker.o src/server/subserver.o
+S_OBJS = src/server/server.o src/server/talker.o src/server/listener.o src/server/subserver.o
 PROG = sCribble
 S_PROG = sCribbleServer
 
