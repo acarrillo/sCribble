@@ -50,9 +50,6 @@ void init(char *title) {
     color.b = 0;
     color.id = 0; // Black
 
-    //draw divider line
-    line(0, 425, 650, 425, 0, 0, 0); //DIVIDER LINE
-
     //draw slider line
     line(300,462,400,462,0,0,0);
 
