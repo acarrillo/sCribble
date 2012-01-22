@@ -23,7 +23,7 @@ void init(char *title) {
 		exit(1);
 	}
 
-    SDL_WM_SetIcon(SDL_LoadBMP("gfx/color_line.bmp"), 100);
+    SDL_WM_SetIcon(SDL_LoadBMP("gfx/color_line.bmp"), NULL);
     screen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE);
 
 	if (screen == NULL) {
