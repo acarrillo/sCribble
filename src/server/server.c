@@ -43,12 +43,12 @@ int main(int argc, char *argv[]){
   signal(SIGINT, sighandler);
 
   //Set up a list of client socket descriptors in shared memory
-  clientListDescriptor = shmget(CLIENT_LIST_KEY, 64*sizeof(int), 0666 | IPC_CREAT | IPC_EXCL);
+  clientListDescriptor = shmget(CLIENT_LIST_KEY, 64*sizeof(int), 0666 | IPC_CREAT);
   clientList = (int*) shmat(clientListDescriptor, NULL, 0);
   printf("clientListDescriptor: %d\n",clientListDescriptor);
 
   //Set up the messagePot in shared memory
-  messagePotDescriptor = shmget(MESSAGE_POT_KEY, 64*sizeof(int), 0664 | IPC_CREAT | IPC_EXCL);
+  messagePotDescriptor = shmget(MESSAGE_POT_KEY, 64*sizeof(int), 0664 | IPC_CREAT);
   messagePot = (cribblePacket*) shmat(messagePotDescriptor, NULL, 0);  
   printf("messagePotDescriptor: %d\n",messagePotDescriptor);
 
