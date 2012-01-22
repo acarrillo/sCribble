@@ -12,7 +12,7 @@
 
 int main(){
 
-  char* serverIP;
+  char* serverIP = "127.0.0.1";
   int socket_id;
   struct cribblePacket buffer;
   int b;
@@ -30,7 +30,7 @@ int main(){
   inet_aton( serverIP, &(sock.sin_addr) );
     
   //set the port to listen on, htons converts the port number to network format
-  sock.sin_port = htons(24601);
+  sock.sin_port = htons(44444);
   
   //connect to the server
   int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));

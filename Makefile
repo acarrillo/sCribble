@@ -14,7 +14,7 @@ client: client.o
 
 # compiling server source files.
 src/server/%.o: %.c %.h src/defs.h
-	gcc $(CFLAGS) -c -s $<
+	gcc $(CFLAGS) -c -g -s $<
 
 # compiling source files.
 %.o: src/%.c src/%.h src/defs.h
