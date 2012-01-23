@@ -3,7 +3,7 @@
  */
 #include "input.h"
 
-extern cribblePacket cribblePacket;
+/*extern cribblePacket cribblePacket;*/
 
 void getInput()
 {
