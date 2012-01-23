@@ -5,10 +5,10 @@
 #include <sys/sem.h>
 #include <unistd.h>
 #include <signal.h>
-#define AM_SERVER 1
 #include "talker.h"
 #include "server.h"
 #include "listener.h"
+#include "semun.h"
 #include <errno.h>
 
 /* FROM server.h : 

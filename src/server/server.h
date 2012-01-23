@@ -1,3 +1,4 @@
+#define AM_SERVER 1
 #include "../defs.h"
 
 #define CLIENT_LIST_KEY 27422533
