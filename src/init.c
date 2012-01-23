@@ -11,7 +11,7 @@ extern TTF_Font *loadFont(char* name, int size);
 extern void closeFont(TTF_Font *font);
 extern Circle circle;
 extern int toolno;
-extern cribblePacket cribblePacket;
+/*extern cribblePacket cribblePacket;*/
 
 extern void saveImage(); // from file.c
 
