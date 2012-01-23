@@ -6,11 +6,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "client.h"
+//#include "client.h"
+#define AM_SERVER 1
 #include "defs.h"
 
-void run_client(char* serverIP){
+int main(){
 
+  char* serverIP = "127.0.0.1";
   int socket_id;
   struct cribblePacket buffer;
   int b;
@@ -28,19 +30,19 @@ void run_client(char* serverIP){
   inet_aton( serverIP, &(sock.sin_addr) );
     
   //set the port to listen on, htons converts the port number to network format
-  sock.sin_port = htons(24601);
+  sock.sin_port = htons(44444);
   
   //connect to the server
   int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));
   printf("Connect returned: %d\n", c);
 
   //register with the current document using a CONNECT message
-  strcpy(buffer.type, "CONNECT");
+  buffer.type = C_CONNECT;
   b = write(socket_id, &buffer, sizeof(buffer) + 1);
 
-    //do client stuff continuously
-    while (1) {
-      strcpy(buffer.type, "PEN");
+  //do client stuff continuously
+  while (1) {
+      buffer.type = C_PEN;
 
       printf("Enter message: ");
       fgets(buffer.data, sizeof(buffer.data), stdin);
@@ -48,17 +50,19 @@ void run_client(char* serverIP){
 
       b = write( socket_id, &buffer, sizeof(buffer) + 1 );
 
-      if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0)
-	break;
+      if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
+          break;
+      }
 
       b = read( socket_id, &buffer, sizeof(buffer));
-      
+
       printf("\tReceived: %s\n", buffer.data);
-    }
+  }
 
-    //unregister with the current document using a DISCONNECT message
-    strcpy(buffer.type, "DISCONNECT");
-    b = write(socket_id, &buffer, sizeof(buffer) +1);
+  //unregister with the current document using a DISCONNECT message
+  buffer.type = C_DISCONNECT;
+  b = write(socket_id, &buffer, sizeof(buffer) +1);
 
-    close(socket_id);
+  close(socket_id);
+  return 1;
 }
