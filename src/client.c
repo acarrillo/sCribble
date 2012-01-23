@@ -40,8 +40,8 @@ int main(){
   buffer.type = C_CONNECT;
   b = write(socket_id, &buffer, sizeof(buffer) + 1);
 
-    //do client stuff continuously
-    while (1) {
+  //do client stuff continuously
+  while (1) {
       buffer.type = C_PEN;
 
       printf("Enter message: ");
@@ -50,18 +50,19 @@ int main(){
 
       b = write( socket_id, &buffer, sizeof(buffer) + 1 );
 
-      if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0)
-	break;
+      if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
+          break;
+      }
 
       b = read( socket_id, &buffer, sizeof(buffer));
-      
+
       printf("\tReceived: %s\n", buffer.data);
-    }
+  }
 
-    //unregister with the current document using a DISCONNECT message
-    buffer.type = C_DISCONNECT;
-    b = write(socket_id, &buffer, sizeof(buffer) +1);
+  //unregister with the current document using a DISCONNECT message
+  buffer.type = C_DISCONNECT;
+  b = write(socket_id, &buffer, sizeof(buffer) +1);
 
-    close(socket_id);
-    return 1;
+  close(socket_id);
+  return 1;
 }
