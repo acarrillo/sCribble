@@ -12,6 +12,8 @@ extern void closeFont(TTF_Font *font);
 extern Circle circle;
 extern int toolno;
 
+extern void saveImage(); // from file.c
+
 void init(char *title) {
 
   if (TTF_Init() == -1){
@@ -70,5 +72,6 @@ void init(char *title) {
 }
 
 void cleanup() {
+    saveImage();
 	SDL_Quit();
 }

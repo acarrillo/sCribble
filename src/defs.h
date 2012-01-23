@@ -17,6 +17,10 @@
 #define C_PEN 3
 #define C_LINE 4
 
+#define BORDER_WIDTH 6
+#define BORDER_COLOR 50
+#define C_SQUARE     25
+
 typedef struct Mouse {
     int xcor;
     int ycor;
