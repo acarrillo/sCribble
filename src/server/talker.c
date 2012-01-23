@@ -4,6 +4,7 @@
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <unistd.h>
+#include <errno.h>
 #include "server.h"
 
 void blastMessage(char* message){
@@ -37,7 +38,10 @@ void server_talker(int clientListKey){
   while(1){
     //Block until the pot semaphore is ready
     sop.sem_op = 0;
-    semop(semid, &sop, 1);
+    int i = semop(semid, &sop, 1);
+    printf("semid is %d\n", semid);
+    printf("Talker: Semaphore is ready (i = %d)\n", i);
+    printf( "Error: %s\n", strerror( errno ) );
     if(messagePot->type == C_DISCONNECT)
       removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
     else {

@@ -62,12 +62,13 @@ void server_listener(){
 
     //accept the incoming connection, create a new file desciptor for the socket to the client | BLOCKS
     socket_client = accept(socket_id, (struct sockaddr *)&server, &l);
-    printf( "Error: %s\n", strerror( errno ) );
+    //printf( "Error: %s\n", strerror( errno ) );
 
     printf("accepted connection %d\n",socket_client);
 
     b = read( socket_client, &buffer, sizeof(buffer) );
     if(buffer.type == C_CONNECT){
+      printf("Listener got connect message\n");
       add_client(socket_client);
       subserver = fork();
       if(subserver == 0)

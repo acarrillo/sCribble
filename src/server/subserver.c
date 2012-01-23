@@ -19,13 +19,16 @@ void subserve(int socket_client){
     sop.sem_op = -2;
     semop(semid, &sop, 1);
    
+    //change the message
+    strcat(buffer.data,"SRV");
+
     memcpy(messagePot, &buffer, sizeof(buffer));
-    
-    if(messagePot->type == C_DISCONNECT)
-      break;
 
     //release the semaphore to the main server
     sop.sem_op = -1;
     semop(semid, &sop, 1);
+
+    if(messagePot->type == C_DISCONNECT)
+      break;
   }
 }

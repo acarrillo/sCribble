@@ -53,15 +53,15 @@ int main(int argc, char *argv[]){
   printf("messagePotDescriptor: %d\n",messagePotDescriptor);
 
   //Set up a semaphore for the messagePot
-  semid = semget(MESSAGE_POT_SEM, 1, 0664 | IPC_CREAT | IPC_EXCL);
+  semid = semget(MESSAGE_POT_SEM, 1, 0664 | IPC_CREAT);
   semop.val = POT_EMPTY;
   semctl(semid, 0, SETVAL, semop);
 
   talker = fork();
-   if(talker == 0)
-     server_talker(CLIENT_LIST_KEY); //broadcasts outgoing network connections
-   else
-     server_listener();  //accepts incoming network connections
+  if(talker == 0)
+    server_talker(CLIENT_LIST_KEY); //broadcasts outgoing network connections
+  else
+    server_listener();  //accepts incoming network connections
    
    cleanup();
    return 1;
