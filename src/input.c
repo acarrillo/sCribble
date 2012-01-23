@@ -3,6 +3,8 @@
  */
 #include "input.h"
 
+extern cribblePacket cribblePacket;
+
 void getInput()
 {
     Uint8 *keystate; // Used for getting cmd-q
