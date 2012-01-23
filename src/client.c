@@ -6,17 +6,15 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-//#include "client.h"
+#include "client.h"
 #define AM_SERVER 1
 #include "defs.h"
 
-char *serverIP = "127.0.0.1"; // TODO: Fix this
-int socket_id;
-struct cribblePacket buffer;
-int b;
-struct sockaddr_in sock;
 
-void initClient() {
+/*
+ * Called once in init.c
+ */
+void initClient(char *addr) {
     //make the server socket for reliable IPv4 traffic 
     socket_id = socket( AF_INET, SOCK_STREAM, 0);
 
@@ -26,7 +24,7 @@ void initClient() {
     sock.sin_family = AF_INET;
 
     //Client will connect to address in serverIP, need to translate that IP address to binary
-    inet_aton( serverIP, &(sock.sin_addr) );
+    inet_aton( addr, &(sock.sin_addr) );
 
     //set the port to listen on, htons converts the port number to network format
     sock.sin_port = htons(44444);
@@ -39,7 +37,8 @@ void initClient() {
     buffer.type = C_CONNECT;
     b = write(socket_id, &buffer, sizeof(buffer) + 1);
 }
-int main(){
+
+void run_client(){
     initClient();
     //do client stuff continuously
     while (1) {

@@ -16,6 +16,7 @@ extern int toolno;
 extern void saveImage(); // from file.c
 
 void init(char *title) {
+    // TODO: Call initClient in client.c
 
   if (TTF_Init() == -1){
     exit(1);
