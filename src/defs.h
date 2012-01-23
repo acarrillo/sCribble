@@ -2,12 +2,24 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include "SDL/SDL.h"
-#include "SDL/SDL_ttf.h"
-#include "SDL/SDL_image.h"
+#ifndef AM_SERVER
+  #include "SDL/SDL.h"
+  #include "SDL/SDL_ttf.h"
+  #include "SDL/SDL_image.h"
+#endif
 
 #define READ 0
 #define WRITE 1
+
+#define C_CONNECT 0
+#define C_DISCONNECT 1
+#define C_STATUS 2
+#define C_PEN 3
+#define C_LINE 4
+
+#define BORDER_WIDTH 6
+#define BORDER_COLOR 50
+#define C_SQUARE     25
 
 typedef struct Mouse {
     int xcor;
@@ -18,17 +30,18 @@ typedef struct Mouse {
 
 typedef struct Color {
     int id; // 0 to 8, constants defined in graphics.h
-    Uint8 r; // 0 to 255
-    Uint8 g;
-    Uint8 b;
+    uint8_t r; // 0 to 255
+    uint8_t g;
+    uint8_t b;
 } Color;
 
-struct cribblePacket {
-  char type[64];  //CONNECT, DISCONNECT, STATUS, PEN, LINE
+typedef struct cribblePacket {
+  int type;
   Color color;
-  int size;
+  int tool_width;
+  Mouse mouse;
   char data[128];
-};
+} cribblePacket;
 
 typedef struct Circle {
   int savedx;

@@ -4,11 +4,15 @@
 #include "init.h"
 
 extern void line(int sx, int sy, int ex, int ey, int r, int g, int b);
+extern void drawToolsBackground();
+extern void setImages();
 extern void Status(char*, TTF_Font *font);
 extern TTF_Font *loadFont(char* name, int size);
 extern void closeFont(TTF_Font *font);
 extern Circle circle;
 extern int toolno;
+
+extern void saveImage(); // from file.c
 
 void init(char *title) {
 
@@ -21,6 +25,7 @@ void init(char *title) {
 		exit(1);
 	}
 
+    SDL_WM_SetIcon(SDL_LoadBMP("gfx/color_line.bmp"), NULL);
     screen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE);
 
 	if (screen == NULL) {
@@ -50,8 +55,9 @@ void init(char *title) {
     color.b = 0;
     color.id = 0; // Black
 
-    //draw divider line
-    line(0, 425, 650, 425, 0, 0, 0); //DIVIDER LINE
+    //Draws the background
+    drawToolsBackground();
+    setImages();
 
     //draw slider line
     line(300,462,400,462,0,0,0);
@@ -66,5 +72,6 @@ void init(char *title) {
 }
 
 void cleanup() {
+    saveImage();
 	SDL_Quit();
 }

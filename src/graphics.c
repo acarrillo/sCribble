@@ -156,7 +156,7 @@ SDL_Surface *loadImage(char *name)
 {
 	/* Load the image using SDL Image */
 
-	SDL_Surface *temp = IMG_Load(name);
+	SDL_Surface *temp = SDL_LoadBMP(name);
 	SDL_Surface *image;
 
 	if (temp == NULL)
@@ -168,7 +168,7 @@ SDL_Surface *loadImage(char *name)
 
 	/* Make the background transparent */
 
-	SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 0, 0, 0));
+	SDL_SetColorKey(temp, (SDL_SRCCOLORKEY|SDL_RLEACCEL), SDL_MapRGB(temp->format, 100, 100, 100));
 
 	/* Convert the image to the screen's native format */
 
@@ -205,36 +205,38 @@ void drawImage(SDL_Surface *image, int x, int y)
 }
 
 void setImages(){
-    SDL_Surface *image, *image2, *image3;
-    image = loadImage("gfx/color_line.jpg");
+    SDL_Surface *image;
+    image = loadImage("gfx/color_line.bmp");
     drawImage(image, 225,450);
-    image2 = loadImage("gfx/eraser.jpg");
-    drawImage(image2, 600,450);
-    image3 = loadImage("gfx/c_squared2.bmp");
-    drawImage(image3, 6, 448);
     SDL_FreeSurface(image);
-    SDL_FreeSurface(image2);
 
 }
 
 
 /*--- draws a grey border around drawing screen ---*/
 void drawBorder() {
-    int k_color;
-    k_color = 50;
-    drawFilledRect(0, 0, BORDER_WIDTH, screen->w, k_color, k_color, k_color); // Top
-    drawFilledRect(0, 0, screen->h, BORDER_WIDTH, k_color, k_color, k_color); // Left
-    drawFilledRect(0, screen->h - BORDER_WIDTH, BORDER_WIDTH, screen->w, k_color, k_color, k_color); // Bottom
-    drawFilledRect(screen->w - BORDER_WIDTH, 0, screen->h, BORDER_WIDTH, k_color, k_color, k_color); // Bottom
+    drawFilledRect(0, 0, BORDER_WIDTH, screen->w, BORDER_COLOR, BORDER_COLOR, BORDER_COLOR); // Top
+    drawFilledRect(0, 0, screen->h, BORDER_WIDTH, BORDER_COLOR, BORDER_COLOR, BORDER_COLOR); // Left
+    drawFilledRect(0, screen->h - BORDER_WIDTH, BORDER_WIDTH, screen->w, BORDER_COLOR, BORDER_COLOR, BORDER_COLOR); // Bottom
+    drawFilledRect(screen->w - BORDER_WIDTH, 0, screen->h, BORDER_WIDTH, BORDER_COLOR, BORDER_COLOR, BORDER_COLOR); // Bottom
+}
+
+void drawToolsBackground() {
+    int k_bkgrd = 100;
+    int y_cor = 446; //Warning: not scalable, FIXME
+
+    drawFilledRect(BORDER_WIDTH, y_cor-2, 2, screen->w - BORDER_WIDTH, BORDER_COLOR, BORDER_COLOR, BORDER_COLOR);
+    drawFilledRect(BORDER_WIDTH, y_cor, (screen->h - y_cor) - BORDER_WIDTH, screen->w - BORDER_WIDTH, k_bkgrd, k_bkgrd, k_bkgrd);
+
 }
 
 void setUI(){
     //Creates a pen size indicator.
-  drawFilledRect(300,460,5,100,255,255,255);
+    drawFilledRect(300,460,5,100,255,255,255);
 
     drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
 
-  //draws ROYGBIV palette
+    //draws ROYGBIV palette
     int i = 1; //DIVIDER (|) multiplier
     int magic = 5; //Magic number, dwai
     drawFilledRect(0+BORDER_WIDTH, 448, 1, C_SQUARE*8, 0, 0, 0);                         // outer black border of palette
@@ -261,7 +263,6 @@ void setUI(){
     drawFilledRect(BORDER_WIDTH + (1+color.id)*C_SQUARE - 4, 448, C_SQUARE, 4, 0, 0, 0); // Right border
     drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448, C_SQUARE, 1, 0, 0, 0); // Left border
     drawFilledRect(BORDER_WIDTH + color.id*C_SQUARE, 448 + C_SQUARE - 1, 2, C_SQUARE, 0, 0, 0); // Lower border
-
 
     //draws the erasing rectangle.
     drawFilledRect(549,454,17,27,0,0,0);
@@ -474,23 +475,24 @@ void updateScreen() {
     TTF_Font *font;
     font = loadFont("font/blackWolf.ttf", 16);
 
-    setImages();
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-    if(toolno == 0){
-      Status("Status: Pen Line Drawing", font);
-      penLine(font);
-    }
-    if(toolno == 1){
-      Status("Status: Rectangle Drawing", font);
-      penRect(font);
-    }
-    if(toolno == 2){
-      Status("Status: Circle Drawing", font);
-      penCircle(font);
+    switch(toolno) {
+        case 0:
+            Status("Status: Pen Line Drawing", font);
+            penLine(font);
+            break;
+        case 1:
+            Status("Status: Rectangle Drawing", font);
+            penRect(font);
+            break;
+        case 2:
+            Status("Status: Circle Drawing", font);
+            penCircle(font);
+            break;
     }
 
     modifyPen(font);

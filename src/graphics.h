@@ -1,6 +1,4 @@
 #include "defs.h"
-#define BORDER_WIDTH 6
-#define C_SQUARE     25
 
 #define BLACK        0
 #define RED          1
