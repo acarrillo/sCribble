@@ -21,6 +21,8 @@ int main(int argc, char *argv[]) {
     while (1) {
         getInput();
 
+        run_client();
+
         updateScreen();
 
         SDL_Delay(16);
