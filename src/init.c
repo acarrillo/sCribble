@@ -70,7 +70,6 @@ void init(char *title) {
     circle.iter = 0;
 
     toolno = 0;
-    
     //cribblePacket stuff
     /*
     cribblePacket.type = 3;
@@ -85,12 +84,12 @@ void init(char *title) {
     (cribblePacket.mouse).lasty=-1;
     cribblePacket.data=NULL;
     */
-    
 
     closeFont(font);
 }
 
 void cleanup() {
-    saveImage();
-	SDL_Quit();
+    cleanup_client(); // Disconnect from server
+    saveImage();      // Save canvas as .bmp
+    SDL_Quit();       // Tear down all the SDL things
 }

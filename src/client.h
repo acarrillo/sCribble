@@ -3,5 +3,5 @@ void initClient(char*);
 
 int socket_id;
 struct cribblePacket buffer;
-int b;
+int b;                        // Number of bytes written
 struct sockaddr_in sock;
