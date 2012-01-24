@@ -3,6 +3,7 @@
 #include <sys/sem.h>
 #include <string.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include "server.h"
 
 void subserve(int socket_client){
@@ -12,6 +13,12 @@ void subserve(int socket_client){
   sop.sem_num = 0;
   sop.sem_flg = 0;
   done = 0;
+
+  printf("subserver init'd\n");
+
+ //mark subserver socket as blocking
+  int opts = fcntl(socket_client,F_GETFL);
+  fcntl(socket_client, F_SETFL, opts & (~O_NONBLOCK));
 
   while(!done){
     //read from the client (blocks)

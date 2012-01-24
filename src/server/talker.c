@@ -8,13 +8,23 @@
 #include "server.h"
 #include <assert.h>
 
-void blastMessage(char* message){
+void broadcastPacket(cribblePacket* packet){
+  printf("Message to broadcast: %s.\n", packet->data);
+  int i, b;
+  for(i=0; i<64; i++){
+    if(clientList[i]){
+      b = write( clientList[i], packet, sizeof(*packet));
+      if(b==-1) printf( "Talker writing error: %s\n", strerror( errno ) );
+      printf("Talker wrote %d bytes to %d\n", b, clientList[i]);
+    }
+  }
+}
+
+void broadcastMessage(char* message){
   cribblePacket buffer;
   buffer.type = C_STATUS;
   strcpy(buffer.data, message);
-  int i;
-  for(i=0; i<64; i++)
-    write( clientList[i], &buffer, sizeof(buffer));
+  broadcastPacket(&buffer);
 }
 
 void removeClient(int sock_client){
@@ -28,43 +38,37 @@ void removeClient(int sock_client){
     char message[140];
     strcpy(message, messagePot->data);
     strcat(message, " left the doc");
-    blastMessage(message);
+    broadcastMessage(message);
 }
 
 void server_talker(int clientListKey){
-  int b;
+  /* int b;
   struct sembuf sop;
   sop.sem_num = 0;
-  sop.sem_flg = 0;
+  sop.sem_flg = IPC_NOWAIT; //Do not block
 
   while(1){
-    
-    //Block until the pot semaphore is ready
     sop.sem_op = 0;
     int i = semop(semid, &sop, 1);
-    printf("Talker: semid is %d\n", semid);
-    printf("Talker: Semaphore is ready (i = %d)\n", i);
-    if(i==-1) printf( "Talker error: %s\n", strerror( errno ) );
-    if(messagePot->type == C_DISCONNECT){
-      printf("Talker: disconnecting client\n");
-      removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
-    }
-    else {
-      printf("Talker: broadcasting...\n");
-      if(messagePot->type == C_PEN){
-	printf("Message to broadcast: %s.\n", messagePot->data);
+
+    if((i == -1) && (errno != EAGAIN)) printf( "Semop error in talker: %s\n", strerror( errno ) );
+    else { //The semaphore is ready!
+      printf("Talker: semid is %d\n", semid);
+      printf("Talker: Semaphore is ready (i = %d)\n", i);
+
+      if(messagePot->type == C_DISCONNECT){
+	printf("Talker: disconnecting client\n");
+	removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
       }
-      int i;
-      for(i=0; i<64; i++){
-	if(clientList[i]){
-	  b = write( clientList[i], &messagePot, sizeof(messagePot));
-	  if(b==-1) printf( "Talker writing error: %s\n", strerror( errno ) );
-	  printf("Talker wrote %d bytes to %d\n", b, clientList[i]);
-	}
+      else {
+	printf("Talker: broadcasting...\n");
+	if(messagePot->type == C_PEN) broadcastPacket(&messagePot);
       }
+
+      printf("Talker: releasing semaphore\n");
+      sop.sem_op = 3;
+      semop(semid, &sop, 1);
     }
-    printf("Talker: releasing semaphore\n");
-    sop.sem_op = 3;
-    semop(semid, &sop, 1);
   }
+  */
 }
