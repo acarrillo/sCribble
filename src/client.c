@@ -15,12 +15,12 @@
  * Called once in init.c
  */
 void initClient(char *addr) {
-    //make the server socket for reliable IPv4 traffic 
+    //make the server socket for reliable IPv4 traffic
     socket_id = socket( AF_INET, SOCK_STREAM, 0);
 
     printf("Socket file descriptor: %d\n", socket_id);
 
-    //set up the server socket struct, use IPv4 
+    //set up the server socket struct, use IPv4
     sock.sin_family = AF_INET;
 
     //Client will connect to address in serverIP, need to translate that IP address to binary

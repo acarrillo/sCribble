@@ -16,11 +16,12 @@ extern int toolno;
 extern void saveImage(); // from file.c
 
 void init(char *title) {
-    // TODO: Call initClient in client.c
+    // Initializes network communications
+    initClient("127.0.0.1"); //TODO: Test external servers
 
-  if (TTF_Init() == -1){
-    exit(1);
-  }
+    if (TTF_Init() == -1){
+        exit(1);
+    }
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("Could not initialize SDL: %s\n", SDL_GetError());
