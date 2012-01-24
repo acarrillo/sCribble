@@ -8,7 +8,7 @@
 #include "talker.h"
 #include "server.h"
 #include "listener.h"
-#include "semun.h"
+//#include "semun.h"
 #include <errno.h>
 
 /* FROM server.h : 
