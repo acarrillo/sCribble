@@ -54,7 +54,7 @@ void server_listener(){
 
   server_listener_setup();
   while(1) {
-    printf("Waiting for a connection\n");
+    printf("Listener: Waiting for a connection\n");
 
     //set socket_length after the connection is made
     socket_length = sizeof(server);
@@ -64,11 +64,11 @@ void server_listener(){
     socket_client = accept(socket_id, (struct sockaddr *)&server, &l);
     //printf( "Error: %s\n", strerror( errno ) );
 
-    printf("accepted connection %d\n",socket_client);
+    printf("Listener: accepted connection %d\n",socket_client);
 
     b = read( socket_client, &buffer, sizeof(buffer) );
     if(buffer.type == C_CONNECT){
-      printf("Listener got connect message\n");
+      printf("Listener: got connect message\n");
       add_client(socket_client);
       subserver = fork();
       if(subserver == 0)

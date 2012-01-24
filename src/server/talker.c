@@ -39,9 +39,9 @@ void server_talker(int clientListKey){
     //Block until the pot semaphore is ready
     sop.sem_op = 0;
     int i = semop(semid, &sop, 1);
-    printf("semid is %d\n", semid);
+    printf("Talker: semid is %d\n", semid);
     printf("Talker: Semaphore is ready (i = %d)\n", i);
-    printf( "Error: %s\n", strerror( errno ) );
+    if(i==-1) printf( "Talker error: %s\n", strerror( errno ) );
     if(messagePot->type == C_DISCONNECT)
       removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
     else {
