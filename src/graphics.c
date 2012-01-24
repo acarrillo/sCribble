@@ -7,7 +7,7 @@
 
 extern Circle circle;
 extern int toolno;
-extern cribblePacketo cribblePacket;
+extern cribblePacket cPacket;
 
 void drawPixel(int x, int y, int color) {
   Uint32 *pixel;
@@ -387,7 +387,7 @@ void penLine(TTF_Font *font){
           //draws a line based on current information.
 	  //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
           //draws a line based on cribblePacket's information.
-	  line((cribblePacket.mouse).lastx, (cribblePacket.mouse).lasty, (cribblePacket.mouse).xcor, (cribblePacket.mouse).ycor, (cribblePacket.color).r, (cribblePacket.color).g, (cribblePacket.color).b);
+	  line((cPacket.mouse).lastx, (cPacket.mouse).lasty, (cPacket.mouse).xcor, (cPacket.mouse).ycor, (cPacket.color).r, (cPacket.color).g, (cPacket.color).b);
 
         }
         mouse.lastx = mouse.xcor;
@@ -486,16 +486,16 @@ void updateScreen() {
     }
 
     //updates a cribblePacket.
-    cribblePacket.type = 3;
-    (cribblePacket.color).r=color.r;
-    (cribblePacket.color).g=color.g;
-    (cribblePacket.color).b=color.b;
-    (cribblePacket.color).id=color.id;
-    cribblePacket.tool_width = tool_width;
-    (cribblePacket.mouse).xcor= mouse.xcor;
-    (cribblePacket.mouse).ycor= mouse.ycor;
-    (cribblePacket.mouse).lastx= mouse.lastx;
-    (cribblePacket.mouse).lasty= mouse.lasty;
+    cPacket.type = 3;
+    (cPacket.color).r=color.r;
+    (cPacket.color).g=color.g;
+    (cPacket.color).b=color.b;
+    (cPacket.color).id=color.id;
+    cPacket.tool_width = tool_width;
+    (cPacket.mouse).xcor= mouse.xcor;
+    (cPacket.mouse).ycor= mouse.ycor;
+    (cPacket.mouse).lastx= mouse.lastx;
+    (cPacket.mouse).lasty= mouse.lasty;
     
 
     switch(toolno) {
