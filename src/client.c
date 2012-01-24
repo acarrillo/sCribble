@@ -47,11 +47,6 @@ void run_client(){
 
     b = write( socket_id, &buffer, sizeof(buffer) + 1 );
 
-    if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
-        //Exit program?
-        return 0;
-    }
-
     b = read( socket_id, &buffer, sizeof(buffer));
 
     printf("\tReceived: %s\n", buffer.data);
