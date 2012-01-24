@@ -48,7 +48,8 @@ void run_client(){
     b = write( socket_id, &buffer, sizeof(buffer) + 1 );
 
     if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
-        break;
+        //Exit program?
+        return 0;
     }
 
     b = read( socket_id, &buffer, sizeof(buffer));

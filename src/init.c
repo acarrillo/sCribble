@@ -17,9 +17,9 @@ extern void saveImage(); // from file.c
 
 extern void cleanup_client(); // From client.c
 
-void init(char *title) {
+void init(char *title, char *addr) {
     // Initializes network communications
-    initClient("127.0.0.1"); //TODO: Test external servers
+    initClient(addr); //TODO: Test external servers
 
     if (TTF_Init() == -1){
         exit(1);
