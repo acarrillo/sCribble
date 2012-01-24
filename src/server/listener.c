@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "server.h"
 #include "subserver.h"
 #include <errno.h>
@@ -18,6 +19,9 @@ void server_listener_setup(){
   //make the server socket for reliable IPv4 traffic
   socket_id = socket( AF_INET, SOCK_STREAM, 0);
   printf("Socket file descriptor: %d\n", socket_id);
+
+  //mark server socket as non-blocking
+  //  fcntl(socket_id
 
   //set up the server socket struct (use IPv4)
   server.sin_family = AF_INET;
@@ -38,12 +42,12 @@ void server_listener_setup(){
 int add_client(int sock_client){
   int i;
   for(i=0;i<64; i++){
-    printf("checking client #%d\n",i);
     if(!clientList[i]){
       clientList[i] = sock_client;
       break;
     }
   }
+  printf("Listener added client: %d\n", sock_client);
   return 64 - i;
 }
 
@@ -63,8 +67,6 @@ void server_listener(){
     //accept the incoming connection, create a new file desciptor for the socket to the client | BLOCKS
     socket_client = accept(socket_id, (struct sockaddr *)&server, &l);
     //printf( "Error: %s\n", strerror( errno ) );
-
-    printf("Listener: accepted connection %d\n",socket_client);
 
     b = read( socket_client, &buffer, sizeof(buffer) );
     if(buffer.type == C_CONNECT){
