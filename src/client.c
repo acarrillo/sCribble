@@ -39,30 +39,29 @@ void initClient(char *addr) {
 }
 
 void run_client(){
-    initClient();
-    //do client stuff continuously
-    while (1) {
-        buffer.type = C_PEN;
+    buffer.type = C_PEN;
 
-        printf("Enter message: ");
-        fgets(buffer.data, sizeof(buffer.data), stdin);
-        *(strchr(buffer.data, '\n')) = 0;
+    printf("Enter message: ");
+    fgets(buffer.data, sizeof(buffer.data), stdin);
+    *(strchr(buffer.data, '\n')) = 0;
 
-        b = write( socket_id, &buffer, sizeof(buffer) + 1 );
+    b = write( socket_id, &buffer, sizeof(buffer) + 1 );
 
-        if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
-            break;
-        }
-
-        b = read( socket_id, &buffer, sizeof(buffer));
-
-        printf("\tReceived: %s\n", buffer.data);
+    if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
+        break;
     }
 
+    b = read( socket_id, &buffer, sizeof(buffer));
+
+    printf("\tReceived: %s\n", buffer.data);
+
+    return 1;
+}
+
+void cleanup_client() {
     //unregister with the current document using a DISCONNECT message
     buffer.type = C_DISCONNECT;
     b = write(socket_id, &buffer, sizeof(buffer) +1);
 
     close(socket_id);
-    return 1;
 }
