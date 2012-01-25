@@ -377,17 +377,17 @@ void modifyPen(TTF_Font *font){
 }
 
 void penLine(TTF_Font *font){
-  if (mouse.xcor >= 0 && mouse.ycor < 450) {
+  if (cPacket.mouse.xcor >= 0 && cPacket.mouse.ycor < 450) {
         if(color.r == 255 && color.g == 255 && color.b == 255){
             Status("Status: Erasing...", font);
         }
         else
             Status("Status: Drawing...", font);
-        if(mouse.lastx >= 0){
-          //draws a line based on current information.
-	  //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
-          //draws a line based on cribblePacket's information.
-	  line((cPacket.mouse).lastx, (cPacket.mouse).lasty, (cPacket.mouse).xcor, (cPacket.mouse).ycor, (cPacket.color).r, (cPacket.color).g, (cPacket.color).b);
+        if(cPacket.mouse.lastx >= 0){
+            //draws a line based on current information.
+            //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
+            //draws a line based on cribblePacket's information.
+            line((cPacket.mouse).lastx, (cPacket.mouse).lasty, (cPacket.mouse).xcor, (cPacket.mouse).ycor, (cPacket.color).r, (cPacket.color).g, (cPacket.color).b);
 
         }
         mouse.lastx = mouse.xcor;
