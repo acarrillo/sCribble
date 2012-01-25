@@ -1,14 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include "client.h"
-#include <errno.h>
-#include <fcntl.h>
+
+extern int local_tool_width; // From main.h
 
 /*
  * Updates the cPacket buffer to reflect the changes made to it by the client.  Must be run AFTER canvas has drawn the server's cPacket.
@@ -19,7 +11,7 @@ void update_cPacket() {
     (cPacket.color).g=color.g;
     (cPacket.color).b=color.b;
     (cPacket.color).id=color.id;
-    cPacket.tool_width = tool_width;
+    cPacket.tool_width = local_tool_width;
     (cPacket.mouse).xcor= mouse.xcor;
     (cPacket.mouse).ycor= mouse.ycor;
     (cPacket.mouse).lastx= mouse.lastx;
