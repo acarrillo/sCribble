@@ -11,6 +11,22 @@
 #include <fcntl.h>
 
 /*
+ * Updates the cPacket buffer to reflect the changes made to it by the client.  Must be run AFTER canvas has drawn the server's cPacket.
+ */
+void update_cPacket() {
+    cPacket.type = C_PEN;
+    (cPacket.color).r=color.r;
+    (cPacket.color).g=color.g;
+    (cPacket.color).b=color.b;
+    (cPacket.color).id=color.id;
+    cPacket.tool_width = tool_width;
+    (cPacket.mouse).xcor= mouse.xcor;
+    (cPacket.mouse).ycor= mouse.ycor;
+    (cPacket.mouse).lastx= mouse.lastx;
+    (cPacket.mouse).lasty= mouse.lasty;
+}
+
+/*
  * Called once in init.c
  */
 void initClient(char *addr) {
@@ -32,7 +48,7 @@ void initClient(char *addr) {
     int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));
     // printf("Connect returned: %d\n", c);
     if (c == -1) printf("connect returned %d with an error \"%s\"\n", c, strerror(errno));
-    
+
     //mark client socket as non-blocking
     fcntl(socket_id, F_SETFL, O_NONBLOCK);
 
@@ -46,6 +62,7 @@ void initClient(char *addr) {
  * Called iteratively in main.c
  */
 void run_client(){
+    update_cPacket(); // Applies the local conditions to the cPacket buffer
 
     b = write( socket_id, &cPacket, sizeof(cPacket));
     if (b == -1) printf("write returned %d with an error \"%s\"\n", b, strerror(errno));
@@ -62,3 +79,4 @@ void cleanup_client() {
 
     close(socket_id);
 }
+

@@ -401,7 +401,7 @@ void rasterCircle(int x0, int y0, int radius){
   int ddF_y = -2 * radius;
   int x = 0;
   int y = radius;
- 
+
   drawFilledRect(x0, y0 + radius,tool_width,tool_width,color.r,color.g,color.b);
   drawFilledRect(x0, y0 - radius,tool_width,tool_width,color.r,color.g,color.b);
   drawFilledRect(x0 + radius, y0,tool_width,tool_width,color.r,color.g,color.b);
@@ -484,18 +484,6 @@ void updateScreen() {
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
-
-    //updates a cribblePacket.
-    cPacket.type = C_PEN;
-    (cPacket.color).r=color.r;
-    (cPacket.color).g=color.g;
-    (cPacket.color).b=color.b;
-    (cPacket.color).id=color.id;
-    cPacket.tool_width = tool_width;
-    (cPacket.mouse).xcor= mouse.xcor;
-    (cPacket.mouse).ycor= mouse.ycor;
-    (cPacket.mouse).lastx= mouse.lastx;
-    (cPacket.mouse).lasty= mouse.lasty;
 
 
     switch(toolno) {
