@@ -7,6 +7,7 @@
 
 extern Circle circle;
 extern int toolno;
+extern cribblePacket cPacket;
 
 void drawPixel(int x, int y, int color) {
   Uint32 *pixel;
@@ -383,7 +384,11 @@ void penLine(TTF_Font *font){
         else
             Status("Status: Drawing...", font);
         if(mouse.lastx >= 0){
-            line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
+          //draws a line based on current information.
+	  //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
+          //draws a line based on cribblePacket's information.
+	  line((cPacket.mouse).lastx, (cPacket.mouse).lasty, (cPacket.mouse).xcor, (cPacket.mouse).ycor, (cPacket.color).r, (cPacket.color).g, (cPacket.color).b);
+
         }
         mouse.lastx = mouse.xcor;
         mouse.lasty = mouse.ycor;
@@ -479,6 +484,19 @@ void updateScreen() {
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
+
+    //updates a cribblePacket.
+    cPacket.type = 3;
+    (cPacket.color).r=color.r;
+    (cPacket.color).g=color.g;
+    (cPacket.color).b=color.b;
+    (cPacket.color).id=color.id;
+    cPacket.tool_width = tool_width;
+    (cPacket.mouse).xcor= mouse.xcor;
+    (cPacket.mouse).ycor= mouse.ycor;
+    (cPacket.mouse).lastx= mouse.lastx;
+    (cPacket.mouse).lasty= mouse.lasty;
+    
 
     switch(toolno) {
         case 0:

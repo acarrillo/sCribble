@@ -11,4 +11,4 @@
 
 int semid;
 cribblePacket* messagePot;
-int* clientList;
+int clientList[64];
