@@ -19,16 +19,21 @@
 
 int clientListDescriptor, messagePotDescriptor;
 
+/*********************************************************************
+ * Unlink and remove shared memory
+ * Remove semaphore
+ *********************************************************************/
 void cleanup(){
   //unlink and remove shared memory
   printf("\t(cleaning up...)\n");
   shmdt(messagePot);
   shmctl(messagePotDescriptor, IPC_RMID, NULL);
+  semctl(semid, 0, IPC_RMID);
 }
 
 static void sighandler(int signo) {
   printf("Caught %d\n", signo);
-  cleanup();  //So we don't leave junk memory behind
+  cleanup();
   if ( signo == SIGINT )
     exit(-1);
 }
@@ -49,7 +54,8 @@ int main(int argc, char *argv[]){
   semop.val = POT_EMPTY;
   semctl(semid, 0, SETVAL, semop);
 
-  server_listener();  //accepts incoming network connections
+  //accept incoming network connections
+  loop_server();
    
   cleanup();
   return 1;
