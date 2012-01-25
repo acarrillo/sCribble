@@ -8,7 +8,6 @@
 #include <arpa/inet.h>
 #include "client.h"
 #define AM_SERVER 1
-#include "defs.h"
 
 
 /*
@@ -48,8 +47,6 @@ void run_client(){
     b = read( socket_id, &cPacket, sizeof(cPacket));
 
     printf("\tReceived: %s\n", cPacket.data);
-
-    return 1;
 }
 
 void cleanup_client() {

@@ -3,12 +3,13 @@
  */
 
 #include "main.h"
-#include "client.h"
 
 extern void init(char *, char *);
 extern void cleanup(void);
 extern void updateScreen(void);
 extern void getInput(void);
+
+extern void run_client(); // From client.c
 
 int main(int argc, char *argv[]) {
 

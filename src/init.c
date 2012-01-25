@@ -16,6 +16,7 @@ extern int toolno;
 extern void saveImage(); // from file.c
 
 extern void cleanup_client(); // From client.c
+extern void initClient(char*); // From client.c
 
 void init(char *title, char *addr) {
     // Initializes network communications
