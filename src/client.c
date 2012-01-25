@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include "client.h"
 
+#include <fcntl.h>
 
 /*
  * Called once in init.c
@@ -17,6 +18,10 @@ void initClient(char *addr) {
     socket_id = socket( AF_INET, SOCK_STREAM, 0);
 
     printf("Socket file descriptor: %d\n", socket_id);
+
+
+  //mark server socket as non-blocking
+  fcntl(socket_id, F_SETFL, O_NONBLOCK);
 
     //set up the server socket struct, use IPv4
     sock.sin_family = AF_INET;
@@ -34,6 +39,7 @@ void initClient(char *addr) {
     //register with the current document using a CONNECT message
     cPacket.type = C_CONNECT;
     b = write(socket_id, &cPacket, sizeof(cPacket) + 1);
+    printf("Send a connect message of %d bytes\n", b);
 }
 
 /*
