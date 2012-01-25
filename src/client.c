@@ -34,33 +34,29 @@ void initClient(char *addr) {
     printf("Connect returned: %d\n", c);
 
     //register with the current document using a CONNECT message
-    buffer.type = C_CONNECT;
-    b = write(socket_id, &buffer, sizeof(buffer) + 1);
+    cPacket.type = C_CONNECT;
+    b = write(socket_id, &cPacket, sizeof(cPacket) + 1);
 }
 
 /*
  * Called iteratively in main.c
  */
 void run_client(){
-    buffer.type = C_PEN;
+    cPacket.type = C_PEN;
 
-    printf("Enter message: ");
-    fgets(buffer.data, sizeof(buffer.data), stdin);
-    *(strchr(buffer.data, '\n')) = 0;
+    b = write( socket_id, &cPacket, sizeof(cPacket) + 1 );
 
-    b = write( socket_id, &buffer, sizeof(buffer) + 1 );
+    b = read( socket_id, &cPacket, sizeof(cPacket));
 
-    b = read( socket_id, &buffer, sizeof(buffer));
-
-    printf("\tReceived: %s\n", buffer.data);
+    printf("\tReceived: %s\n", cPacket.data);
 
     return 1;
 }
 
 void cleanup_client() {
     //unregister with the current document using a DISCONNECT message
-    buffer.type = C_DISCONNECT;
-    b = write(socket_id, &buffer, sizeof(buffer) +1);
+    cPacket.type = C_DISCONNECT;
+    b = write(socket_id, &cPacket, sizeof(cPacket) +1);
 
     close(socket_id);
 }

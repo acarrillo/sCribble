@@ -496,7 +496,7 @@ void updateScreen() {
     (cPacket.mouse).ycor= mouse.ycor;
     (cPacket.mouse).lastx= mouse.lastx;
     (cPacket.mouse).lasty= mouse.lasty;
-    
+
 
     switch(toolno) {
         case 0:
