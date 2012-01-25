@@ -9,13 +9,13 @@
 #include <assert.h>
 
 void broadcastPacket(cribblePacket* packet){
-  printf("Message to broadcast: %s.\n", packet->data);
+  // printf("Message to broadcast: %s.\n", packet->data);
   int i, b;
   for(i=0; i<64; i++){
     if(clientList[i]){
       b = write( clientList[i], packet, sizeof(*packet));
       if(b==-1) printf( "Talker writing error: %s\n", strerror( errno ) );
-      printf("Talker wrote %d bytes to %d\n", b, clientList[i]);
+      printf("\tTalker wrote %d bytes to %d\n", b, clientList[i]);
     }
   }
 }

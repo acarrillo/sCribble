@@ -81,7 +81,7 @@ void server_listener(){
     if(socket_client != -1){
       do {b = read( socket_client, &buffer, sizeof(buffer) );} while (b==-1);
       if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
-      printf("Listener accepted, got a %d message saying socket client is %d\n", buffer.type, socket_client);
+      //printf("Listener accepted, got a %d message saying socket client is %d\n", buffer.type, socket_client);
       if(buffer.type == C_CONNECT){
 	printf("Listener: got connect message\n");
 	add_client(socket_client);
@@ -97,7 +97,6 @@ void server_listener(){
     i = semop(semid, &sop, 1);
     
     if(i != -1) { //The semaphore is ready!
-      printf("Talker: semid is %d\n", semid);
       printf("Talker: Semaphore is ready (i = %d)\n", i);
       
       if(messagePot->type == C_DISCONNECT){
@@ -105,16 +104,15 @@ void server_listener(){
 	removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
       }
       else {
-	printf("Talker: broadcasting...\n");
+	printf("\tTalker: broadcasting...\n");
 	if(messagePot->type == C_PEN) broadcastPacket(messagePot);
       }
 
-      printf("Talker: releasing semaphore\n");
+      printf("\tTalker: releasing semaphore\n");
       sop.sem_op = 3;
       semop(semid, &sop, 1);
     }
     else if(errno != EAGAIN) printf( "Semop error in talker: %s\n", strerror( errno ) );
-    /*********************************************************************************************************************************/
-    
+    /*********************************************************************************************************************************/  
   }
 }
