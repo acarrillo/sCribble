@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "client.h"
-
+#include <errno.h>
 #include <fcntl.h>
 
 /*
@@ -18,10 +18,6 @@ void initClient(char *addr) {
     socket_id = socket( AF_INET, SOCK_STREAM, 0);
 
     printf("Socket file descriptor: %d\n", socket_id);
-
-
-  //mark server socket as non-blocking
-  fcntl(socket_id, F_SETFL, O_NONBLOCK);
 
     //set up the server socket struct, use IPv4
     sock.sin_family = AF_INET;
@@ -34,7 +30,11 @@ void initClient(char *addr) {
 
     //connect to the server
     int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));
-    printf("Connect returned: %d\n", c);
+    // printf("Connect returned: %d\n", c);
+    if (c == -1) printf("connect returned %d with an error \"%s\"\n", c, strerror(errno));
+
+  //mark server socket as non-blocking
+  fcntl(socket_id, F_SETFL, O_NONBLOCK);
 
     //register with the current document using a CONNECT message
     cPacket.type = C_CONNECT;
