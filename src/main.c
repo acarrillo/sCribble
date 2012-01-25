@@ -11,6 +11,18 @@ extern void updateScreen(void);
 extern void getInput(void);
 
 int main(int argc, char *argv[]) {
+    
+    //I can't figure this out. 
+    /*  if(argc == 2){
+    if(inet_pton(AF_INET, argv[1], NULL))
+      initClient(argv[1]); //can't access initClient function from here.
+    else
+      printf("Error occurred in second parameter. \n");
+  }
+  //else 
+    //execvp("the server program");?
+    //send loopback address to client?
+   */
 
     init("sCribble"); //Starts SDL
 
