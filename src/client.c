@@ -38,6 +38,9 @@ void initClient(char *addr) {
     b = write(socket_id, &buffer, sizeof(buffer) + 1);
 }
 
+/*
+ * Called iteratively in main.c
+ */
 void run_client(){
     buffer.type = C_PEN;
 
