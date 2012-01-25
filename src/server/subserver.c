@@ -35,9 +35,6 @@ void subserve(int socket_client){
 	done = 1;
       }
       
-      //change the message (for testing only)
-      strcat(buffer.data,"SRV");
-      
       memcpy(messagePot, &buffer, sizeof(buffer));
       
       //release the semaphore to the main server

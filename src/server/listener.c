@@ -76,12 +76,12 @@ void server_listener(){
     //set socket_length after the connection is made
     socklen_t l = sizeof(server);
 
-    //accept the incoming connection, create a new file desciptor for the socket to the client | BLOCKS
+    //accept the incoming connection, create a new file desciptor for the socket to the client
     socket_client = accept(socket_id, (struct sockaddr *)&server, &l);
     if(socket_client != -1){
-      b = read( socket_client, &buffer, sizeof(buffer) );
-      // printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
-      printf("Listener accepted, got a %d message saying %s\n", buffer.type, buffer.data);
+      do {b = read( socket_client, &buffer, sizeof(buffer) );} while (b==-1);
+      if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
+      printf("Listener accepted, got a %d message saying socket client is %d\n", buffer.type, socket_client);
       if(buffer.type == C_CONNECT){
 	printf("Listener: got connect message\n");
 	add_client(socket_client);
