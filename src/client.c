@@ -32,13 +32,13 @@ void initClient(char *addr) {
     int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));
     // printf("Connect returned: %d\n", c);
     if (c == -1) printf("connect returned %d with an error \"%s\"\n", c, strerror(errno));
-
-  //mark server socket as non-blocking
-  fcntl(socket_id, F_SETFL, O_NONBLOCK);
+    
+    //mark client socket as non-blocking
+    fcntl(socket_id, F_SETFL, O_NONBLOCK);
 
     //register with the current document using a CONNECT message
     cPacket.type = C_CONNECT;
-    b = write(socket_id, &cPacket, sizeof(cPacket) + 1);
+    b = write(socket_id, &cPacket, sizeof(cPacket));
     printf("Send a connect message of %d bytes\n", b);
 }
 
@@ -47,11 +47,12 @@ void initClient(char *addr) {
  */
 void run_client(){
 
-    b = write( socket_id, &cPacket, sizeof(cPacket) + 1 );
-
+    b = write( socket_id, &cPacket, sizeof(cPacket));
+    if (b == -1) printf("write returned %d with an error \"%s\"\n", b, strerror(errno));
+    printf("\tSent %d bytes\n", b);
     b = read( socket_id, &cPacket, sizeof(cPacket));
-
-    printf("\tReceived: %s\n", cPacket.data);
+    if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
+    printf("\tReceived %d bytes\n", b);
 }
 
 void cleanup_client() {
