@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     atexit(cleanup); //Tells SDL to call the cleanup() function in init.c when exiting
 
-
+    printf("Begun main loop\n");
     while (1) {
         getInput();
 

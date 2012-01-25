@@ -5,9 +5,9 @@
 #include <sys/sem.h>
 #include <unistd.h>
 #include <signal.h>
-#include "talker.h"
 #include "server.h"
 #include "listener.h"
+#include "talker.h"
 //#include "semun.h"
 #include <errno.h>
 

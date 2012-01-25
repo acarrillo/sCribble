@@ -7,7 +7,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "client.h"
-#define AM_SERVER 1
 
 
 /*

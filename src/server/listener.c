@@ -61,7 +61,6 @@ int add_client(int sock_client){
 void server_listener(){
   int socket_client, b, subserver;
   struct cribblePacket buffer;
-  socklen_t socket_length;
  /*****************************************FROM TALKER*****************************************************************************/
   //int b;
   int i;
@@ -75,7 +74,6 @@ void server_listener(){
     // printf("Listener: Waiting for a connection\n");
 
     //set socket_length after the connection is made
-    socket_length = sizeof(server);
     socklen_t l = sizeof(server);
 
     //accept the incoming connection, create a new file desciptor for the socket to the client | BLOCKS
