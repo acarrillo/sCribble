@@ -486,7 +486,7 @@ void updateScreen() {
     }
 
     //updates a cribblePacket.
-    cPacket.type = 3;
+    cPacket.type = C_PEN;
     (cPacket.color).r=color.r;
     (cPacket.color).g=color.g;
     (cPacket.color).b=color.b;

@@ -42,7 +42,6 @@ void initClient(char *addr) {
  * Called iteratively in main.c
  */
 void run_client(){
-    cPacket.type = C_PEN;
 
     b = write( socket_id, &cPacket, sizeof(cPacket) + 1 );
 
