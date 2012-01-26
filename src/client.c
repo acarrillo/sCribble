@@ -51,17 +51,40 @@ void initClient(char *addr) {
 }
 
 /*
+ * Clears buffer cPacket
+ */
+void clear_buffer() {
+    cPacket.type = C_PEN;
+    (cPacket.color).r=-1;
+    (cPacket.color).g=-1;
+    (cPacket.color).b=-1;
+    (cPacket.color).id=-1;
+    cPacket.tool_width = -1;
+    (cPacket.mouse).xcor= -1;
+    (cPacket.mouse).ycor= -1;
+    (cPacket.mouse).lastx= -1;
+    (cPacket.mouse).lasty= -1;
+}
+
+/*
  * Called iteratively in main.c
  */
 void run_client(){
     update_cPacket(); // Applies the local conditions to the cPacket buffer
 
-    b = write( socket_id, &cPacket, sizeof(cPacket));
-    if (b == -1) printf("write returned %d with an error \"%s\"\n", b, strerror(errno));
-    printf("\tSent %d bytes\n", b);
+    if (mouse.xcor >= 0 || mouse.ycor >= 0) {
+        b = write( socket_id, &cPacket, sizeof(cPacket));
+        if (b == -1) printf("write returned %d with an error \"%s\"\n", b, strerror(errno));
+        printf("\tSent %d bytes\n", b);
+    }
+
+    clear_buffer(); // Sets cPacket to nonsense values
+
     b = read( socket_id, &cPacket, sizeof(cPacket));
     if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
     printf("\tReceived %d bytes\n", b);
+
+    printf("%sXCOR:%d\tYCOR:%d\n", clienttag, cPacket.mouse.xcor, cPacket.mouse.ycor);
 }
 
 void cleanup_client() {

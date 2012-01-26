@@ -7,11 +7,10 @@
 #include <signal.h>
 #include "server.h"
 #include "listener.h"
-#include "talker.h"
 //#include "semun.h"
 #include <errno.h>
 
-/* FROM server.h : 
+/* FROM server.h :
   int semid;
   cribblePacket* messagePot;
   int* clientList;
@@ -40,13 +39,13 @@ static void sighandler(int signo) {
 
 int main(int argc, char *argv[]){
   union semun semop;
-  
+
   // signal(SIGSEGV, sighandler);
   signal(SIGINT, sighandler);
 
   //Set up the messagePot in shared memory
   messagePotDescriptor = shmget(MESSAGE_POT_KEY, 64*sizeof(int), 0664 | IPC_CREAT);
-  messagePot = (cribblePacket*) shmat(messagePotDescriptor, NULL, 0);  
+  messagePot = (cribblePacket*) shmat(messagePotDescriptor, NULL, 0);
   printf("messagePotDescriptor: %d\n",messagePotDescriptor);
 
   //Set up a semaphore for the messagePot

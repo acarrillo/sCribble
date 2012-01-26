@@ -21,3 +21,6 @@ struct sockaddr_in sock;
 extern cribblePacket cPacket;
 extern Mouse mouse;
 extern Color color;
+extern int local_tool_width;
+
+char *clienttag = "CLIENT -- ";
