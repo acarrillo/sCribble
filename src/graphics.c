@@ -269,16 +269,25 @@ void setUI(){
     drawFilledRect(549,454,17,27,0,0,0);
     drawFilledRect(550,455,15,25,255,255,255);
 
-    //draws the white rectangles that are buttons that change local_tool_width
-    drawFilledRect(275,455,15,25,255,255,255);
-    drawFilledRect(400,455,15,25,255,255,255);
+    //draws the grey rectangles that are buttons that change local_tool_width
+    drawFilledRect(275,455,15,25,50,50,50);
+    drawFilledRect(400,455,15,25,50,50,50);
+    //draws the borders for aforementioned buttons
+    drawFilledRect(275,455,1,25,0,0,0);
+    drawFilledRect(275,470,1,25,0,0,0);
+    drawFilledRect(275,455,15,1,0,0,0);
+    drawFilledRect(300,455,15,1,0,0,0);
+    drawFilledRect(400,455,1,25,0,0,0);
+    drawFilledRect(400,470,1,25,0,0,0);
+    drawFilledRect(400,455,15,1,0,0,0);
+    drawFilledRect(425,455,15,1,0,0,0);
 
     //draws the plus sign
     drawFilledRect(407,462,2,13,0,0,0);
     drawFilledRect(412,458,10,2,0,0,0);
 
     //draws the minus sign
-    drawFilledRect(280,462,2,13,0,0,0);
+    drawFilledRect(280,462,2,15,0,0,0);
 
 
     //indicates the current color of the pen.
