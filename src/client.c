@@ -78,8 +78,8 @@ void run_client(){
     clear_buffer(); // Sets cPacket to nonsense values
 
     b = read( socket_id, &cPacket, sizeof(cPacket));
-    if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
-    printf("\tReceived %d bytes\n", b);
+    /*if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));*/
+    /*printf("\tReceived %d bytes\n", b);*/
 
 }
 
