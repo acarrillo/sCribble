@@ -1,7 +1,10 @@
 To do list:
-   Current - 1.25.11
-   	   Fix server issues
-	   Fix remaining nuisances
-	   Initialization code
-	   Update documents and such
-	   Celebrate project completion
+   Fully test status message feature (and fix on OSX)
+   Test scalability of server
+
+Cool Features to Add:
+   More tools
+   Update newly joined users with the total drawing thus far
+   Implement chat
+   Implement mouse "watcher" overlay, even when not doodling
+   Implement basic art critic
