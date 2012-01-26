@@ -1,4 +1,4 @@
-CFLAGS = -Werror -Wall -I./lib/ -g
+CFLAGS = -Werror -Wall
 LFLAGS = `sdl-config --libs` -lSDL -lSDL_ttf
 OBJS   = client.o file.o init.o input.o graphics.o main.o
 S_OBJS = src/server/server.o src/server/listener.o src/server/subserver.o
