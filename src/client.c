@@ -25,8 +25,6 @@ void initClient(char *addr) {
     //make the server socket for reliable IPv4 traffic
     socket_id = socket( AF_INET, SOCK_STREAM, 0);
 
-    printf("Socket file descriptor: %d\n", socket_id);
-
     //set up the server socket struct, use IPv4
     sock.sin_family = AF_INET;
 
@@ -47,7 +45,6 @@ void initClient(char *addr) {
     //register with the current document using a CONNECT message
     cPacket.type = C_CONNECT;
     b = write(socket_id, &cPacket, sizeof(cPacket));
-    printf("Send a connect message of %d bytes\n", b);
 }
 
 /*
@@ -84,7 +81,6 @@ void run_client(){
     if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
     printf("\tReceived %d bytes\n", b);
 
-    printf("%sXCOR:%d\tYCOR:%d\n", clienttag, cPacket.mouse.xcor, cPacket.mouse.ycor);
 }
 
 void cleanup_client() {
