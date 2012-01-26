@@ -6,7 +6,7 @@ PROG = sCribble
 S_PROG = sCribbleServer
 
 # top-level rule to create the program.
-all: $(PROG)
+all: $(PROG) server
 
 # standalone client
 client: client.o
@@ -29,15 +29,12 @@ server: $(S_OBJS)
 	gcc $(S_OBJS) -o $(S_PROG)
 
 # cleaning everything that can be automatically recreated with "make".
-clean:
+clean: cleanS
 	rm $(PROG) *.o
 
 # cleaning everything that can be automatically recreated with "make server".
 cleanS:
 	rm $(S_PROG) src/server/*.o
-
-# cleaning everything that can be automatically recreated with "make server".
-cleanA: clean cleanS
 
 cleanC:
 	rm client client.o
