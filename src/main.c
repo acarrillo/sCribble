@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
   if(argc == 2){
     if(inet_pton(AF_INET, argv[1], NULL)){
-      initClient(argv[1]); 
+      initClient(argv[1]);
     }
     else
       printf("Error occurred in second parameter. \n");
@@ -27,9 +27,9 @@ int main(int argc, char *argv[]) {
   else if(argc == 1)
     execlp("server", "server", NULL);
   //send loopback address to client? how do?
-  
-  
-  
+
+
+
     init("sCribble", "127.0.0.1"); //Starts SDL, connects to 127.0.0.1
 
 

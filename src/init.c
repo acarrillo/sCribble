@@ -11,7 +11,7 @@ extern TTF_Font *loadFont(char* name, int size);
 extern void closeFont(TTF_Font *font);
 extern Circle circle;
 extern int toolno;
-/*extern cribblePacket cribblePacket;*/
+extern int local_tool_width;
 
 extern void saveImage(); // from file.c
 
@@ -73,21 +73,7 @@ void init(char *title, char *addr) {
     circle.iter = 0;
 
     toolno = 0;
-    //cribblePacket stuff
-    /*
-    cribblePacket.type = 3;
-    (cribblePacket.color).r=0;
-    (cribblePacket.color).g=0;
-    (cribblePacket.color).b=0;
-    (cribblePacket.color).id=0;
-    cribblePacket.tool_width = 5;
-    (cribblePacket.mouse).xcor=-1;
-    (cribblePacket.mouse).ycor=-1;
-    (cribblePacket.mouse).lastx=-1;
-    (cribblePacket.mouse).lasty=-1;
-    cribblePacket.data=NULL;
-    */
-
+    local_tool_width = 5; // Initializes tool to have a stroke of 5
     closeFont(font);
 }
 
