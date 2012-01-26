@@ -14,22 +14,8 @@ Files in sCribble repository:
       font
 	blackWolf.ttf
       gfx
-	c_squared2.bmp
-	c_squared2_red_down.bmp
-	c_squared2_red_up.bmp
-	c_squared2_white_down.bmp
 	color_line.bmp
 	eraser.jpg
-      lib
-	libSDL-1.2.0.dylib
-	libSDL.a
-	libSDL.dylib
-	libSDL.la
-	libSDL_ttf-2.0.0.dylib
-	libSDL_ttf.a
-	libSDL_ttf.dylilb
-	libSDL_ttf.la
-	libSDLmain.a
       src
 	server
 	  listener.c
