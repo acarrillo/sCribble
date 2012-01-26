@@ -18,23 +18,36 @@ WHAT ARE YOU?
     I am a collaborative doodle-pad. Combining the simplicity of MS Paint with the magic of networking, we can bring multiple clients together to work on a single screen.
 
 HOW DO I USE YOU?
-    Quite simply, just draw on the canvas and all of your edits will simultaneously propagate to all of your collaborators’ canvases as well.  To create a new doodle, just run the program. You will be presented with your IP address that other users can use to "log in" to your doodle.  If you wish to join someone else's doodle, just pass their IP address as a command line argument when you start up.  Upon quitting, the final doodle will be saved on your computer as mypicture.bmp.
+    Quite simply, just draw on the canvas and all of your edits will simultaneously propagate to all of your collaborators’ canvases as well.  To create a new doodle, use the interface just like you would make any other file on your computer. You will be presented with a special code that other users can use to “log in” to your doodle.
+    The UI is simple. There are multiple pen colors you may choose from and a pen size to choose from as well (the slider in the middle). To the right of that tells you your current color and further down is the eraser. Above this is a text status that tells you what is happening.
+    To start the server, compile it by using "make server" then typing in "./sCribbleServer". 
+    To start the application itself, compile it by using "make" then typing in "./sCribble".
 
 HOW DO YOU WORK?
-    -The Doodling:
-     The program runs on top of SDL, a framework that allows easy access to pixels in a buffer.  The window is divided into two areas: the canvas and the user interactions area.  Mouse events in the canvas are constantly recorded and sent off to the networking client, while buttons and sliders in the UI area define what tools are being used.  At the top of the UI area is a status bar, where messages from the server are displayed.  Each iteration of the main program loop, three things happen:
-     First, information about the mouse and keyboard is collected.  Standard keyboard shortcuts for quitting are caught, and, when relevant, the mouse's coordinates and state are packaged into a struct called a cribblePacket.  Control is then passed to a networking client.  If a cribblePacket was filled, it is sent over TCP to a server.   At this time, a cribblePacket may also be received from the server.  Finally, the canvas takes control of the program, and uses drawing algorithms to modifies pixels on the screen based on the cribblePackets that have been received.
- 
-    -The Magic:
-    Each "doodle" is hosted by a central server program (which runs alongside one client program).  The server/client distinction is not transparent to the user.
-    The server has at least two processes at any given time.  The first process sets up the network connection and begins listening for clients.  When a client connects, its descriptor is added to an internal list of descriptors and a subserver is forked.  When the server is initialized, it also sets up a cribblePacket in shared memory with a semaphore attached.  Subservers, upon receiving further communications from their respective clients, wait for the semaphore to be in an open state.  When it is, they dump their cribblePackets in the memory, and move the semaphore to a central-server-only state.  The central server then writes the data to all of the clients on its list and opens up the semaphore again.
 
+    SDL is used to create the screen and such rudimentary parts such as that.
+    SDL_ttf is used to write on the status bar.   
+    SDL_image is used to blit the eraser and pen icons in the UI.
+    We use the Bresenham's line algorithm to draw the lines (simply drawing rectangles does not make lines to our initial dismay).
+    Each "doodle" will be hosted by a central server (which runs alongside one client program).  The server/client distinction will not be transparent to the user and the “code” generated for each doodle will be a description of the server’s location on the network.
+    Changes made to the doodle will be sent as high-level instructions ("draw a red line of width 5px from 1,2 to 3,4").  Specialized structs will hold this data.  Each client will be split up into at least three processes: one is a "canvas" that is dedicated entirely to drawing the instructions sent to it, another is the user interactions process that intercepts mouse events to send to the canvas and central server, and the last is a networking client that sends instructions from the central server to the canvas.
+    The clients package all information into packets called cPackets which are sent to the server. The server distributes these packets and every client draws based on the cPacket. 
+    
+
+    sample struct outline:
+    {
+        timestamp;
+        tool type;
+        color;
+        size;
+        tool-specific data; //e.g. x,y coordinates
+    }
     
     TEAM MEMBER WORK BREAKDOWN:
-        Networking- Doron
-        Canvas Drawing- Alex
-        UI- Alex
-        Client logic- Vincent
+        Networking- Doron (with Alex)
+        Canvas Drawing- Alex (with Vincent)
+        UI- Alex (with Vincent)
+        Client logic- Doron (with Vincent)
 
 WHEN WILL YOU BE READY?
     Week of the 1st:  Project code outlined
@@ -42,3 +55,6 @@ WHEN WILL YOU BE READY?
     Week of the 15th: Working client-server relationships
     Week of the 22nd: Connect client/server code with paint tools
     Week of the 29th: Debugging/extra features (chat, mouse overlay, etc)
+
+Miscellaneous:
+    There is a function that draws a circle and another that draws rectangles but we did not have time to find a way to implement this into the program. The code is still in graphics.c but it is not utilized. We meant to make multiple tools such as these.
