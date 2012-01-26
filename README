@@ -53,4 +53,6 @@ Files in sCribble repository:
       .gitignore
       DESIGN
       README
+      TODO
+      BUGS
       Makefile
