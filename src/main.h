@@ -6,4 +6,6 @@ int tool_width;
 Color color;
 Circle circle;
 int toolno;
+
 cribblePacket cPacket;
+int local_tool_width;

@@ -7,6 +7,7 @@
 
 extern Circle circle;
 extern int toolno;
+extern int local_tool_width;
 extern cribblePacket cPacket;
 
 void drawPixel(int x, int y, int color) {
@@ -65,7 +66,7 @@ void line(int startx, int starty, int endx, int endy, int r, int g, int b) {
 
     /* draw the line */
     for(t=0; t<=distance+1; t++) {
-        drawFilledRect(startx, starty, tool_width, tool_width, r, g, b);
+        drawFilledRect(startx, starty, cPacket.tool_width, cPacket.tool_width, r, g, b);
 
         xerr+=delta_x;
         yerr+=delta_y;
@@ -235,7 +236,7 @@ void setUI(){
     //Creates a pen size indicator.
     drawFilledRect(300,460,5,100,255,255,255);
 
-    drawFilledRect(300 + (tool_width * 5),460,5,10,0,0,0);
+    drawFilledRect(300 + (local_tool_width * 5),460,5,10,0,0,0);
 
     //draws ROYGBIV palette
     int i = 1; //DIVIDER (|) multiplier
@@ -270,6 +271,7 @@ void setUI(){
     drawFilledRect(550,455,15,25,255,255,255);
 
     //draws the grey rectangles that are buttons that change local_tool_width
+
     drawFilledRect(275,455,15,25,50,50,50);
     drawFilledRect(400,455,15,25,50,50,50);
     //draws the borders for aforementioned buttons
@@ -359,17 +361,17 @@ void modifyPen(TTF_Font *font){
         }
 
         //Changing pen size where 1 <= pen size <= 16.
-        else if(mouse.xcor <=300 && mouse.xcor >=275 && tool_width > 1){
+        else if(mouse.xcor <=300 && mouse.xcor >=275 && local_tool_width > 1){
             Status("Status: Pen size decreased", font);
-            tool_width--;
+            local_tool_width--;
         }
-        else if(mouse.xcor <=425 && mouse.xcor >=400 && tool_width < 16){
+        else if(mouse.xcor <=425 && mouse.xcor >=400 && local_tool_width < 16){
             Status("Status: Pen size increased", font);
-            tool_width++;
+            local_tool_width++;
         }
         else if(mouse.xcor >= 305 && mouse.xcor <= 390){
             Status("Status: Pen size changing", font);
-            tool_width = (mouse.xcor - 300) / 5;
+            local_tool_width = (mouse.xcor - 300) / 5;
         }
         else if(mouse.xcor >= 550 && mouse.xcor <= 575){
             Status("Status: Eraser ON", font);
@@ -393,17 +395,17 @@ void modifyPen(TTF_Font *font){
 }
 
 void penLine(TTF_Font *font){
-  if (mouse.xcor >= 0 && mouse.ycor < 450) {
+  if (cPacket.mouse.xcor >= 0 && cPacket.mouse.ycor < 450) {
         if(color.r == 255 && color.g == 255 && color.b == 255){
             Status("Status: Erasing...", font);
         }
         else
             Status("Status: Drawing...", font);
-        if(mouse.lastx >= 0){
-          //draws a line based on current information.
-	  //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
-          //draws a line based on cribblePacket's information.
-	  line((cPacket.mouse).lastx, (cPacket.mouse).lasty, (cPacket.mouse).xcor, (cPacket.mouse).ycor, (cPacket.color).r, (cPacket.color).g, (cPacket.color).b);
+        if(cPacket.mouse.lastx >= 0){
+            //draws a line based on current information.
+            //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
+            //draws a line based on cribblePacket's information.
+            line((cPacket.mouse).lastx, (cPacket.mouse).lasty, (cPacket.mouse).xcor, (cPacket.mouse).ycor, (cPacket.color).r, (cPacket.color).g, (cPacket.color).b);
 
         }
         mouse.lastx = mouse.xcor;
@@ -417,11 +419,11 @@ void rasterCircle(int x0, int y0, int radius){
   int ddF_y = -2 * radius;
   int x = 0;
   int y = radius;
- 
-  drawFilledRect(x0, y0 + radius,tool_width,tool_width,color.r,color.g,color.b);
-  drawFilledRect(x0, y0 - radius,tool_width,tool_width,color.r,color.g,color.b);
-  drawFilledRect(x0 + radius, y0,tool_width,tool_width,color.r,color.g,color.b);
-  drawFilledRect(x0 - radius, y0,tool_width,tool_width,color.r,color.g,color.b);
+
+  drawFilledRect(x0, y0 + radius,local_tool_width,local_tool_width,color.r,color.g,color.b);
+  drawFilledRect(x0, y0 - radius,local_tool_width,local_tool_width,color.r,color.g,color.b);
+  drawFilledRect(x0 + radius, y0,local_tool_width,local_tool_width,color.r,color.g,color.b);
+  drawFilledRect(x0 - radius, y0,local_tool_width,local_tool_width,color.r,color.g,color.b);
 
   while(x < y)
   {
@@ -437,14 +439,14 @@ void rasterCircle(int x0, int y0, int radius){
     x++;
     ddF_x += 2;
     f += ddF_x;
-    drawFilledRect(x0 + x, y0 + y,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 - x, y0 + y,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 + x, y0 - y,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 - x, y0 - y,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 + y, y0 + x,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 - y, y0 + x,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 + y, y0 - x,tool_width,tool_width,color.r,color.g,color.b);
-    drawFilledRect(x0 - y, y0 - x,tool_width,tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + x, y0 + y,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - x, y0 + y,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + x, y0 - y,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - x, y0 - y,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + y, y0 + x,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - y, y0 + x,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 + y, y0 - x,local_tool_width,local_tool_width,color.r,color.g,color.b);
+    drawFilledRect(x0 - y, y0 - x,local_tool_width,local_tool_width,color.r,color.g,color.b);
   }
 }
 
@@ -501,18 +503,6 @@ void updateScreen() {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
     }
 
-    //updates a cribblePacket.
-    cPacket.type = 3;
-    (cPacket.color).r=color.r;
-    (cPacket.color).g=color.g;
-    (cPacket.color).b=color.b;
-    (cPacket.color).id=color.id;
-    cPacket.tool_width = tool_width;
-    (cPacket.mouse).xcor= mouse.xcor;
-    (cPacket.mouse).ycor= mouse.ycor;
-    (cPacket.mouse).lastx= mouse.lastx;
-    (cPacket.mouse).lasty= mouse.lasty;
-    
 
     switch(toolno) {
         case 0:

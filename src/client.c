@@ -1,68 +1,97 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-//#include "client.h"
-#define AM_SERVER 1
-#include "defs.h"
+#include "client.h"
 
-int main(){
+extern int local_tool_width; // From main.h
 
-  char* serverIP = "127.0.0.1";
-  int socket_id;
-  struct cribblePacket buffer;
-  int b;
-  struct sockaddr_in sock;
-
-  //make the server socket for reliable IPv4 traffic 
-  socket_id = socket( AF_INET, SOCK_STREAM, 0);
-
-  printf("Socket file descriptor: %d\n", socket_id);
-
-  //set up the server socket struct, use IPv4 
-  sock.sin_family = AF_INET;
-
-  //Client will connect to address in serverIP, need to translate that IP address to binary
-  inet_aton( serverIP, &(sock.sin_addr) );
-    
-  //set the port to listen on, htons converts the port number to network format
-  sock.sin_port = htons(44444);
-  
-  //connect to the server
-  int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));
-  printf("Connect returned: %d\n", c);
-
-  //register with the current document using a CONNECT message
-  buffer.type = C_CONNECT;
-  b = write(socket_id, &buffer, sizeof(buffer) + 1);
-
-  //do client stuff continuously
-  while (1) {
-      buffer.type = C_PEN;
-
-      printf("Enter message: ");
-      fgets(buffer.data, sizeof(buffer.data), stdin);
-      *(strchr(buffer.data, '\n')) = 0;
-
-      b = write( socket_id, &buffer, sizeof(buffer) + 1 );
-
-      if ( strncmp(buffer.data, "exit", sizeof(buffer)) == 0) {
-          break;
-      }
-
-      b = read( socket_id, &buffer, sizeof(buffer));
-
-      printf("\tReceived: %s\n", buffer.data);
-  }
-
-  //unregister with the current document using a DISCONNECT message
-  buffer.type = C_DISCONNECT;
-  b = write(socket_id, &buffer, sizeof(buffer) +1);
-
-  close(socket_id);
-  return 1;
+/*
+ * Updates the cPacket buffer to reflect the changes made to it by the client.  Must be run AFTER canvas has drawn the server's cPacket.
+ */
+void update_cPacket() {
+    cPacket.type = C_PEN;
+    (cPacket.color).r=color.r;
+    (cPacket.color).g=color.g;
+    (cPacket.color).b=color.b;
+    (cPacket.color).id=color.id;
+    cPacket.tool_width = local_tool_width;
+    (cPacket.mouse).xcor= mouse.xcor;
+    (cPacket.mouse).ycor= mouse.ycor;
+    (cPacket.mouse).lastx= mouse.lastx;
+    (cPacket.mouse).lasty= mouse.lasty;
 }
+
+/*
+ * Called once in init.c
+ */
+void initClient(char *addr) {
+    //make the server socket for reliable IPv4 traffic
+    socket_id = socket( AF_INET, SOCK_STREAM, 0);
+
+    printf("Socket file descriptor: %d\n", socket_id);
+
+    //set up the server socket struct, use IPv4
+    sock.sin_family = AF_INET;
+
+    //Client will connect to address in serverIP, need to translate that IP address to binary
+    inet_aton( addr, &(sock.sin_addr) );
+
+    //set the port to listen on, htons converts the port number to network format
+    sock.sin_port = htons(44444);
+
+    //connect to the server
+    int c = connect(socket_id, (struct sockaddr *)&sock, sizeof(sock));
+    // printf("Connect returned: %d\n", c);
+    if (c == -1) printf("connect returned %d with an error \"%s\"\n", c, strerror(errno));
+
+    //mark client socket as non-blocking
+    fcntl(socket_id, F_SETFL, O_NONBLOCK);
+
+    //register with the current document using a CONNECT message
+    cPacket.type = C_CONNECT;
+    b = write(socket_id, &cPacket, sizeof(cPacket));
+    printf("Send a connect message of %d bytes\n", b);
+}
+
+/*
+ * Clears buffer cPacket
+ */
+void clear_buffer() {
+    cPacket.type = C_PEN;
+    (cPacket.color).r=-1;
+    (cPacket.color).g=-1;
+    (cPacket.color).b=-1;
+    (cPacket.color).id=-1;
+    cPacket.tool_width = -1;
+    (cPacket.mouse).xcor= -1;
+    (cPacket.mouse).ycor= -1;
+    (cPacket.mouse).lastx= -1;
+    (cPacket.mouse).lasty= -1;
+}
+
+/*
+ * Called iteratively in main.c
+ */
+void run_client(){
+    update_cPacket(); // Applies the local conditions to the cPacket buffer
+
+    if (mouse.xcor >= 0 || mouse.ycor >= 0) {
+        b = write( socket_id, &cPacket, sizeof(cPacket));
+        if (b == -1) printf("write returned %d with an error \"%s\"\n", b, strerror(errno));
+        printf("\tSent %d bytes\n", b);
+    }
+
+    clear_buffer(); // Sets cPacket to nonsense values
+
+    b = read( socket_id, &cPacket, sizeof(cPacket));
+    if (b == -1) printf("read returned %d with an error \"%s\"\n", b, strerror(errno));
+    printf("\tReceived %d bytes\n", b);
+
+    printf("%sXCOR:%d\tYCOR:%d\n", clienttag, cPacket.mouse.xcor, cPacket.mouse.ycor);
+}
+
+void cleanup_client() {
+    //unregister with the current document using a DISCONNECT message
+    cPacket.type = C_DISCONNECT;
+    b = write(socket_id, &cPacket, sizeof(cPacket) +1);
+    printf("disconnected from server\n\n\n");
+    close(socket_id);
+}
+

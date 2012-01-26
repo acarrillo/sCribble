@@ -23,9 +23,9 @@ void subserve(int socket_client){
   while(!done){
     //read from the client (blocks)
     b = read( socket_client, &buffer, sizeof(buffer) );
-    printf("Subserver: got %d message\n", buffer.type);
     if(buffer.type != C_CONNECT){
-      
+      printf("Subserver: got %d message\n", buffer.type);      
+
       //grab the semaphore
       sop.sem_op = -2;
       semop(semid, &sop, 1);
@@ -35,13 +35,10 @@ void subserve(int socket_client){
 	done = 1;
       }
       
-      //change the message (for testing only)
-      strcat(buffer.data,"SRV");
-      
       memcpy(messagePot, &buffer, sizeof(buffer));
       
       //release the semaphore to the main server
-      printf("Subserver: releasing the semaphore\n");
+      printf("\tSubserver: releasing the semaphore\n");
       sop.sem_op = -1;
       semop(semid, &sop, 1);
     }
