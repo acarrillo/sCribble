@@ -1,9 +1,12 @@
 To do list:
    Fully test status message feature (and fix on OSX)
+   Finish the circle drawing and rectangle drawing functions in graphics.c
    Test scalability of server
+   Fix picture saving at end of drawing
 
 Cool Features to Add:
    More tools
+    * "Fill" tool, rectangle tool, circle drawing tool
    Update newly joined users with the total drawing thus far
    Implement chat
    Implement mouse "watcher" overlay, even when not doodling

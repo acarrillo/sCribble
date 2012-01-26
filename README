@@ -1,59 +1,72 @@
+      ____      _ _     _     _
+ ___ / ___|_ __(_) |__ | |__ | | ___
+/ __| |   | '__| | '_ \| '_ \| |/ _ \
+\__ \ |___| |  | | |_) | |_) | |  __/
+|___/\____|_|  |_|_.__/|_.__/|_|\___|
+                                     The smart doodler
+
+------------------------------------------------------
+by Alejandro Carrillo, Doron Shapiro, and Vincent Zhen
+------------------------------------------------------
+
 Members:
 	Alejandro Carrillo
 	Doron Shapiro
 	Vincent Zhen
 
 
-How to use:
-        Run "make" to compile and "make clean" to clean up once you are through.
+HOW TO USE:
+    Install the `libsdl` and `libsdl_ttf` packages.
+
+    Then, to build, run:
+        $ make
+
 	To start a doodle, run "./sCribble".  To collaborate on an existing doodle, run "./sCribble XXX.XXX.XXX.XXX", where XXX.XXX.XXX.XXX is the IP address of the host.
+
+    For example, to run two canvases on the same computer, do the following:
+
+    TERMINAL WINDOW A
+        $ ./sCribble
+    TERMINAL WINDOW B
+        $ ./sCribble 127.0.0.1
+
 	We used SDL for our project. This includes SDL_image (for image blitting), SDL_ttf (for text) and SDL (for the rest of it).
-	It is necessary to download 'libsdl' & 'libsdl_ttf' for usage.
+
+    To clean up the build files:
+        $ make clean && make cleanS
 
 Files in sCribble repository:
       font
-	blackWolf.ttf
+	      blackWolf.ttf
       gfx
-	c_squared2.bmp
-	c_squared2_red_down.bmp
-	c_squared2_red_up.bmp
-	c_squared2_white_down.bmp
-	color_line.bmp
-	eraser.jpg
-      lib
-	libSDL-1.2.0.dylib
-	libSDL.a
-	libSDL.dylib
-	libSDL.la
-	libSDL_ttf-2.0.0.dylib
-	libSDL_ttf.a
-	libSDL_ttf.dylilb
-	libSDL_ttf.la
-	libSDLmain.a
+	      color_line.bmp
       src
-	server
-	  listener.c
-	  listener.h
-	  server.c
-	  server.h
-	  subserver.c
-	  subserver.h
-	client.c
-	client.h
-	defs.h
-	file.c
-	file.h
-	graphics.c
-	graphics.h
-	init.c
-	init.h
-	input.c
-	input.h
-	main.c
-	main.h
+	      server
+	          listener.c
+	          listener.h
+	          server.c
+	          server.h
+	          subserver.c
+	          subserver.h
+	      client.c
+	      client.h
+	      defs.h
+	      file.c
+	      file.h
+	      graphics.c
+	      graphics.h
+	      init.c
+	      init.h
+	      input.c
+	      input.h
+	      main.c
+	      main.h
       .gitignore
       DESIGN
       README
       TODO
       BUGS
       Makefile
+
+NOTES:
+    The full commit history of this project can be found at http://github.com/acarrillo/Cribble
