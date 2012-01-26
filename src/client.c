@@ -91,7 +91,7 @@ void cleanup_client() {
     //unregister with the current document using a DISCONNECT message
     cPacket.type = C_DISCONNECT;
     b = write(socket_id, &cPacket, sizeof(cPacket) +1);
-
+    printf("disconnected from server\n\n\n");
     close(socket_id);
 }
 

@@ -9,6 +9,7 @@
 #include "listener.h"
 #include "semun.h"
 #include <errno.h>
+#include <signal.h>
 
 /* FROM server.h :
   int semid;
@@ -25,6 +26,7 @@ int clientListDescriptor, messagePotDescriptor;
 void cleanup(){
   //unlink and remove shared memory
   printf("\t(cleaning up...)\n");
+  kill(0,2);
   shmdt(messagePot);
   shmctl(messagePotDescriptor, IPC_RMID, NULL);
   semctl(semid, 0, IPC_RMID);

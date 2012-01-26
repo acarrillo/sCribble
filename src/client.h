@@ -13,6 +13,7 @@
 
 void run_client();
 void initClient(char*);
+void cleanup_client();
 
 int socket_id;
 int b;                        // Number of bytes written

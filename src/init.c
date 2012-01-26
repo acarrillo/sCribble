@@ -2,6 +2,7 @@
  * SDL framework borrowed from http://www.parallelrealities.co.uk/
  */
 #include "init.h"
+#include <signal.h>
 
 extern void line(int sx, int sy, int ex, int ey, int r, int g, int b);
 extern void drawToolsBackground();
@@ -78,7 +79,9 @@ void init(char *title, char *addr) {
 }
 
 void cleanup() {
-    cleanup_client(); // Disconnect from server
-    saveImage();      // Save canvas as .bmp
-    SDL_Quit();       // Tear down all the SDL things
+  cleanup_client(); // Disconnect from server
+  saveImage();      // Save canvas as .bmp
+  SDL_Quit();       // Tear down all the SDL things
+  printf("killing server\n");
+  kill(0, 2);
 }
