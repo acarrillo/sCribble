@@ -4,8 +4,9 @@ Members:
 	Vincent Zhen
 
 
-How to compile:
-        Type in "make server" then "make" in a different terminal tab to compile everything.
+How to use:
+        Run "make" to compile and "make clean" to clean up once you are through.
+	To start a doodle, run "./sCribble".  To collaborate on an existing doodle, run "./sCribble XXX.XXX.XXX.XXX", where XXX.XXX.XXX.XXX is the IP address of the host.
 	We used SDL for our project. This includes SDL_image (for image blitting), SDL_ttf (for text) and SDL (for the rest of it).
 	It is necessary to download 'libsdl' & 'libsdl_ttf' for usage.
 
