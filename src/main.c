@@ -19,25 +19,11 @@ extern void initClient(char* addr);
 int haveAServer;
 
 int main(int argc, char *argv[]) {
-<<<<<<< HEAD
-    
-    //I can't figure this out. 
-    /*  if(argc == 2){
-    if(inet_pton(AF_INET, argv[1], NULL))
-      initClient(argv[1]); //can't access initClient function from here.
-    else
-      printf("Error occurred in second parameter. \n");
-  }
-  //else 
-    //execvp("the server program");?
-    //send loopback address to client?
-   */
-=======
+
+    // Defaults it to localhost
   char serverIP[16];
   strncpy(serverIP, "127.0.0.1", 16);
   haveAServer = 0;
-
->>>>>>> client-canvas
 
   if(argc == 2){ //we have been passed a server to connect to
     if(inet_addr(argv[1]))
