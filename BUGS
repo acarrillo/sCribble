@@ -1,3 +1,8 @@
-sCribble bugs:
-	 Server gets wacky when number of clients grows.
-	 Inter-client drawings will be drawn with the client's own pen size, not the size of the client that draws it.
+1/02 Program crashes when mouse leaves window too quickly
+1/14 No way to quit on OSX
+1/23 Server prints garbage instead of serving
+1/23 Server leaves semaphores and shared memory behind
+1/26 Server gets wacky when number of clients grows.
+1/26 Inter-client drawings will be drawn with the client's own pen size, not the size of the client that draws it.
+1/26 Line tool width init'd to zero
+1/26 Server never quits
