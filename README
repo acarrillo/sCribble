@@ -7,7 +7,7 @@ Members:
 How to compile:
         Type in "make server" then "make" in a different terminal tab to compile everything.
 	We used SDL for our project. This includes SDL_image (for image blitting), SDL_ttf (for text) and SDL (for the rest of it).
-	It is necessary to download these SDL libraries for usage.
+	It is necessary to download 'libsdl' & 'libsdl_ttf' for usage.
 
 Files in sCribble repository:
       font
