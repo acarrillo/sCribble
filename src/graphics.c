@@ -35,6 +35,7 @@ void drawFilledRect(int xi, int yi, int len, int width, int r, int g, int b) {
 //dwks from 'http://cboard.cprogramming.com/game-programming/67832-line-drawing-algorithm.html'
 //Bresenham's line algorithm
 void line(int startx, int starty, int endx, int endy, int r, int g, int b) {
+    printf("%sin line(), local_tool_width:%d\n", gtag, local_tool_width);
     int t, distance;
     int xerr=0, yerr=0, delta_x, delta_y;
     int incx, incy;
