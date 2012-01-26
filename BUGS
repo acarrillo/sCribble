@@ -1,2 +1,3 @@
 sCribble bugs:
 	 Server gets wacky when number of clients grows.
+	 Inter-client drawings will be drawn with the client's own pen size, not the size of the client that draws it.
