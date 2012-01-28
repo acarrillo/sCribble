@@ -16,7 +16,7 @@ Members:
 
 
 HOW TO USE:
-    Install the `libsdl` and `libsdl_ttf` packages.
+    Install the `libsdl-devel` and `libsdl_ttf` packages.  Depending on your platform, package names will vary, but you need the "dev" versions of the package to compile sCribble.
 
     Then, to build, run:
         $ make
