@@ -27,9 +27,6 @@
 extern void line(int sx, int sy, int ex, int ey, int r, int g, int b);
 extern void drawToolsBackground();
 extern void setImages();
-extern void Status(char*, TTF_Font *font);
-extern TTF_Font *loadFont(char* name, int size);
-extern void closeFont(TTF_Font *font);
 extern Circle circle;
 extern int toolno;
 extern int local_tool_width;
@@ -42,10 +39,6 @@ extern void initClient(char*); // From client.c
 void init(char *title, char *addr) {
     // Initializes network communications
     initClient(addr); //TODO: Test external servers
-
-    if (TTF_Init() == -1){
-        exit(1);
-    }
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("Could not initialize SDL: %s\n", SDL_GetError());
@@ -62,10 +55,6 @@ void init(char *title, char *addr) {
 	}
 	SDL_WM_SetCaption(title, NULL); // Sets screen title
     SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 255, 255, 255)); //Sets screen white
-
-    TTF_Font * font;
-    font = loadFont("font/blackWolf.ttf", 16);
-    Status("Welcome to sCribble!", font);
 
     /* initialize mouse coordinate struct */
     mouse.xcor = -1;
@@ -95,7 +84,6 @@ void init(char *title, char *addr) {
 
     toolno = 0;
     local_tool_width = 5; // Initializes tool to have a stroke of 5
-    closeFont(font);
 }
 
 void cleanup() {
