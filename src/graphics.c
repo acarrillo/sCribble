@@ -249,59 +249,51 @@ void setUI(){
     drawBorder();
 }
 
-void modifyPen(TTF_Font *font){
+void modifyPen(){
   if (mouse.ycor > 450 && mouse.ycor < 450+C_SQUARE){ // If the mouse is in range of the palette area
         if(mouse.xcor <= C_SQUARE){
-            Status("Status: Pen Color: Black", font);
             color.id=BLACK;
             color.r=0;
             color.g=0;
             color.b=0;
         }
         else if(mouse.xcor <= 2*C_SQUARE){
-            Status("Status: Pen Color: Red", font);
             color.id=RED;
             color.r=255;
             color.g=0;
             color.b=0;
         }
         else if(mouse.xcor <= 3*C_SQUARE){
-            Status("Status: Pen Color: Orange", font);
             color.id=ORANGE;
             color.r=255;
             color.g=100;
             color.b=0;
         }
         else if(mouse.xcor <= 4*C_SQUARE){
-            Status("Status: Pen Color: Yellow", font);
             color.id=YELLOW;
             color.r=255;
             color.g=255;
             color.b=0;
         }
         else if(mouse.xcor <= 5*C_SQUARE){
-            Status("Status: Pen Color: Green", font);
             color.id=GREEN;
             color.r=0;
             color.g=255;
             color.b=0;
         }
         else if(mouse.xcor <= 6*C_SQUARE){
-            Status("Status: Pen Color: Blue", font);
             color.id=BLUE;
             color.r=0;
             color.g=0;
             color.b=255;
         }
         else if(mouse.xcor <= 7*C_SQUARE){
-            Status("Status: Pen Color: Indigo", font);
             color.id=INDIGO;
             color.r=75;
             color.g=0;
             color.b=130;
         }
         else if(mouse.xcor <= 8*C_SQUARE){
-            Status("Status: Pen Color: Violet", font);
             color.id=VIOLET;
             color.r=148;
             color.g=0;
@@ -310,19 +302,15 @@ void modifyPen(TTF_Font *font){
 
         //Changing pen size where 1 <= pen size <= 16.
         else if(mouse.xcor <=300 && mouse.xcor >=275 && local_tool_width > 1){
-            Status("Status: Pen size decreased", font);
             local_tool_width--;
         }
         else if(mouse.xcor <=425 && mouse.xcor >=400 && local_tool_width < 16){
-            Status("Status: Pen size increased", font);
             local_tool_width++;
         }
         else if(mouse.xcor >= 305 && mouse.xcor <= 390){
-            Status("Status: Pen size changing", font);
             local_tool_width = (mouse.xcor - 300) / 5;
         }
         else if(mouse.xcor >= 550 && mouse.xcor <= 575){
-            Status("Status: Eraser ON", font);
             color.r=255;
             color.g=255;
             color.b=255;
@@ -342,13 +330,8 @@ void modifyPen(TTF_Font *font){
     }
 }
 
-void penLine(TTF_Font *font){
+void penLine(){
   if (cPacket.mouse.xcor >= 0 && cPacket.mouse.ycor < 450) {
-        if(color.r == 255 && color.g == 255 && color.b == 255){
-            Status("Status: Erasing...", font);
-        }
-        else
-            Status("Status: Drawing...", font);
         if(cPacket.mouse.lastx >= 0){
             //draws a line based on current information.
             //line(mouse.lastx, mouse.lasty, mouse.xcor, mouse.ycor, color.r, color.g, color.b);
@@ -399,16 +382,14 @@ void rasterCircle(int x0, int y0, int radius){
 }
 
 //this just draws a circle with radius 25 as of now. please modify.
-void penCircle(TTF_Font *font){
+void penCircle(){
   if (mouse.xcor >= 0 && mouse.ycor < 450){
     if(circle.iter == 0){
-      Status("Pick center of circle", font);
       circle.savedx = mouse.xcor;
       circle.savedy = mouse.ycor;
       circle.iter = 1;
     }
     if(circle.iter == 1){
-      Status("Pick distance to circle's edge (radius)", font);
       rasterCircle(circle.savedx, circle.savedy, 25);
       circle.iter = 0;
     }
@@ -422,16 +403,14 @@ void drawRectangle(int x1, int y1, int x2, int y2){
   line(x2,y1,x2,y2,color.r,color.g,color.b);
 }
 
-void penRect(TTF_Font *font){
+void penRect(){
   if(mouse.xcor >= 0 && mouse.ycor < 450){
     if(circle.iter == 0){
-      Status("Pick upper left hand corner of rectangle", font);
       circle.savedx = mouse.xcor;
       circle.savedy = mouse.ycor;
       circle.iter = 1;
     }
     if(circle.iter == 1){
-      Status("Pick bottom right hand corner of rectangle", font);
       drawRectangle(circle.savedx, circle.savedy, circle.savedx + 100, circle.savedy + 100);
       circle.iter = 0;
     }
@@ -443,9 +422,6 @@ void penRect(TTF_Font *font){
  */
 
 void updateScreen() {
-    TTF_Font *font;
-    font = loadFont("font/blackWolf.ttf", 16);
-
 
     if(SDL_MUSTLOCK(screen)) {
         if(SDL_LockSurface(screen) < 0) return; //Lock surface for directly accessing pixels
@@ -454,24 +430,21 @@ void updateScreen() {
 
     switch(toolno) {
         case 0:
-            Status("Status: Pen Line Drawing", font);
-            penLine(font);
+            penLine();
             break;
         case 1:
-            Status("Status: Rectangle Drawing", font);
-            penRect(font);
+            penRect();
             break;
         case 2:
-            Status("Status: Circle Drawing", font);
-            penCircle(font);
+            penCircle();
             break;
     }
 
-    modifyPen(font);
+    modifyPen();
 
     setUI();
 
-    closeFont(font);
+    closeFont();
 
 
     if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen); //Unlocks surface, done writing

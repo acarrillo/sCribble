@@ -24,8 +24,6 @@
 #include <stdint.h>
 #ifndef AM_SERVER
   #include "SDL/SDL.h"
-  #include "SDL/SDL_ttf.h"
-  #include "SDL/SDL_image.h"
 #endif
 
 #define READ 0
