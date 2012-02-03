@@ -42,7 +42,7 @@ void server_listener_setup(){
 
   //make the server socket for reliable IPv4 traffic
   socket_id = socket( AF_INET, SOCK_STREAM, 0);
-  printf("Socket file descriptor: %d\n", socket_id);
+  /*printf("Socket file descriptor: %d\n", socket_id);*/
 
   //mark server socket as non-blocking
   fcntl(socket_id, F_SETFL, O_NONBLOCK);
@@ -52,15 +52,14 @@ void server_listener_setup(){
 
   //This is the server, so it will listen to anything coming into the host computer
   server.sin_addr.s_addr = INADDR_ANY;
-  
   //set the port to listen on, htons converts the port number to network format
   server.sin_port = htons(44444);
-  
+
   //bind the socket to the socket struct
   i = bind( socket_id, (struct sockaddr *)&server, sizeof(server) );
 
   //wait for any connection
-  i = listen( socket_id, 0 );    
+  i = listen( socket_id, 0 );
 }
 
 void broadcastPacket(cribblePacket* packet){
@@ -70,7 +69,7 @@ void broadcastPacket(cribblePacket* packet){
     if(clientList[i]){
       b = write( clientList[i], packet, sizeof(*packet));
       if(b==-1) printf( "Talker writing error: %s\n", strerror( errno ) );
-      printf("\tTalker wrote %d bytes to %d\n", b, clientList[i]);
+      /*printf("\tTalker wrote %d bytes to %d\n", b, clientList[i]);*/
     }
   }
 }
@@ -140,20 +139,18 @@ void server_talk(){
 
   sop.sem_op = 0;
   i = semop(semid, &sop, 1);
-    
   if(i != -1) { //The semaphore is ready!
-    printf("Talker: Semaphore is ready (i = %d)\n", i);
-      
+    /*printf("Talker: Semaphore is ready (i = %d)\n", i);*/
     if(messagePot->type == C_DISCONNECT){
       printf("Talker: disconnecting client\n");
       removeClient(atoi(messagePot->data)); //Disconnect messages already have the client descriptor inserted into their message
     }
     else {
-      printf("\tTalker: broadcasting...\n");
+      /*printf("\tTalker: broadcasting...\n");*/
       if(messagePot->type != C_CONNECT) broadcastPacket(messagePot);
     }
 
-    printf("\tTalker: releasing semaphore\n");
+    /*printf("\tTalker: releasing semaphore\n");*/
     sop.sem_op = 3;
     semop(semid, &sop, 1);
   }

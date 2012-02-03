@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
   //Set up the messagePot in shared memory
   messagePotDescriptor = shmget(MESSAGE_POT_KEY, 64*sizeof(int), 0664 | IPC_CREAT);
   messagePot = (cribblePacket*) shmat(messagePotDescriptor, NULL, 0);
-  printf("messagePotDescriptor: %d\n",messagePotDescriptor);
+  /*printf("messagePotDescriptor: %d\n",messagePotDescriptor);*/
 
   //Set up a semaphore for the messagePot
   semid = semget(MESSAGE_POT_SEM, 1, 0664 | IPC_CREAT);
@@ -76,7 +76,6 @@ int main(int argc, char *argv[]){
 
   //accept incoming network connections
   loop_server();
-   
   cleanup();
   return 1;
 }

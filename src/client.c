@@ -91,7 +91,6 @@ void run_client(){
     if (mouse.xcor >= 0 || mouse.ycor >= 0) {
         b = write( socket_id, &cPacket, sizeof(cPacket));
         if (b == -1) printf("write returned %d with an error \"%s\"\n", b, strerror(errno));
-        printf("\tSent %d bytes\n", b);
     }
 
     clear_buffer(); // Sets cPacket to nonsense values
